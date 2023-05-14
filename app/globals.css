@@ -2,26 +2,139 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+/* * {
+  border: 1px solid #d12f12;
+} */
+
+.scrollbar-hide::-webkit-scrollbar {
+    background-color: rgb(237, 210, 100);
+    width: 10px;
+
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.react-resizable-handle {
+    display: block;
+    background-color: #37414b;
+    /* background-repeat: no-repeat; */
+    background-position: 50%;
+    /* margin: 0 0px; */
   }
-}
+  
+  .resize-horizontal {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .react {
+    margin-right: 12px;
+  }
+  
+  .react-resizable-handle-s {
+    height: 12px;
+    /* width: 80.1em; */
+    width: 100%;
+    margin-top: -0.5px;
+    cursor: row-resize;
+    
+    /* background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII="); */
+    /* background: linear-gradient(to right,grey,black,black,black,black, white,black,black,black, black,grey) */
+    background: linear-gradient(to right, 
+    rgba(60, 207, 197, 0.226)  0%, 
+    black 39% 40%, 
+    rgba(27, 249, 19, 0.703)  50%, 
+    black 60% 100%,
+    rgba(60, 207, 197, 0.51) 100%
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
+);
+  }
+  
+  
+  .react-resizable-handle-e {
+    width: 11px;
+    min-width: 10px;
+    /* height: 23.45em; */
+    height: 100%;
+    cursor: col-resize;
+    margin-left: -0.5px;
+  
+    /* background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg=="); */
+    background: linear-gradient(
+      /* rgba(8, 98, 90, 0.262) 0%,  */
+    /* rgb(0, 255, 238)  0%,  */
+
+      black 10% 25%, 
+      rgba(27, 249, 19, 0.703)  50%, 
+      black 75% 100%
+      /* rgba(8, 98, 90, 0.262) 100% */
+      
+
+    );
+  }
+  
+
+  
+  
+  /* @media only screen and (max-width: 1320px) {
+    .react-resizable-handle-s{
+      width: 20em;
+    }
+  
+  } */
+
+  .frame {
+    position: relative;
+    top: 30px;
+    margin-bottom: 100px;
+    width: 100%;
+
+  }
+  /* .oneEditor {
+    position: relative;
+    height: 100%;
+    width: 100%;
+  } */
+  .resizableReactEditor {
+    height: 100%;
+  }
+  .thaReactEditor {
+    height: 100%;
+  }
+  .preview-wrapper iframe {
+    height: 100%;
+    width: 100%;
+  }
+
+  .preview-wrapper {
+    position: relative;
+    height: 99.99%;
+    flex-grow: 1;
+    /* width: 120px; */
+  }
+  
+
+  .react-draggable-transparent-selection .preview-wrapper:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+  }
+
+
+
+
+
+
+
+  
+
+
+
