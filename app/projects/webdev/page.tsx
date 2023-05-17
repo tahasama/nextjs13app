@@ -170,7 +170,7 @@ const page = () => {
                 Learn the basics of HTML and start building your own web pages.
               </p>
               <a
-                href="/projects/webdev/tutorials/"
+                href="/projects/webdev/tutorials/html"
                 className="mt-8 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md bg-sky-600 hover:bg-sky-700"
               >
                 <RiArrowRightSLine className="w-5 h-5 mr-2" />
@@ -187,7 +187,7 @@ const page = () => {
                 websites.
               </p>
               <a
-                href="/projects/python/tutorials/dataAnalysis"
+                href="/projects/webdev/tutorials/css"
                 className="mt-8 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md bg-sky-600 hover:bg-sky-700"
               >
                 <RiArrowRightSLine className="w-5 h-5 mr-2" />

@@ -12,6 +12,7 @@ const Iframe = () => {
                     <style>${code?.css}</style>
                     <script>${code?.js}</script> 
                   </html>`;
+
   return (
     <div className={`preview-wrapper  w-20`}>
       <iframe
@@ -19,7 +20,7 @@ const Iframe = () => {
         ref={iframe}
         sandbox="allow-scripts"
         srcDoc={srcDoc}
-        className="w-full"
+        // className="w-full"
       />
     </div>
   );

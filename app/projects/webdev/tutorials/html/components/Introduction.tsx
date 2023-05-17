@@ -1,5 +1,7 @@
+"use client";
+import React, { useState } from "react";
+import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 import Head from "next/head";
-import React from "react";
 import { Lato } from "next/font/google";
 
 const lato = Lato({
@@ -7,6 +9,8 @@ const lato = Lato({
   weight: "400",
 });
 const Introduction = () => {
+  const [ShowSection, setShowSection] = useState(false);
+
   return (
     <>
       <Head>
@@ -31,15 +35,29 @@ const Introduction = () => {
             in HTML and be ready to create your own web pages and projects.
           </p>
           <div className="mt-6">
-            <h2 className="text-lg font-medium text-gray-200">
-              Basic Structure of an HTML Document
-            </h2>
-            <p className="mt-2">
-              Every HTML document must start with a document type declaration:{" "}
-              <code className="bg-gray-800 px-1">{"<!DOCTYPE html>"}</code>
-            </p>
-            <pre className="bg-gray-800 rounded-md p-4 mt-2">
-              {`<!DOCTYPE html>
+            <button
+              className={`flex flex-row items-start justify-between text-2xl  md:min-w-[33.3rem] min-w-[27rem]
+    font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
+              onClick={() => setShowSection(!ShowSection)}
+            >
+              Basic Structure of a Document
+              {!ShowSection ? (
+                <FaCaretDown size={24} className="ml-8" />
+              ) : (
+                <FaCaretUp size={24} className="ml-8" />
+              )}
+            </button>
+            <div
+              className={`${
+                !ShowSection ? "hidden" : "visible"
+              } indent-10 mb-8  mt-3`}
+            >
+              <p className="mt-2">
+                Every HTML document must start with a document type declaration:{" "}
+                <code className="bg-gray-800 px-1">{"<!DOCTYPE html>"}</code>
+              </p>
+              <pre className="bg-gray-800 rounded-md p-4 mt-2">
+                {`<!DOCTYPE html>
    <html>
       <head>
           <title>Page Title</title>
@@ -49,7 +67,8 @@ const Introduction = () => {
           <p>This is a paragraph.</p>
       </body>
    </html>`}
-            </pre>
+              </pre>
+            </div>
           </div>
         </div>
       </div>

@@ -80,16 +80,18 @@ const VanillaEditor = () => {
     <>
       <button
         onClick={onFormat}
-        className=" 
-        bg-teal-950 transition-colors duration-700 ease-in-out hover:bg-transparent px-3
-    hover:bg-teal-700 py-1 text-lg w-20 text-slate-200
-         "
+        className="group
+            bg-teal-950 transition-colors duration-700 ease-in-out px-3
+        hover:bg-teal-900 py-1 text-lg w-20 text-teal-200 hover:text-gray-100
+             "
 
         // top-[-84px]
       >
+        {/* <p className="group-hover:-rotate-90 transition-all duration-300"> */}{" "}
         format
+        {/* </p> */}
       </button>
-      <div className={`relative right-0 h-full w-full `}>
+      <div className={`relative right-0 h-full w-[calc(100%-80px)] `}>
         <span onClick={() => dispatch(updateSaved(false))}>
           <div className="resizableReactEditor">
             <Editor
