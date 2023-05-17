@@ -160,8 +160,8 @@ const page = () => {
               to advanced topics like React.js.
             </p>
           </div>
-          <div className="mt-16 flex flex-col md:flex-row gap-5 flex-wrap justify-center items-center w-full">
-            <div className="flex flex-col items-center md:w-80 p-2 my-4 hover:bg-gradient-to-br rounded-md hover:from-slate-900 via-slate-900 hover:to-slate-800">
+          <div className="mt-20 flex flex-col md:flex-row gap-5 md:gap-20 flex-wrap justify-center items-center w-full">
+            <div className="flex flex-col items-center md:w-80 p-4 my-4 bg-gradient-to-br rounded-md from-slate-900 via-slate-900 to-slate-800">
               <div className="w-20 h-20 rounded-full bg-sky-600 flex items-center justify-center">
                 <AiFillHtml5 className="w-9 h-9 text-white" />
               </div>
@@ -177,7 +177,7 @@ const page = () => {
                 Start tutorial
               </a>
             </div>
-            <div className="flex flex-col items-center md:w-80 p-2 my-4 hover:bg-gradient-to-br rounded-md hover:from-slate-900 via-slate-900 hover:to-slate-800">
+            <div className="flex flex-col items-center md:w-80 p-4 my-4 bg-gradient-to-br rounded-md from-slate-900 via-slate-900 to-slate-800">
               <div className="w-20 h-20 rounded-full bg-sky-600 flex items-center justify-center">
                 <DiCss3 className="w-9 h-9 text-white" />
               </div>
@@ -194,7 +194,7 @@ const page = () => {
                 Start tutorial
               </a>
             </div>
-            <div className="flex flex-col items-center md:w-80 p-2 my-4 hover:bg-gradient-to-br rounded-md hover:from-slate-900 via-slate-900 hover:to-slate-800">
+            <div className="flex flex-col items-center md:w-80 p-4 my-4 bg-gradient-to-br rounded-md from-slate-900 via-slate-900 to-slate-800">
               <div className="w-20 h-20 rounded-full bg-sky-600 flex items-center justify-center">
                 <IoLogoJavascript className="w-8 h-8 text-white" />
               </div>
@@ -214,7 +214,7 @@ const page = () => {
               </a>
             </div>
             {/* <div className="col-span-3 sm:col-span-2 lg:col-span-3 flex justify-center items-center"> */}
-            <div className="flex flex-col items-center md:w-80 p-2 my-4 hover:bg-gradient-to-br rounded-md hover:from-slate-900 via-slate-900 hover:to-slate-800">
+            <div className="flex flex-col items-center md:w-80 p-4 my-4 bg-gradient-to-br rounded-md from-slate-900 via-slate-900 to-slate-800">
               <div className="w-20 h-20 rounded-full bg-sky-600 flex items-center justify-center">
                 <SiTypescript className="w-8 h-8 text-white" />
               </div>
@@ -233,7 +233,7 @@ const page = () => {
                 Start tutorial
               </a>
             </div>
-            <div className="flex flex-col items-center md:w-80 p-2 my-4 hover:bg-gradient-to-br rounded-md hover:from-slate-900 via-slate-900 hover:to-slate-800">
+            <div className="flex flex-col items-center md:w-80 p-4 my-4 bg-gradient-to-br rounded-md from-slate-900 via-slate-900 to-slate-800 ">
               <div className="w-20 h-20 rounded-full bg-sky-600 flex items-center justify-center">
                 <FaReact className="w-10 h-10 text-white" />
               </div>
