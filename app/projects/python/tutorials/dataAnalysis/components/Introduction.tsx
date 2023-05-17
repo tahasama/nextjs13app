@@ -71,7 +71,7 @@ const Introduction = () => {
             <code className="p-2 mx-2 bg-slate-700 rounded-md  text-green-600">
               plt.close('all')
             </code>{" "}
-            That will avoid creating ba or wrongly generated plot
+            That will avoid creating bad or wrongly generated plot
           </p>
         </div>
       </div>
