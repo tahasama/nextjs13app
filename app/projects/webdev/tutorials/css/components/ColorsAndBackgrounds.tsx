@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 import Head from "next/head";
+
 const ColorsAndBackgrounds = () => {
   const [ShowSection, setShowSection] = useState(false);
 
