@@ -9,6 +9,15 @@ import ControlFlow from "./components/ControlFlow";
 import FunctionsAndScope from "./components/FunctionsAndScope";
 import ArraysAndObjects from "./components/ArraysAndObjects";
 import DomManipulation from "./components/DomManipulation";
+import FunctionsAandHigherOrderFunctions from "./components/FunctionsAandHigherOrderFunctions";
+import AsynchronousProgramming from "./components/AsynchronousProgramming";
+import ErrorHandlingAndDebugging from "./components/ErrorHandlingAndDebugging";
+import ES6Features from "./components/ES6Features";
+import WorkingWithAPIs from "./components/WorkingWithAPIs";
+import BrowserStorage from "./components/BrowserStorage";
+import JavaScriptAndHTMLForms from "./components/JavaScriptAndHTMLForms";
+import RegularExpressions from "./components/RegularExpressions";
+import JavaScriptLibrariesAndFrameworks from "./components/JavaScriptLibrariesAndFrameworks";
 
 const MachineLeraningTutorial = () => {
   return (
@@ -21,6 +30,15 @@ const MachineLeraningTutorial = () => {
       <FunctionsAndScope />
       <ArraysAndObjects />
       <DomManipulation />
+      <FunctionsAandHigherOrderFunctions />
+      <AsynchronousProgramming />
+      <ErrorHandlingAndDebugging />
+      <ES6Features />
+      <WorkingWithAPIs />
+      <BrowserStorage />
+      <JavaScriptAndHTMLForms />
+      <RegularExpressions />
+      <JavaScriptLibrariesAndFrameworks />
     </div>
   );
 };
