@@ -47,12 +47,18 @@ const page = () => {
               {/* <h1 className="text-base md:text-lg font-bold">{email}</h1> */}
               <p className="text-xs md:text-sm text-gray-400 mt-4">
                 Joined:
-                {creationTime?.slice(0, 16)}
+                {new Date(creationTime.seconds * 1000)
+                  .toDateString()
+                  .slice(0, 16)}
               </p>
-              <p className="text-xs md:text-sm text-gray-400 mt-1">
-                Last visited:
-                {lastSignInTime?.slice(0, 16)}
-              </p>
+              {lastSignInTime !== "" && (
+                <p className="text-xs md:text-sm text-gray-400 mt-1">
+                  Last visited:
+                  {new Date(lastSignInTime.seconds * 1000)
+                    .toDateString()
+                    .slice(0, 16)}
+                </p>
+              )}
             </div>
           </div>
         </div>

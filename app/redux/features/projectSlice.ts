@@ -67,6 +67,7 @@ export const searchProject = createAsyncThunk(
 );
 
 export interface valueProps {
+  _id?: any;
   projectId?: string;
   title: string | undefined;
   description: string | undefined;
@@ -146,16 +147,28 @@ export const cloneProject = createAsyncThunk(
   }
 );
 
-// export const saveProject = createAsyncThunk(
-//   "saveProject",
-//   async (value: valueProps) => {
-//     const object = {
-//       _id: value._id,
-//     };
-//     const res = await axios.put(POJECT_URL + object._id, value);
-//     return res.data;
-//   }
-// );
+interface saveProps {
+  _id: string | undefined;
+  title: string;
+  description: string;
+  code?: {
+    html: string | undefined;
+    css: string | undefined;
+    js: string | undefined;
+  };
+  cells?: { cellId: string; cellCode: string }[];
+}
+
+export const saveProject = createAsyncThunk(
+  "saveProject",
+  async (value: valueProps) => {
+    const object = {
+      _id: value._id,
+    };
+    const res = await axios.put(POJECT_URL + object._id, value);
+    return res.data;
+  }
+);
 interface starProps {
   _id: string | undefined;
   star: string[];
@@ -185,7 +198,11 @@ export const deleteProject = createAsyncThunk(
 export interface projectProps {
   projs: {
     all: any[];
-    user: string;
+    user: {
+      uid: string | undefined;
+      email?: string | undefined;
+      username?: string | undefined;
+    };
     title: string;
     description: string;
     code?: { html: string; css: string; js: string };
@@ -207,7 +224,11 @@ export interface projectProps {
 
 export const projectInitialState = {
   all: [],
-  user: "",
+  user: {
+    uid: "",
+    email: "",
+    username: "",
+  },
   title: "",
   description: "",
   code: { html: "", css: "", js: "" },

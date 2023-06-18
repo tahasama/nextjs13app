@@ -164,8 +164,8 @@ export interface userProps {
     error: { code: string; message: string };
     message: string;
     image: string;
-    creationTime: string;
-    lastSignInTime: string;
+    creationTime: any;
+    lastSignInTime: any;
     displayName: string;
     bio: string;
   };

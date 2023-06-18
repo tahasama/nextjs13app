@@ -9,7 +9,13 @@ import jsParser from "prettier/parser-babel";
 
 import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
 import {
+  cleanState,
+  cloneProject,
+  deleteProject,
   getProjectData,
+  projectInitialState,
+  saveProject,
+  updateCellCode,
   updateCode,
   updateSaved,
 } from "@/app/redux/features/projectSlice";
@@ -20,6 +26,8 @@ import {
 } from "../../../constatnts/example";
 import { Dancing_Script } from "next/font/google";
 import { getAuthData } from "@/app/redux/features/authSlice";
+import { useParams } from "next/navigation";
+import { userAgent } from "next/server";
 
 const bilbo = Dancing_Script({
   subsets: ["latin"],
@@ -28,8 +36,18 @@ const bilbo = Dancing_Script({
 const VanillaEditor = () => {
   const editorRef = useRef<any>(null);
   const dispatch = useAppDispatch();
-  const { selectedDiv, code } = useAppSelector(getProjectData);
-  const { uid } = useAppSelector(getAuthData);
+  const { uid, email } = useAppSelector(getAuthData);
+  const { projectId } = useParams();
+  const {
+    title,
+    description,
+    selectedDiv,
+    code,
+    updatedAt,
+    saved,
+    reactCode,
+    cells,
+  } = useAppSelector(getProjectData);
 
   const handleEditorChange = () => {
     dispatch(

@@ -47,14 +47,17 @@ const novaOval = Nova_Oval({
 });
 
 const Side = ({ remove, save, clone }: any) => {
-  const { id } = useParams();
+  const { projectId } = useParams();
   const dispatch = useAppDispatch();
   const params = useParams();
-  const bar = useAppSelector((state) => state.bar);
+  const bar = useAppSelector((state) => state.sideBar);
   const { saved, user, star } = useAppSelector(getProjectData);
   const { uid } = useAppSelector(getAuthData);
   const [result, setResult] = useState(false);
   const router = useRouter();
+
+  console.log("2222222222", projectId && uid === user.uid);
+  console.log("5555555555", uid, "7777777777", user.uid);
 
   const alerted = (destination: string) => {
     if (!saved) {
@@ -80,11 +83,11 @@ const Side = ({ remove, save, clone }: any) => {
       if (starArrayIndex !== -1) {
         starArray.splice(starArrayIndex, 1);
       }
-      dispatch(StarProject({ _id: id, star: starArray }));
+      dispatch(StarProject({ _id: projectId, star: starArray }));
       dispatch(updateStar({ star: starArray }));
     } else {
       starArray.push(uid);
-      dispatch(StarProject({ _id: id, star: starArray }));
+      dispatch(StarProject({ _id: projectId, star: starArray }));
       dispatch(updateStar({ star: starArray }));
     }
   };
@@ -136,7 +139,7 @@ const Side = ({ remove, save, clone }: any) => {
   return (
     <nav
       className={`z-50 fixed mt-16 overflow-auto w-16 h-[calc(100vh-64px)] border-r-2 border-slate-500 shadow-slate-700 text-lg
-       bg-black py-3 text-slate-400 flex flex-col items-center justify-around ${kiwi.className}`}
+       bg-black py-3 text-slate-400 flex flex-col items-center justify-around  ${kiwi.className}`}
     >
       {/* <button
         className="side c but"
@@ -145,7 +148,7 @@ const Side = ({ remove, save, clone }: any) => {
         onClick={() => alerted("/")}
       >
         <div className="iconSide">
-          <AiFillHome className="w-8 h-8 text-white" />
+          <AiFillHome className="w-8 h-8 " />
         </div>
         {bar.home && <div className="message">Home</div>}
       </button> */}
@@ -158,7 +161,7 @@ const Side = ({ remove, save, clone }: any) => {
             onClick={handleCodeAndRun}
           >
             <div className="iconSide">
-              <HiOutlineCode className="w-7 h-7 text-white" />
+              <HiOutlineCode className="w-7 h-7 " />
             </div>{" "}
             {bar.code && <div className="message">Code and Run</div>}
           </button>
@@ -169,7 +172,7 @@ const Side = ({ remove, save, clone }: any) => {
             onClick={handleReactCodeAndRun}
           >
             <div className="iconSide reacticon">
-              <DiReact className="w-8 h-8 text-white" />
+              <DiReact className="w-8 h-8 " />
             </div>{" "}
             {bar.react && (
               <div className="message reactmessage">React and Run</div>
@@ -182,7 +185,7 @@ const Side = ({ remove, save, clone }: any) => {
             onClick={handlePython}
           >
             <div className="iconSide reacticon">
-              <DiPython className="w-8 h-8 text-white" />
+              <DiPython className="w-8 h-8 " />
             </div>{" "}
             {bar.python && (
               <div className="message reactmessage">Python to go</div>
@@ -195,7 +198,7 @@ const Side = ({ remove, save, clone }: any) => {
             onClick={handleDataScience}
           >
             <div className="iconSide reacticon">
-              <FaChartLine className="w-6 h-6 text-white" />
+              <FaChartLine className="w-6 h-6 " />
             </div>{" "}
             {bar.data && (
               <div className="message reactmessage">data Science</div>
@@ -206,123 +209,109 @@ const Side = ({ remove, save, clone }: any) => {
       {uid && (
         <>
           <button
-            className="side b but"
             onMouseEnter={() => dispatch(barState({ new: true }))}
             onMouseLeave={() => dispatch(barState(sideBArInitialState))}
             onClick={handleNewProject}
           >
-            <div className="iconSide">
-              <MdAddCircleOutline />
+            <div>
+              <MdAddCircleOutline className="w-7 h-7" />
             </div>
-            {bar.new && <div className="message">New Project</div>}
+            {bar.new && <div>New Project</div>}
           </button>
-          {id && uid === user && (
+          {projectId && uid === user.uid && (
             <>
-              {!location.pathname.startsWith("/profile") && (
-                <>
-                  <button
-                    className="side a but"
-                    onMouseEnter={() => dispatch(barState({ save: true }))}
-                    onMouseLeave={() => dispatch(barState(sideBArInitialState))}
-                    onClick={save}
-                  >
-                    <div className="iconSide">
-                      <AiFillSave />
-                    </div>
-                    {bar.save && <div className="message in">Save</div>}
-                  </button>
-                  <button
-                    className="side e but"
-                    onMouseEnter={() => dispatch(barState({ edit: true }))}
-                    onMouseLeave={() => dispatch(barState(sideBArInitialState))}
-                    onClick={() => alerted("/create")}
-                  >
-                    <div className="iconSide">
-                      <AiFillEdit />{" "}
-                    </div>
-                    {bar.edit && (
-                      <div className="message">Edit project's infos</div>
-                    )}
-                  </button>
-                </>
-              )}
+              <>
+                <button
+                  onMouseEnter={() => dispatch(barState({ save: true }))}
+                  onMouseLeave={() => dispatch(barState(sideBArInitialState))}
+                  onClick={save}
+                >
+                  <div>
+                    <AiFillSave className="w-7 h-7" />
+                  </div>
+                  {bar.save && <div>Save</div>}
+                </button>
+                <button
+                  onMouseEnter={() => dispatch(barState({ edit: true }))}
+                  onMouseLeave={() => dispatch(barState(sideBArInitialState))}
+                  onClick={() => alerted("/create")}
+                >
+                  <div>
+                    <AiFillEdit className="w-7 h-7" />{" "}
+                  </div>
+                  {bar.edit && <div>Edit project's infos</div>}
+                </button>
+              </>
             </>
           )}
 
-          <button
-            className="side f but"
+          <s
             onMouseEnter={() => dispatch(barState({ open: true }))}
             onMouseLeave={() => dispatch(barState(sideBArInitialState))}
             onClick={handleOpenProject}
           >
-            <div className="iconSide">
-              <AiOutlineFolderOpen />
+            <div>
+              <AiOutlineFolderOpen className="w-7 h-7" />
             </div>
-            {bar.open && <div className="message">Open Project</div>}
-          </button>
-          {id && uid === user && !location.pathname.startsWith("/profile") && (
-            <button
-              className="side d but"
-              onMouseEnter={() => dispatch(barState({ delete: true }))}
-              onMouseLeave={() => dispatch(barState(sideBArInitialState))}
-              onClick={remove}
-            >
-              <div className="iconSide">
-                <AiFillDelete />
-              </div>
-              {bar.delete && <div className="message">Delete</div>}
-            </button>
-          )}
-          {uid !== user &&
+            {bar.open && <div>Open Project</div>}
+          </s>
+          {projectId &&
+            uid === user.uid &&
+            !location.pathname.startsWith("/profile") && (
+              <button
+                onMouseEnter={() => dispatch(barState({ delete: true }))}
+                onMouseLeave={() => dispatch(barState(sideBArInitialState))}
+                onClick={remove}
+              >
+                <div>
+                  <AiFillDelete className="w-7 h-7" />
+                </div>
+                {bar.delete && <div>Delete</div>}
+              </button>
+            )}
+          {uid !== user.uid &&
             params.id &&
             !location.pathname.startsWith("/profile") && (
               <>
                 <button
-                  className="side g but"
                   onMouseEnter={() => dispatch(barState({ delete: true }))}
                   onMouseLeave={() => dispatch(barState(sideBArInitialState))}
                   onClick={clone}
                 >
-                  <div className="iconSide sizeIt">
+                  <div>
                     <FaRegClone />
                   </div>
-                  {bar.delete && <div className="message">Clone Project</div>}
+                  {bar.delete && <div>Clone Project</div>}
                 </button>
                 <button
-                  className="side a but"
                   onMouseEnter={() => dispatch(barState({ edit: true }))}
                   onMouseLeave={() => dispatch(barState(sideBArInitialState))}
                   onClick={handleAuthorsProfile}
                 >
-                  <div className="iconSide sizeIt">
+                  <div>
                     <ImProfile />
                   </div>
-                  {bar.edit && <div className="message">Authors's Profile</div>}
+                  {bar.edit && <div>Authors's Profile</div>}
                 </button>
                 <button
-                  className="side a but"
                   onMouseEnter={() => dispatch(barState({ star: true }))}
                   onMouseLeave={() => dispatch(barState(sideBArInitialState))}
                   onClick={handleStar}
                 >
                   {!star.includes(uid) ? (
                     <div>
-                      <div className="iconSide sizeIt starColor">
+                      <div>
                         <AiOutlineStar />
                       </div>
-                      {bar.star && (
-                        <div className="message">Give it a Star</div>
-                      )}
+                      {bar.star && <div>Give it a Star</div>}
                     </div>
                   ) : (
                     <div>
-                      <div className="iconSide sizeIt starColor">
+                      <div>
                         <AiTwotoneStar />
                       </div>
                       {bar.star && (
-                        <div className="message">
-                          you rated this project. unrate it?{" "}
-                        </div>
+                        <div>you rated this project. unrate it? </div>
                       )}
                     </div>
                   )}

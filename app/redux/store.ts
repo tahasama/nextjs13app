@@ -11,7 +11,8 @@ export const store = configureStore({
     // reducer of local state
     authUser: authReducer,
     proj: projectsReducer,
-    bar: sideBarReducer,
+    bar: barReducer,
+    sideBar: sideBarReducer,
     // reducer of API Created in App in Api directory
     [usersNextApi.reducerPath]: usersNextApi.reducer,
   },
