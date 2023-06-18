@@ -12,7 +12,14 @@ import axios from "axios";
 import { uuid } from "uuidv4";
 
 import { RootState } from "../store";
-import { addDoc, collection, doc, getDoc, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  where,
+} from "firebase/firestore";
 import { db } from "@/app/firebase";
 
 const POJECT_URL: any = process.env.NEXT_PUBLIC_PROJECT_URL;
@@ -47,6 +54,18 @@ export const fetchProjectById = createAsyncThunk<any, string>(
   }
 );
 
+export const searchProject = createAsyncThunk(
+  "searchProject",
+  async (projectTitle: string | undefined) => {
+    try {
+      const res = await axios.get(POJECT_URL + "search/q=" + projectTitle);
+      return res.data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
 export interface valueProps {
   projectId?: string;
   title: string | undefined;
@@ -57,7 +76,7 @@ export interface valueProps {
     email?: string | undefined;
     username?: string | undefined;
   };
-  star?: string[];
+  star: string[];
   projectType: string;
   cells?: { cellId: string; cellCode: string }[];
   code?: {
@@ -181,6 +200,8 @@ export interface projectProps {
     selectedDiv: string;
     projectType: string;
     projectId: string;
+    searchAll: any[];
+    loading: boolean;
   };
 }
 
@@ -194,13 +215,15 @@ export const projectInitialState = {
   createdAt: "",
   updatedAt: "",
   saved: true,
-  star: [],
+  star: [""],
   cells: [{ cellId: "", cellCode: "" }],
   reactCode: "",
   projectType: "",
   pythonCode: "",
   selectedDiv: "html",
   projectId: "",
+  searchAll: [{}],
+  loading: true,
 };
 
 export const projectSlice = createSlice({
@@ -254,6 +277,17 @@ export const projectSlice = createSlice({
     cleanState: (state, action) => {
       Object.assign(state, action.payload);
     },
+    updateLoading: (state, action) => {
+      state.loading = action.payload;
+    },
+    filteredProjects: (state, action) => {
+      state.all = action.payload;
+    },
+    cleanUpProjects: (state, action) => {
+      // console.log("cleaning zooooooooone", action.payload);
+      state.all = action.payload;
+      state.searchAll = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchProjectByUser.fulfilled, (state, action) => {
@@ -287,6 +321,9 @@ export const {
   DeleteCells,
   updatePythonCode,
   selectedDivState,
+  updateLoading,
+  filteredProjects,
+  cleanUpProjects,
 } = projectSlice.actions;
 
 export default projectSlice.reducer;

@@ -3,6 +3,38 @@
 import React from "react";
 import { Kiwi_Maru, Nova_Oval } from "next/font/google";
 import Link from "next/link";
+import {
+  AiFillEdit,
+  AiFillHome,
+  AiFillSave,
+  AiFillDelete,
+  AiOutlineFolderOpen,
+  AiTwotoneStar,
+  AiOutlineStar,
+} from "react-icons/ai";
+import { DiReact } from "react-icons/di";
+
+import { HiOutlineCode } from "react-icons/hi";
+import { ImProfile } from "react-icons/im";
+import { FaChartLine, FaRegClone } from "react-icons/fa";
+import { MdAddCircleOutline } from "react-icons/md";
+import { DiPython } from "react-icons/di";
+
+import { useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import {
+  StarProject,
+  getProjectData,
+  projectInitialState,
+  updateSaved,
+  updateStar,
+  cleanUpProjects,
+  fetchProjectByUser,
+  cleanState,
+} from "../redux/features/projectSlice";
+import { getAuthData } from "../redux/features/authSlice";
+import { barState, sideBArInitialState } from "../redux/features/sideBarSlice";
 
 const kiwi = Kiwi_Maru({
   subsets: ["latin"],
@@ -14,71 +46,292 @@ const novaOval = Nova_Oval({
   weight: "400",
 });
 
-const Side = () => {
-  return (
-    <header
-      className={`z-50 fixed mt-16 overflow-auto w-16 h-screen border-r-2 border-slate-500 shadow-slate-700 text-lg
-       bg-black text-slate-400 flex flex-col items-center justify-around ${kiwi.className}`}
-    >
-      <Link
-        href={"/react-project"}
-        className={`${novaOval.className} text-2xl `}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          className="w-5 h-5"
-        >
-          <path
-            fillRule="evenodd"
-            d="M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 11h-1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-3a1 1 0 00-1-1H9a1 1 0 00-1 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-6H3a1 1 0 01-.707-1.707l7-7z"
-            clipRule="evenodd"
-          />
-        </svg>
-        {/* Create a React Project */}
-      </Link>
-      <Link href={"/signUpIn"} className={`${novaOval.className} text-2xl `}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          className="w-5 h-5"
-        >
-          <path
-            fillRule="evenodd"
-            d="M3 4.25A2.25 2.25 0 015.25 2h5.5A2.25 2.25 0 0113 4.25v2a.75.75 0 01-1.5 0v-2a.75.75 0 00-.75-.75h-5.5a.75.75 0 00-.75.75v11.5c0 .414.336.75.75.75h5.5a.75.75 0 00.75-.75v-2a.75.75 0 011.5 0v2A2.25 2.25 0 0110.75 18h-5.5A2.25 2.25 0 013 15.75V4.25z"
-            clipRule="evenodd"
-          />
-          <path
-            fillRule="evenodd"
-            d="M6 10a.75.75 0 01.75-.75h9.546l-1.048-.943a.75.75 0 111.004-1.114l2.5 2.25a.75.75 0 010 1.114l-2.5 2.25a.75.75 0 11-1.004-1.114l1.048-.943H6.75A.75.75 0 016 10z"
-            clipRule="evenodd"
-          />
-        </svg>
+const Side = ({ remove, save, clone }: any) => {
+  const { id } = useParams();
+  const dispatch = useAppDispatch();
+  const params = useParams();
+  const bar = useAppSelector((state) => state.bar);
+  const { saved, user, star } = useAppSelector(getProjectData);
+  const { uid } = useAppSelector(getAuthData);
+  const [result, setResult] = useState(false);
+  const router = useRouter();
 
-        {/* Sign Up/Sign In */}
-      </Link>
-      <Link
-        href={"/vanilla-project"}
-        className={`${novaOval.className} text-2xl `}
+  const alerted = (destination: string) => {
+    if (!saved) {
+      const result = window.confirm("are you sure you want to leave? ");
+      setResult(result);
+      console.log("DONT LEAVE....", result);
+      if (result) {
+        dispatch(updateSaved(true));
+        router.push(destination);
+      } else {
+        router.push("");
+      }
+    } else {
+      router.push(destination);
+    }
+  };
+  const handleStar = (e: any) => {
+    e.preventDefault();
+    const starArray: any[] = [...star];
+
+    if (star.includes(uid)) {
+      const starArrayIndex = starArray.indexOf(uid);
+      if (starArrayIndex !== -1) {
+        starArray.splice(starArrayIndex, 1);
+      }
+      dispatch(StarProject({ _id: id, star: starArray }));
+      dispatch(updateStar({ star: starArray }));
+    } else {
+      starArray.push(uid);
+      dispatch(StarProject({ _id: id, star: starArray }));
+      dispatch(updateStar({ star: starArray }));
+    }
+  };
+  const handleOpenProject = () => {
+    dispatch(cleanUpProjects([projectInitialState]));
+    dispatch(fetchProjectByUser(uid));
+    alerted("/projects");
+  };
+  const handleNewProject = () => {
+    if (!saved) {
+      const result = window.confirm("are you sure you want to leave? ");
+
+      if (result) {
+        dispatch(updateSaved(true));
+        dispatch(cleanState(projectInitialState));
+        router.push("/create");
+      } else {
+        router.push("");
+      }
+    } else {
+      dispatch(cleanState(projectInitialState));
+      router.push("/create");
+    }
+  };
+
+  const handleCodeAndRun = () => {
+    router.push("projects/webdev/vanilla-project");
+    dispatch(cleanState(projectInitialState));
+  };
+  const handleReactCodeAndRun = () => {
+    router.push("projects/webdev/react-project");
+    dispatch(cleanState(projectInitialState));
+  };
+  const handlePython = () => {
+    router.push("projects/python/python-project?type=basic");
+    dispatch(cleanState(projectInitialState));
+  };
+  const handleDataScience = () => {
+    router.push("projects/python/python-project?type=data");
+    dispatch(cleanState(projectInitialState));
+  };
+
+  const handleAuthorsProfile = () => {
+    dispatch(cleanUpProjects([projectInitialState]));
+    dispatch(fetchProjectByUser(user));
+    alerted("/profile/" + user);
+  };
+
+  return (
+    <nav
+      className={`z-50 fixed mt-16 overflow-auto w-16 h-[calc(100vh-64px)] border-r-2 border-slate-500 shadow-slate-700 text-lg
+       bg-black py-3 text-slate-400 flex flex-col items-center justify-around ${kiwi.className}`}
+    >
+      {/* <button
+        className="side c but"
+        onMouseEnter={() => dispatch(barState({ home: true }))}
+        onMouseLeave={() => dispatch(barState(sideBArInitialState))}
+        onClick={() => alerted("/")}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          className="w-5 h-5"
-        >
-          <path
-            fillRule="evenodd"
-            d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-11.25a.75.75 0 00-1.5 0v2.5h-2.5a.75.75 0 000 1.5h2.5v2.5a.75.75 0 001.5 0v-2.5h2.5a.75.75 0 000-1.5h-2.5v-2.5z"
-            clipRule="evenodd"
-          />
-        </svg>
-        {/* Create a Vanilla Project */}
-      </Link>
-      {/* </div> */}
-    </header>
+        <div className="iconSide">
+          <AiFillHome className="w-8 h-8 text-white" />
+        </div>
+        {bar.home && <div className="message">Home</div>}
+      </button> */}
+      {!uid && (
+        <>
+          <button
+            className="side d but"
+            onMouseEnter={() => dispatch(barState({ code: true }))}
+            onMouseLeave={() => dispatch(barState(sideBArInitialState))}
+            onClick={handleCodeAndRun}
+          >
+            <div className="iconSide">
+              <HiOutlineCode className="w-7 h-7 text-white" />
+            </div>{" "}
+            {bar.code && <div className="message">Code and Run</div>}
+          </button>
+          <button
+            className="but"
+            onMouseEnter={() => dispatch(barState({ react: true }))}
+            onMouseLeave={() => dispatch(barState(sideBArInitialState))}
+            onClick={handleReactCodeAndRun}
+          >
+            <div className="iconSide reacticon">
+              <DiReact className="w-8 h-8 text-white" />
+            </div>{" "}
+            {bar.react && (
+              <div className="message reactmessage">React and Run</div>
+            )}
+          </button>
+          <button
+            className="but"
+            onMouseEnter={() => dispatch(barState({ react: true }))}
+            onMouseLeave={() => dispatch(barState(sideBArInitialState))}
+            onClick={handlePython}
+          >
+            <div className="iconSide reacticon">
+              <DiPython className="w-8 h-8 text-white" />
+            </div>{" "}
+            {bar.python && (
+              <div className="message reactmessage">Python to go</div>
+            )}
+          </button>
+          <button
+            className="but"
+            onMouseEnter={() => dispatch(barState({ react: true }))}
+            onMouseLeave={() => dispatch(barState(sideBArInitialState))}
+            onClick={handleDataScience}
+          >
+            <div className="iconSide reacticon">
+              <FaChartLine className="w-6 h-6 text-white" />
+            </div>{" "}
+            {bar.data && (
+              <div className="message reactmessage">data Science</div>
+            )}
+          </button>
+        </>
+      )}
+      {uid && (
+        <>
+          <button
+            className="side b but"
+            onMouseEnter={() => dispatch(barState({ new: true }))}
+            onMouseLeave={() => dispatch(barState(sideBArInitialState))}
+            onClick={handleNewProject}
+          >
+            <div className="iconSide">
+              <MdAddCircleOutline />
+            </div>
+            {bar.new && <div className="message">New Project</div>}
+          </button>
+          {id && uid === user && (
+            <>
+              {!location.pathname.startsWith("/profile") && (
+                <>
+                  <button
+                    className="side a but"
+                    onMouseEnter={() => dispatch(barState({ save: true }))}
+                    onMouseLeave={() => dispatch(barState(sideBArInitialState))}
+                    onClick={save}
+                  >
+                    <div className="iconSide">
+                      <AiFillSave />
+                    </div>
+                    {bar.save && <div className="message in">Save</div>}
+                  </button>
+                  <button
+                    className="side e but"
+                    onMouseEnter={() => dispatch(barState({ edit: true }))}
+                    onMouseLeave={() => dispatch(barState(sideBArInitialState))}
+                    onClick={() => alerted("/create")}
+                  >
+                    <div className="iconSide">
+                      <AiFillEdit />{" "}
+                    </div>
+                    {bar.edit && (
+                      <div className="message">Edit project's infos</div>
+                    )}
+                  </button>
+                </>
+              )}
+            </>
+          )}
+
+          <button
+            className="side f but"
+            onMouseEnter={() => dispatch(barState({ open: true }))}
+            onMouseLeave={() => dispatch(barState(sideBArInitialState))}
+            onClick={handleOpenProject}
+          >
+            <div className="iconSide">
+              <AiOutlineFolderOpen />
+            </div>
+            {bar.open && <div className="message">Open Project</div>}
+          </button>
+          {id && uid === user && !location.pathname.startsWith("/profile") && (
+            <button
+              className="side d but"
+              onMouseEnter={() => dispatch(barState({ delete: true }))}
+              onMouseLeave={() => dispatch(barState(sideBArInitialState))}
+              onClick={remove}
+            >
+              <div className="iconSide">
+                <AiFillDelete />
+              </div>
+              {bar.delete && <div className="message">Delete</div>}
+            </button>
+          )}
+          {uid !== user &&
+            params.id &&
+            !location.pathname.startsWith("/profile") && (
+              <>
+                <button
+                  className="side g but"
+                  onMouseEnter={() => dispatch(barState({ delete: true }))}
+                  onMouseLeave={() => dispatch(barState(sideBArInitialState))}
+                  onClick={clone}
+                >
+                  <div className="iconSide sizeIt">
+                    <FaRegClone />
+                  </div>
+                  {bar.delete && <div className="message">Clone Project</div>}
+                </button>
+                <button
+                  className="side a but"
+                  onMouseEnter={() => dispatch(barState({ edit: true }))}
+                  onMouseLeave={() => dispatch(barState(sideBArInitialState))}
+                  onClick={handleAuthorsProfile}
+                >
+                  <div className="iconSide sizeIt">
+                    <ImProfile />
+                  </div>
+                  {bar.edit && <div className="message">Authors's Profile</div>}
+                </button>
+                <button
+                  className="side a but"
+                  onMouseEnter={() => dispatch(barState({ star: true }))}
+                  onMouseLeave={() => dispatch(barState(sideBArInitialState))}
+                  onClick={handleStar}
+                >
+                  {!star.includes(uid) ? (
+                    <div>
+                      <div className="iconSide sizeIt starColor">
+                        <AiOutlineStar />
+                      </div>
+                      {bar.star && (
+                        <div className="message">Give it a Star</div>
+                      )}
+                    </div>
+                  ) : (
+                    <div>
+                      <div className="iconSide sizeIt starColor">
+                        <AiTwotoneStar />
+                      </div>
+                      {bar.star && (
+                        <div className="message">
+                          you rated this project. unrate it?{" "}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </button>
+              </>
+            )}
+        </>
+      )}
+    </nav>
   );
 };
 

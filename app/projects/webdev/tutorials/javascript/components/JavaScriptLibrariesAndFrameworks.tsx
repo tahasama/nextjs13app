@@ -105,7 +105,7 @@ const JavaScriptLibrariesAndFrameworks = () => {
           organize and structure your code. With its simplicity and flexibility,
           Express.js has gained widespread popularity in the Node.js ecosystem.
         </p>
-        <h4 className="text-md font-semibold mb-2">Pros and Cons</h4>
+        <h4 className="text-lg font-semibold mb-2">Pros and Cons</h4>
         <table className="border border-gray-300 mt-4">
           <thead>
             <tr>

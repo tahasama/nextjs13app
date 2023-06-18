@@ -2,6 +2,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./features/authSlice";
 import projectsReducer from "./features/projectSlice";
 import barReducer from "./features/barSlice";
+import sideBarReducer from "./features/sideBarSlice";
+
 import { usersNextApi } from "./services/users/usersApi";
 
 export const store = configureStore({
@@ -9,7 +11,7 @@ export const store = configureStore({
     // reducer of local state
     authUser: authReducer,
     proj: projectsReducer,
-    bar: barReducer,
+    bar: sideBarReducer,
     // reducer of API Created in App in Api directory
     [usersNextApi.reducerPath]: usersNextApi.reducer,
   },
