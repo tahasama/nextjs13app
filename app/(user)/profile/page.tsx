@@ -171,14 +171,14 @@ const page = () => {
               .map((project: any) => (
                 <div className="flex flex-col w-1/3 bg-gray-800 rounded-lg p-4">
                   <a
-                    key={project.projectId}
+                    key={project._id}
                     href={`/projects/${
                       project.projectType === "rj"
                         ? "webdev/react-project"
                         : project.projectType === "vwd"
                         ? "webdev/vanilla-project"
                         : "python/python-project"
-                    }/${project.projectId}`}
+                    }/${project._id}`}
                     // target="_blank"
                     rel="noopener noreferrer"
                     className="text-lg font-medium hover:text-gray-300 mb-2"

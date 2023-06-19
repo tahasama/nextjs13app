@@ -17,7 +17,8 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import { MdAddCircleOutline } from "react-icons/md";
 
 export default function Modal() {
   const router = useRouter();
@@ -34,7 +35,8 @@ export default function Modal() {
   const Proj = useAppSelector(getProjectData);
   const { _id } = useAppSelector(getProjectData);
   console.log("🚀 ~ file: modal.tsx:27 ~ Modal ~ Proj:", Proj);
-  // const router = useRouter();
+  const pathname = usePathname();
+  console.log("🚀 ~ file: modal.tsx:39 ~ Modal ~ pathname:", pathname);
 
   const projectDestination = useMemo(
     () =>
@@ -93,7 +95,7 @@ export default function Modal() {
         setTimeout(() => {
           payload._id &&
             router.push(`/projects/${projectDestination}/${payload._id}`);
-        }, 50);
+        }, 500);
     });
     // );
     // .then(() =>
@@ -103,16 +105,27 @@ export default function Modal() {
 
   return (
     <>
-      <button
-        className="bg-pink-700 text-white hover:bg-pink-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-        type="button"
-        onClick={() => setShowModal(true)}
-      >
-        Create Project
-      </button>
+      {pathname === "/profile" ? (
+        <button
+          className={
+            pathname === "/profile"
+              ? "bg-pink-700 text-white hover:bg-pink-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              : ""
+          }
+          type="button"
+          onClick={() => setShowModal(true)}
+        >
+          Create Project
+        </button>
+      ) : (
+        <MdAddCircleOutline
+          className="w-7 h-7"
+          onClick={() => setShowModal(true)}
+        />
+      )}
       {showModal ? (
         <>
-          <div className="closeModal text-stone-200 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 ">
+          <div className="closeModal backdrop-blur-sm text-stone-200 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 ">
             <div className=" relative w-[24rem] max-h-screen my-6 mx-auto max-w-4xl">
               {/*content*/}
               <div className="mt-16 border-0 px-6 pb-6 bg-indigo-950 rounded-lg shadow-lg relative flex flex-col w-full outline-none focus:outline-none">

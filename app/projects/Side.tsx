@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Kiwi_Maru, Nova_Oval } from "next/font/google";
 import Link from "next/link";
 import {
@@ -32,9 +32,15 @@ import {
   cleanUpProjects,
   fetchProjectByUser,
   cleanState,
+  deleteProject,
+  cloneProject,
+  updateCellCode,
+  saveProject,
+  updateCode,
 } from "../redux/features/projectSlice";
 import { getAuthData } from "../redux/features/authSlice";
 import { barState, sideBArInitialState } from "../redux/features/sideBarSlice";
+import Modal from "../modal";
 
 const kiwi = Kiwi_Maru({
   subsets: ["latin"],
@@ -46,18 +52,41 @@ const novaOval = Nova_Oval({
   weight: "400",
 });
 
-const Side = ({ remove, save, clone }: any) => {
+const Side = () => {
   const { projectId } = useParams();
   const dispatch = useAppDispatch();
   const params = useParams();
   const bar = useAppSelector((state) => state.sideBar);
-  const { saved, user, star } = useAppSelector(getProjectData);
-  const { uid } = useAppSelector(getAuthData);
   const [result, setResult] = useState(false);
   const router = useRouter();
+  const [saveMessage, setSaveMessage] = useState("");
+  const { uid, email } = useAppSelector(getAuthData);
+  const {
+    title,
+    description,
+    selectedDiv,
+    code,
+    updatedAt,
+    saved,
+    reactCode,
+    cells,
+    user,
+    star,
+    projectType,
+    pythonCode,
+  } = useAppSelector(getProjectData);
+  console.log("🚀 ~ saved121342423424234234234:", saved);
+  console.log(
+    "🚀 ~ file: Side.tsx:79 ~ Side ~ pythonCode:777777777777777777",
+    pythonCode
+  );
 
   console.log("2222222222", projectId && uid === user.uid);
-  console.log("5555555555", uid, "7777777777", user.uid);
+  console.log("5555555555", uid, "7777777777", user);
+
+  useEffect(() => {
+    dispatch(updateSaved(false));
+  }, []);
 
   const alerted = (destination: string) => {
     if (!saved) {
@@ -136,6 +165,66 @@ const Side = ({ remove, save, clone }: any) => {
     alerted("/profile/" + user);
   };
 
+  const handleUpdateTitle = (e: any) => {
+    e.preventDefault();
+
+    dispatch(
+      saveProject({
+        _id: projectId,
+        title: title,
+        description: description,
+        code: { html: code?.html, css: code?.css, js: code?.js },
+        cells: cells,
+        user: {
+          uid: uid,
+          email: email,
+        },
+        star: [],
+        projectType: projectType,
+        pythonCode: pythonCode,
+      })
+    );
+
+    dispatch(
+      updateCode({ code: { html: code?.html, css: code?.css, js: code?.js } })
+    );
+    dispatch(updateCellCode(cells));
+    dispatch(updateSaved(true));
+    // setSaveMessage("Saved !");
+    // setTimeout(() => {
+    //   setSaveMessage("");
+    // }, 1000);
+  };
+
+  const handleClone = () => {
+    dispatch(
+      cloneProject({
+        user: { email: email, uid: uid },
+        title: title,
+        description: description,
+        code: { html: code?.html, css: code?.css, js: code?.js },
+        star: [],
+        projectType: "",
+      })
+    );
+    // setSaveMessage("Cloned ! ");
+    // setTimeout(() => {
+    //   setSaveMessage("");
+    // }, 1000);
+  };
+
+  const handleDeleteProject = async () => {
+    const result = window.confirm("are you sure you want to delete ");
+    if (result) {
+      dispatch(deleteProject(projectId));
+      dispatch(cleanState(projectInitialState));
+      //   navigate("/projects");
+      // } else {
+      //   navigate("");
+      // }
+    }
+  };
+
   return (
     <nav
       className={`z-50 fixed mt-16 overflow-auto w-16 h-[calc(100vh-64px)] border-r-2 border-slate-500 shadow-slate-700 text-lg
@@ -211,10 +300,10 @@ const Side = ({ remove, save, clone }: any) => {
           <button
             onMouseEnter={() => dispatch(barState({ new: true }))}
             onMouseLeave={() => dispatch(barState(sideBArInitialState))}
-            onClick={handleNewProject}
+            // onClick={handleNewProject}
           >
             <div>
-              <MdAddCircleOutline className="w-7 h-7" />
+              <Modal />
             </div>
             {bar.new && <div>New Project</div>}
           </button>
@@ -224,7 +313,7 @@ const Side = ({ remove, save, clone }: any) => {
                 <button
                   onMouseEnter={() => dispatch(barState({ save: true }))}
                   onMouseLeave={() => dispatch(barState(sideBArInitialState))}
-                  onClick={save}
+                  onClick={handleUpdateTitle}
                 >
                   <div>
                     <AiFillSave className="w-7 h-7" />
@@ -261,7 +350,7 @@ const Side = ({ remove, save, clone }: any) => {
               <button
                 onMouseEnter={() => dispatch(barState({ delete: true }))}
                 onMouseLeave={() => dispatch(barState(sideBArInitialState))}
-                onClick={remove}
+                onClick={handleDeleteProject}
               >
                 <div>
                   <AiFillDelete className="w-7 h-7" />
@@ -276,7 +365,7 @@ const Side = ({ remove, save, clone }: any) => {
                 <button
                   onMouseEnter={() => dispatch(barState({ delete: true }))}
                   onMouseLeave={() => dispatch(barState(sideBArInitialState))}
-                  onClick={clone}
+                  onClick={handleClone}
                 >
                   <div>
                     <FaRegClone />

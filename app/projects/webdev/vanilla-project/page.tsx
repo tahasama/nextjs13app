@@ -34,65 +34,6 @@ export default function vanillaEdit() {
     cells,
   } = useAppSelector(getProjectData);
 
-  const handleUpdateTitle = (e: any) => {
-    e.preventDefault();
-
-    dispatch(
-      saveProject({
-        _id: projectId,
-        title: title,
-        description: description,
-        code: { html: code?.html, css: code?.css, js: code?.js },
-        cells: cells,
-        user: {
-          uid: uid,
-          email: email,
-        },
-        star: [],
-        projectType: "",
-      })
-    );
-
-    dispatch(
-      updateCode({ code: { html: code?.html, css: code?.css, js: code?.js } })
-    );
-    dispatch(updateCellCode(cells));
-    dispatch(updateSaved(true));
-    // setSaveMessage("Saved !");
-    // setTimeout(() => {
-    //   setSaveMessage("");
-    // }, 1000);
-  };
-
-  const handleClone = () => {
-    dispatch(
-      cloneProject({
-        user: { email: email, uid: uid },
-        title: title,
-        description: description,
-        code: { html: code?.html, css: code?.css, js: code?.js },
-        star: [],
-        projectType: "",
-      })
-    );
-    // setSaveMessage("Cloned ! ");
-    // setTimeout(() => {
-    //   setSaveMessage("");
-    // }, 1000);
-  };
-
-  const handleDeleteProject = async () => {
-    const result = window.confirm("are you sure you want to delete ");
-    if (result) {
-      dispatch(deleteProject(projectId));
-      dispatch(cleanState(projectInitialState));
-      //   navigate("/projects");
-      // } else {
-      //   navigate("");
-      // }
-    }
-  };
-
   return (
     <div className="flex flex-col items-center ml-16 w-[calc(100vw-5.1rem)] bg-gray-950 min-h-screen">
       <div className="mt-20"></div>

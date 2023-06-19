@@ -19,6 +19,7 @@ import {
   getDoc,
   getDocs,
   query,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import { db } from "@/app/firebase";
@@ -51,6 +52,7 @@ export const fetchProjectById = createAsyncThunk<any, string>(
   async (_id: string) => {
     try {
       const res = await getDoc(doc(db, "projects", _id));
+      console.log("🚀 ~ file: projectSlice.ts:54 ~ res:", res);
 
       return { ...res.data(), _id: res.id };
     } catch (error) {
@@ -165,14 +167,23 @@ interface saveProps {
 
 export const saveProject = createAsyncThunk(
   "saveProject",
-  async (value: valueProps) => {
+  async (value: any) => {
     const object = {
       _id: value._id,
+      pythonCode: value.pythonCode, // Include the pythonCode field in the object
     };
-    const res = await axios.put(POJECT_URL + object._id, value);
-    return res.data;
+    try {
+      const res = await updateDoc(
+        doc(db, "projects", object._id),
+        object // Pass the object containing the pythonCode field as the second argument
+      );
+      return res;
+    } catch (error) {
+      console.log("eeeeeeeeeeeeeeeeeeerr", error);
+    }
   }
 );
+
 interface starProps {
   _id: string | undefined;
   star: string[];

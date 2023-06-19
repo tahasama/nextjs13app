@@ -1,9 +1,10 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useParams } from "next/navigation";
 import { Editor } from "@monaco-editor/react";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
 import {
+  fetchProjectById,
   getProjectData,
   updatePythonCode,
   updateSaved,
@@ -17,8 +18,7 @@ if (typeof window !== "undefined") {
   x = window;
 }
 
-export default function PythonEdit(id: any) {
-  const projectId = id.projectId;
+export default function PythonEdit() {
   const editorRef = useRef<any>(null);
 
   const [data, setData] = useState<any>({
@@ -30,17 +30,23 @@ export default function PythonEdit(id: any) {
   console.log("🚀 ~ file: page.tsx:30 ~ images:", images);
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  const { pythonCode } = useAppSelector(getProjectData);
+  const { pythonCode, title } = useAppSelector(getProjectData);
+  console.log("🚀 ~ file: page.tsx:34 ~ pythonCode000000000000:", pythonCode);
+  const ffffffff = useAppSelector(getProjectData);
   const { uid } = useAppSelector(getAuthData);
   const [handleWidth, setHandleWidth] = useState(x.innerWidth * 0.8);
 
   const query = useSearchParams().get("type");
+  const { projectId } = useParams();
+  console.log("🚀 ~ file: page.tsx:34 ~ titleLLLLLLLLLLLLLL", ffffffff);
 
   useEffect(() => {
     if (!projectId) {
       dispatch(
         updatePythonCode(query === "basic" ? pythonExample2 : pythonExample)
       );
+    } else {
+      dispatch(fetchProjectById(projectId));
     }
   }, []);
 
@@ -93,6 +99,34 @@ export default function PythonEdit(id: any) {
   return (
     <div className=" flex flex-col items-center ml-14 md:ml-0 justify-center w-[calc(100vw-4.7rem)]  md:w-[calc(100vw-1.4rem)] ">
       <div className="mt-28"></div>
+      {projectId && (
+        <>
+          {/* {saveMessage && <p className="saveMessage">{saveMessage}</p>} */}
+          {uid ? (
+            <h2 className="projectTitle">Project: {title} </h2>
+          ) : (
+            <p className="projectWarning">
+              This work can't be saved, Log in and create/save or clone
+              projects.
+            </p>
+          )}
+          {uid && (
+            <p className="date ">
+              Updated on &#160;
+              {/* {new Date(updatedAt).toLocaleDateString(navigator.language, {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })} */}
+              &#160; at &#160;
+              {/* {new Date(updatedAt).toLocaleTimeString(navigator.language, {
+                    hour: "numeric",
+                    minute: "numeric",
+                  })} */}
+            </p>
+          )}
+        </>
+      )}
       <div className=" bg-gradient-to-b from-gray-800 to-black rounded-md py-3 px-0 ">
         <Resizable direction="vertical-react" handleWidth={handleWidth}>
           <div

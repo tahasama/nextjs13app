@@ -16,11 +16,7 @@ export const store = configureStore({
     // reducer of API Created in App in Api directory
     [usersNextApi.reducerPath]: usersNextApi.reducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([
-      // add all api here
-      usersNextApi.middleware,
-    ]),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
