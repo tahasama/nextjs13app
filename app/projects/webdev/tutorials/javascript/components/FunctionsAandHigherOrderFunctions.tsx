@@ -13,7 +13,7 @@ const FunctionsAandHigherOrderFunctions = () => {
         onClick={() => setShowSection(!ShowSection)}
       >
         Functions and Higher-Order Functions{" "}
-        {!ShowSection ? (
+          {!ShowSection ? (
           <FaCaretDown size={24} className="ml-8" />
         ) : (
           <FaCaretUp size={24} className="ml-8" />

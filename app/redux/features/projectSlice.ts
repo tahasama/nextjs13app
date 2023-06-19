@@ -18,6 +18,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  query,
   where,
 } from "firebase/firestore";
 import { db } from "@/app/firebase";
@@ -29,11 +30,15 @@ export const fetchProjectByUser = createAsyncThunk(
   async (uid: any) => {
     try {
       const getProjects = collection(db, "projects");
-      const querySnapshot = await getDocs(getProjects);
+      const getUserProjects = query(getProjects, where("user.uid", "==", uid));
+
+      const querySnapshot = await getDocs(getUserProjects);
+
       const promises = querySnapshot.docs.map(async (docs: any) => {
-        return { ...docs.data(), projectId: docs.id };
+        return { ...docs.data(), _id: docs.id };
       });
       const result: any[] = await Promise.all(promises);
+      console.log("🚀 ~ file: projectSlice.ts:45 ~ result:", result);
       return result;
     } catch (error) {
       return error;
@@ -43,11 +48,11 @@ export const fetchProjectByUser = createAsyncThunk(
 
 export const fetchProjectById = createAsyncThunk<any, string>(
   "fetchProject",
-  async (projectId: string) => {
+  async (_id: string) => {
     try {
-      const res = await getDoc(doc(db, "projects", projectId));
+      const res = await getDoc(doc(db, "projects", _id));
 
-      return { ...res.data(), projectId: res.id };
+      return { ...res.data(), _id: res.id };
     } catch (error) {
       return error;
     }
@@ -67,8 +72,7 @@ export const searchProject = createAsyncThunk(
 );
 
 export interface valueProps {
-  _id?: any;
-  projectId?: string;
+  _id?: string;
   title: string | undefined;
   description: string | undefined;
 
@@ -127,7 +131,7 @@ export const createProject = createAsyncThunk(
         code: value.code ? value.code : "",
         pythonCode: value.pythonCode ? value.pythonCode : "",
       });
-      return res;
+      return { _id: res.id, ...res };
     } catch (error) {
       return error;
     }
@@ -196,6 +200,7 @@ export const deleteProject = createAsyncThunk(
   }
 );
 export interface projectProps {
+  _id: string;
   projs: {
     all: any[];
     user: {
@@ -216,13 +221,14 @@ export interface projectProps {
     pythonCode: string;
     selectedDiv: string;
     projectType: string;
-    projectId: string;
+    _id: string;
     searchAll: any[];
     loading: boolean;
   };
 }
 
 export const projectInitialState = {
+  _id: "",
   all: [],
   user: {
     uid: "",
@@ -242,7 +248,6 @@ export const projectInitialState = {
   projectType: "",
   pythonCode: "",
   selectedDiv: "html",
-  projectId: "",
   searchAll: [{}],
   loading: true,
 };

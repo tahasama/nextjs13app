@@ -3,14 +3,24 @@ import { getAuthData } from "@/app/redux/features/authSlice";
 import {
   cleanState,
   createProject,
+  fetchProjectById,
+  fetchProjectByUser,
   getProjectData,
   projectInitialState,
   updateProjectInfos,
 } from "@/app/redux/features/projectSlice";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
-import React, { FormEventHandler, useEffect, useRef, useState } from "react";
+import React, {
+  FormEventHandler,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { useRouter } from "next/navigation";
 
 export default function Modal() {
+  const router = useRouter();
   const projectTypeRef = useRef<any>(null);
   const [showModal, setShowModal] = React.useState(false);
   const nameRef = useRef<any>(null);
@@ -21,6 +31,22 @@ export default function Modal() {
   const { title, description, code, projectType } =
     useAppSelector(getProjectData);
   const { displayName, email, uid } = useAppSelector(getAuthData);
+  const Proj = useAppSelector(getProjectData);
+  const { _id } = useAppSelector(getProjectData);
+  console.log("🚀 ~ file: modal.tsx:27 ~ Modal ~ Proj:", Proj);
+  // const router = useRouter();
+
+  const projectDestination = useMemo(
+    () =>
+      projectType === "py"
+        ? "python/python-project?type=basic"
+        : projectType === "ds"
+        ? "python/python-project?type=data"
+        : projectType === "rj"
+        ? "webdev/react-project"
+        : projectType === "vwd" && "webdev/vanilla-project",
+    [projectType]
+  );
 
   useEffect(() => {
     const handleOutsideClick = (event: any) => {
@@ -59,9 +85,20 @@ export default function Modal() {
       star: [],
     };
     setToUpdate(false);
-    dispatch(createProject(serializableProject)).then(() => {
-      dispatch(cleanState(projectInitialState)), setShowModal(false);
+    dispatch(createProject(serializableProject)).then(({ payload }: any) => {
+      dispatch(cleanState(projectInitialState)),
+        setShowModal(false),
+        // }) .then(({ payload }: any) => dispatch(fetchProjectById(payload.id)))
+
+        setTimeout(() => {
+          payload._id &&
+            router.push(`/projects/${projectDestination}/${payload._id}`);
+        }, 50);
     });
+    // );
+    // .then(() =>
+    //   router.push(`{projects/webdev/vanilla-project/${projectId}}`)
+    // );
   };
 
   return (

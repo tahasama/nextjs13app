@@ -14,6 +14,7 @@ const page = () => {
     useAppSelector(getAuthData);
   const dispatch = useAppDispatch();
   const { all } = useAppSelector(getProjectData);
+  console.log("🚀 ~ file: page.tsx:17 ~ page ~ all:", all);
   useEffect(() => {
     setTimeout(() => {
       dispatch(fetchProjectByUser(uid));

@@ -1,3 +1,5 @@
+"use client";
+
 import { useParams } from "next/navigation";
 import EditorChoice from "./components/EditorChoice";
 import FrameEeditor from "./components/FrameEditor";
