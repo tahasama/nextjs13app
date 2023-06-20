@@ -171,7 +171,14 @@ export const saveProject = createAsyncThunk(
     const object = {
       _id: value._id,
       pythonCode: value.pythonCode, // Include the pythonCode field in the object
+      cells: value.cells, // Include the pythonCode field in the object
+      code: { html: value.code.html, css: value.code.css, js: value.code.js }, // Include the pythonCode field in the object
     };
+    console.log(
+      "🚀 ~ file: projectSlice.ts:177 ~ objectWWWWWWWWWWWWWWWWWWWWWW:",
+      object
+    );
+
     try {
       const res = await updateDoc(
         doc(db, "projects", object._id),
