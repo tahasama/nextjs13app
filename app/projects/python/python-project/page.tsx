@@ -30,15 +30,27 @@ export default function PythonEdit() {
   console.log("🚀 ~ file: page.tsx:30 ~ images:", images);
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  const { pythonCode, title } = useAppSelector(getProjectData);
+  const { pythonCode, title, updatedAt, createdAt } =
+    useAppSelector(getProjectData);
+
   console.log("🚀 ~ file: page.tsx:34 ~ pythonCode000000000000:", pythonCode);
   const ffffffff = useAppSelector(getProjectData);
   const { uid } = useAppSelector(getAuthData);
   const [handleWidth, setHandleWidth] = useState(x.innerWidth * 0.8);
 
   const query = useSearchParams().get("type");
-  const { projectId } = useParams();
-  console.log("🚀 ~ file: page.tsx:34 ~ titleLLLLLLLLLLLLLL", ffffffff);
+  const projectId = useParams();
+  console.log("🚀 ~ file: page.tsx:41 ~ projectId:", projectId);
+
+  const updatedAt1 = new Date(
+    // @ts-ignore
+    updatedAt.seconds * 1000 + updatedAt.nanoseconds / 1000000
+  );
+  const createdAt1 = new Date(
+    // @ts-ignore
+    createdAt.seconds * 1000 + createdAt.nanoseconds / 1000000
+  );
+  console.log("🚀 ~ file: page.tsx:49 ~ updatedAt1:", updatedAt1);
 
   useEffect(() => {
     if (!projectId) {
@@ -46,7 +58,7 @@ export default function PythonEdit() {
         updatePythonCode(query === "basic" ? pythonExample2 : pythonExample)
       );
     } else {
-      dispatch(fetchProjectById(projectId));
+      dispatch(fetchProjectById("projectId"));
     }
   }, []);
 
@@ -98,9 +110,8 @@ export default function PythonEdit() {
 
   return (
     <div className=" flex flex-col items-center ml-14 md:ml-0 justify-center w-[calc(100vw-4.7rem)]  md:w-[calc(100vw-1.4rem)] ">
-      <div className="mt-28"></div>
       {projectId && (
-        <>
+        <div className="mt-24 pb-4 flex flex-row justify-around w-full">
           {/* {saveMessage && <p className="saveMessage">{saveMessage}</p>} */}
           {uid ? (
             <h2 className="projectTitle">Project: {title} </h2>
@@ -111,22 +122,32 @@ export default function PythonEdit() {
             </p>
           )}
           {uid && (
-            <p className="date ">
-              Updated on &#160;
-              {/* {new Date(updatedAt).toLocaleDateString(navigator.language, {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  })} */}
-              &#160; at &#160;
-              {/* {new Date(updatedAt).toLocaleTimeString(navigator.language, {
-                    hour: "numeric",
-                    minute: "numeric",
-                  })} */}
-            </p>
+            <div className="flex flex-col">
+              <p className="date ">
+                Updated on:
+                {updatedAt1.toLocaleDateString("en-US", {
+                  day: "2-digit",
+                  month: "short",
+                  year: "2-digit",
+                })}
+                &nbsp;
+                {updatedAt1.toLocaleTimeString("en-US")}
+              </p>
+              <p className="date ">
+                created on:
+                {createdAt1.toLocaleDateString("en-US", {
+                  day: "2-digit",
+                  month: "short",
+                  year: "2-digit",
+                })}
+                &nbsp;
+                {createdAt1.toLocaleTimeString("en-US")}
+              </p>
+            </div>
           )}
-        </>
+        </div>
       )}
+
       <div className=" bg-gradient-to-b from-gray-800 to-black rounded-md py-3 px-0 ">
         <Resizable direction="vertical-react" handleWidth={handleWidth}>
           <div

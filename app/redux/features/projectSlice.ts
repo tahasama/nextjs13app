@@ -74,6 +74,8 @@ export const searchProject = createAsyncThunk(
 );
 
 export interface valueProps {
+  createdAt?: any;
+  updatedAt?: any;
   _id?: string;
   title: string | undefined;
   description: string | undefined;
@@ -132,6 +134,8 @@ export const createProject = createAsyncThunk(
         cells: value.cells ? value.cells : [],
         code: value.code ? value.code : "",
         pythonCode: value.pythonCode ? value.pythonCode : "",
+        createdAt: value.createdAt,
+        updatedAt: value.updatedAt,
       });
       return { _id: res.id, ...res };
     } catch (error) {
@@ -169,14 +173,18 @@ export const saveProject = createAsyncThunk(
   "saveProject",
   async (value: any) => {
     const object = {
+      updatedAt: new Date(),
       _id: value._id,
       pythonCode: value.pythonCode, // Include the pythonCode field in the object
       cells: value.cells, // Include the pythonCode field in the object
-      code: { html: value.code.html, css: value.code.css, js: value.code.js }, // Include the pythonCode field in the object
+      code:
+        value.projectType !== "vwd"
+          ? { html: "", css: "", js: "" }
+          : { html: value.code.html, css: value.code.css, js: value.code.js }, // Include the pythonCode field in the object
     };
     console.log(
       "🚀 ~ file: projectSlice.ts:177 ~ objectWWWWWWWWWWWWWWWWWWWWWW:",
-      object
+      value
     );
 
     try {
@@ -230,8 +238,8 @@ export interface projectProps {
     description: string;
     code?: { html: string; css: string; js: string };
     err: string;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: any;
+    updatedAt: any;
     saved: boolean;
     star: string[];
     reactCode: string;
@@ -258,7 +266,7 @@ export const projectInitialState = {
   code: { html: "", css: "", js: "" },
   err: "",
   createdAt: "",
-  updatedAt: "",
+  updatedAt: {},
   saved: true,
   star: [""],
   cells: [{ cellId: "", cellCode: "" }],

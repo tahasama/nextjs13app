@@ -41,9 +41,9 @@ export default function Modal() {
   const projectDestination = useMemo(
     () =>
       projectType === "py"
-        ? "python/python-project?type=basic"
+        ? "python/python-project"
         : projectType === "ds"
-        ? "python/python-project?type=data"
+        ? "python/python-project"
         : projectType === "rj"
         ? "webdev/react-project"
         : projectType === "vwd" && "webdev/vanilla-project",
@@ -85,6 +85,8 @@ export default function Modal() {
       description: description,
       projectType: projectType,
       star: [],
+      createdAt: new Date(),
+      updatedAt: new Date(),
     };
     setToUpdate(false);
     dispatch(createProject(serializableProject)).then(({ payload }: any) => {
