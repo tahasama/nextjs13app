@@ -13,6 +13,13 @@ import { getAuthData } from "@/app/redux/features/authSlice";
 import Resizable from "../../resizable";
 import { pythonExample, pythonExample2 } from "../../constatnts/example";
 
+import { Orbitron } from "next/font/google";
+
+const orbitron = Orbitron({
+  subsets: ["latin"],
+  weight: "700",
+});
+
 let x: any = 0;
 if (typeof window !== "undefined") {
   x = window;
@@ -30,16 +37,16 @@ export default function PythonEdit() {
   console.log("🚀 ~ file: page.tsx:30 ~ images:", images);
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  const { pythonCode, title, updatedAt, createdAt } =
+  const { pythonCode, title, updatedAt, createdAt, description } =
     useAppSelector(getProjectData);
+  const { uid } = useAppSelector(getAuthData);
+  const projectId = useParams();
 
   console.log("🚀 ~ file: page.tsx:34 ~ pythonCode000000000000:", pythonCode);
   const ffffffff = useAppSelector(getProjectData);
-  const { uid } = useAppSelector(getAuthData);
   const [handleWidth, setHandleWidth] = useState(x.innerWidth * 0.8);
 
   const query = useSearchParams().get("type");
-  const projectId = useParams();
   console.log("🚀 ~ file: page.tsx:41 ~ projectId:", projectId);
 
   const updatedAt1 = new Date(
@@ -50,7 +57,7 @@ export default function PythonEdit() {
     // @ts-ignore
     createdAt.seconds * 1000 + createdAt.nanoseconds / 1000000
   );
-  console.log("🚀 ~ file: page.tsx:49 ~ updatedAt1:", updatedAt1);
+  console.log("ooooooooooooooooooooooooooooooooooo", createdAt);
 
   useEffect(() => {
     if (!projectId) {
@@ -109,46 +116,57 @@ export default function PythonEdit() {
   };
 
   return (
-    <div className=" flex flex-col items-center ml-14 md:ml-0 justify-center w-[calc(100vw-4.7rem)]  md:w-[calc(100vw-1.4rem)] ">
+    <div className=" flex flex-col items-center ml-0 justify-center w-full mt-4 md:w-[calc(100vw-1.4rem)] ">
       {projectId && (
-        <div className="mt-24 pb-4 flex flex-row justify-around w-full">
+        <div className="mt-10 py-4 flex flex-col md:flex-row min-h-[150px] justify-around items-center w-full bg-gradient-to-r from-purple-900 to-indigo-950  shadow-lg text-white">
           {/* {saveMessage && <p className="saveMessage">{saveMessage}</p>} */}
           {uid ? (
-            <h2 className="projectTitle">Project: {title} </h2>
+            <div className="text-center">
+              <h2 className="text-2xl md:text-4xl font-bold mb-2">{title}</h2>
+              <h3 className="text-md md:text-lg text-gray-300 mb-4">
+                {description}
+              </h3>
+            </div>
           ) : (
-            <p className="projectWarning">
-              This work can't be saved, Log in and create/save or clone
+            <p className="text-red-500 text-md mb-4">
+              This work can't be saved. Please log in to create, save, or clone
               projects.
             </p>
           )}
           {uid && (
-            <div className="flex flex-col">
-              <p className="date ">
-                Updated on:
-                {updatedAt1.toLocaleDateString("en-US", {
-                  day: "2-digit",
-                  month: "short",
-                  year: "2-digit",
-                })}
-                &nbsp;
-                {updatedAt1.toLocaleTimeString("en-US")}
+            <div className="flex flex-col items-center">
+              <p className="text-sm text-gray-400">
+                Created:{" "}
+                <span className={`text-emerald-500 ${orbitron.className}`}>
+                  {" "}
+                  {createdAt1.toLocaleDateString("en-US", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "2-digit",
+                  })}
+                  &nbsp;
+                  {createdAt1.toLocaleTimeString("en-US")}
+                </span>
               </p>
-              <p className="date ">
-                created on:
-                {createdAt1.toLocaleDateString("en-US", {
-                  day: "2-digit",
-                  month: "short",
-                  year: "2-digit",
-                })}
-                &nbsp;
-                {createdAt1.toLocaleTimeString("en-US")}
+              <p className="text-sm text-gray-400">
+                Updated:{" "}
+                <span className={`text-emerald-500 ${orbitron.className}`}>
+                  {" "}
+                  {createdAt1.toLocaleDateString("en-US", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "2-digit",
+                  })}
+                  &nbsp;
+                  {createdAt1.toLocaleTimeString("en-US")}
+                </span>
               </p>
             </div>
           )}
         </div>
       )}
 
-      <div className=" bg-gradient-to-b from-gray-800 to-black rounded-md py-3 px-0 ">
+      <div className=" bg-gradient-to-b from-gray-800 to-black rounded-md mt-3 py-3 px-0 ">
         <Resizable direction="vertical-react" handleWidth={handleWidth}>
           <div
             style={{
@@ -160,7 +178,7 @@ export default function PythonEdit() {
               <>
                 <div className={`relative left-0 h-full w-full`}>
                   <span onClick={() => dispatch(updateSaved(false))}>
-                    <div className="resizableReactEditor">
+                    <div className="w-full">
                       <Editor
                         height="100%"
                         defaultLanguage="python"

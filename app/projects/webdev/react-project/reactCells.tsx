@@ -6,13 +6,34 @@ import ReactProject from "./components/reactProject";
 import { AddCells, getProjectData } from "../../../redux/features/projectSlice";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { example1, example2 } from "../../../projects/constatnts/example";
+import { useParams } from "next/navigation";
+import { getAuthData } from "@/app/redux/features/authSlice";
 
 const exampleCells = [
   { cellId: uuidv4(), cellCode: example2 },
   { cellId: uuidv4(), cellCode: example1 },
 ];
 
+import { Orbitron } from "next/font/google";
+
+const orbitron = Orbitron({
+  subsets: ["latin"],
+  weight: "700",
+});
+
 const ReactCells = () => {
+  const { description, title, updatedAt, createdAt } =
+    useAppSelector(getProjectData);
+  const { uid } = useAppSelector(getAuthData);
+  const projectId = useParams();
+  const updatedAt1 = new Date(
+    // @ts-ignore
+    updatedAt.seconds * 1000 + updatedAt.nanoseconds / 1000000
+  );
+  const createdAt1 = new Date(
+    // @ts-ignore
+    createdAt.seconds * 1000 + createdAt.nanoseconds / 1000000
+  );
   const { cells } = useAppSelector(getProjectData);
   const dispatch = useAppDispatch();
 
@@ -28,24 +49,70 @@ const ReactCells = () => {
   };
 
   return (
-    <div className="grid place-items-center h-(100vh) mt-10">
-      <div className="flex flex-col items-center">
-        <button
-          onClick={handleAddCells}
-          className="
-       text-slate-50 hover:text-emerald-500 border-2 bg-emerald-700 hover:bg-transparent transition duration-700 border-emerald-500  text-lg p-2  rounded-md mt-5 w-56"
-        >
-          Add Cell
-        </button>
-        <div>
-          {cells
-            .filter((cell: any) => cell.cellId !== "")
-            .map((cell) => (
-              <div className="" key={cell.cellId}>
-                <ReactProject cell={cell} />
-              </div>
-            ))}
+    <div className=" flex flex-col items-center  justify-center w-full mt-4 ">
+      {projectId && (
+        <div className="mt-10 py-4 flex flex-col md:flex-row min-h-[150px] justify-around items-center w-full bg-gradient-to-r from-purple-900 to-indigo-950  shadow-lg text-white">
+          {/* {saveMessage && <p className="saveMessage">{saveMessage}</p>} */}
+          {uid ? (
+            <div className="text-center">
+              <h2 className="text-2xl md:text-4xl font-bold mb-2">{title}</h2>
+              <h3 className="text-md md:text-lg text-gray-300 mb-4">
+                {description}
+              </h3>
+            </div>
+          ) : (
+            <p className="text-red-500 text-md mb-4">
+              This work can't be saved. Please log in to create, save, or clone
+              projects.
+            </p>
+          )}
+          {uid && (
+            <div className="flex flex-col items-center">
+              <p className="text-sm text-gray-400">
+                Created:{" "}
+                <span className={`text-emerald-500 ${orbitron.className}`}>
+                  {" "}
+                  {createdAt1.toLocaleDateString("en-US", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "2-digit",
+                  })}
+                  &nbsp;
+                  {createdAt1.toLocaleTimeString("en-US")}
+                </span>
+              </p>
+              <p className="text-sm text-gray-400">
+                Updated:{" "}
+                <span className={`text-emerald-500 ${orbitron.className}`}>
+                  {" "}
+                  {createdAt1.toLocaleDateString("en-US", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "2-digit",
+                  })}
+                  &nbsp;
+                  {createdAt1.toLocaleTimeString("en-US")}
+                </span>
+              </p>
+            </div>
+          )}
         </div>
+      )}
+      <button
+        onClick={handleAddCells}
+        className="
+       text-slate-50 hover:text-emerald-500 border-2 bg-emerald-700 hover:bg-transparent transition duration-700 border-emerald-500  text-lg p-2  rounded-md mt-5 w-56"
+      >
+        Add Cell
+      </button>
+      <div>
+        {cells
+          .filter((cell: any) => cell.cellId !== "")
+          .map((cell) => (
+            <div className="" key={cell.cellId}>
+              <ReactProject cell={cell} />
+            </div>
+          ))}
       </div>
     </div>
   );

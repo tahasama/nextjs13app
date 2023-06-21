@@ -61,6 +61,7 @@ const Side = () => {
   const router = useRouter();
   const [saveMessage, setSaveMessage] = useState("");
   const { uid, email } = useAppSelector(getAuthData);
+  const [loading, setLoading] = useState(false);
   const {
     title,
     description,
@@ -167,33 +168,36 @@ const Side = () => {
 
   const handleUpdateTitle = (e: any) => {
     e.preventDefault();
+    try {
+      dispatch(
+        saveProject({
+          _id: projectId,
+          title: title,
+          description: description,
+          code: { html: code?.html, css: code?.css, js: code?.js },
+          cells: cells,
+          user: {
+            uid: uid,
+            email: email,
+          },
+          star: [],
+          projectType: projectType,
+          pythonCode: pythonCode,
+        })
+      );
 
-    dispatch(
-      saveProject({
-        _id: projectId,
-        title: title,
-        description: description,
-        code: { html: code?.html, css: code?.css, js: code?.js },
-        cells: cells,
-        user: {
-          uid: uid,
-          email: email,
-        },
-        star: [],
-        projectType: projectType,
-        pythonCode: pythonCode,
-      })
-    );
-
-    dispatch(
-      updateCode({ code: { html: code?.html, css: code?.css, js: code?.js } })
-    );
-    dispatch(updateCellCode(cells));
-    dispatch(updateSaved(true));
-    // setSaveMessage("Saved !");
-    // setTimeout(() => {
-    //   setSaveMessage("");
-    // }, 1000);
+      dispatch(
+        updateCode({ code: { html: code?.html, css: code?.css, js: code?.js } })
+      );
+      dispatch(updateCellCode(cells));
+      dispatch(updateSaved(true));
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    } catch (error) {
+      setLoading(true);
+    }
   };
 
   const handleClone = () => {
@@ -227,186 +231,169 @@ const Side = () => {
 
   return (
     <nav
-      className={`z-50 fixed mt-16 overflow-auto w-16 h-[calc(100vh-64px)] border-r-2 border-slate-500 shadow-slate-700 text-lg
-       bg-black py-3 text-slate-400 flex flex-col items-center justify-around  ${kiwi.className}`}
+      className={`z-50 bottom-0 fixed bg-black overflow-auto w-full h-16 md:w-36 md:h-[calc(100vh-64px)] md:border-r-2 border-slate-500 shadow-slate-700 text-md
+       py-3 text-slate-400 flex flex-row md:flex-col items-center md:items-end md:hover:items-stretch justify-around  ${kiwi.className} md:-translate-x-20 md:hover:translate-x-0 md:hover:w-28  transition-all duration-1000 ease-in-out group`}
     >
-      {/* <button
-        className="side c but"
-        onMouseEnter={() => dispatch(barState({ home: true }))}
-        onMouseLeave={() => dispatch(barState(sideBArInitialState))}
-        onClick={() => alerted("/")}
-      >
-        <div className="iconSide">
-          <AiFillHome className="w-8 h-8 " />
-        </div>
-        {bar.home && <div className="message">Home</div>}
-      </button> */}
       {!uid && (
         <>
           <button
-            className="side d but"
-            onMouseEnter={() => dispatch(barState({ code: true }))}
-            onMouseLeave={() => dispatch(barState(sideBArInitialState))}
+            className="flex items-center justify-around mr-2 md:mr-5 md:group-hover:mr-0"
             onClick={handleCodeAndRun}
           >
-            <div className="iconSide">
+            <div>
               <HiOutlineCode className="w-7 h-7 " />
             </div>{" "}
-            {bar.code && <div className="message">Code and Run</div>}
+            <div className="md:group-hover:block hidden ">Code and Run</div>
           </button>
           <button
-            className="but"
-            onMouseEnter={() => dispatch(barState({ react: true }))}
-            onMouseLeave={() => dispatch(barState(sideBArInitialState))}
+            className="flex items-center justify-around mr-2 md:mr-5 md:group-hover:mr-0"
             onClick={handleReactCodeAndRun}
           >
-            <div className="iconSide reacticon">
+            <div>
               <DiReact className="w-8 h-8 " />
             </div>{" "}
-            {bar.react && (
-              <div className="message reactmessage">React and Run</div>
-            )}
+            <div className="md:group-hover:block hidden ">React and Run</div>
           </button>
           <button
-            className="but"
-            onMouseEnter={() => dispatch(barState({ react: true }))}
-            onMouseLeave={() => dispatch(barState(sideBArInitialState))}
+            className="flex items-center justify-around mr-2 md:mr-5 md:group-hover:mr-0"
             onClick={handlePython}
           >
-            <div className="iconSide reacticon">
+            <div>
               <DiPython className="w-8 h-8 " />
             </div>{" "}
-            {bar.python && (
-              <div className="message reactmessage">Python to go</div>
-            )}
+            <div className="md:group-hover:block hidden ">Python to go</div>
           </button>
           <button
-            className="but"
-            onMouseEnter={() => dispatch(barState({ react: true }))}
-            onMouseLeave={() => dispatch(barState(sideBArInitialState))}
+            className="flex items-center justify-around mr-2 md:mr-5 md:group-hover:mr-0"
             onClick={handleDataScience}
           >
-            <div className="iconSide reacticon">
+            <div>
               <FaChartLine className="w-6 h-6 " />
             </div>{" "}
-            {bar.data && (
-              <div className="message reactmessage">data Science</div>
-            )}
+            <div className="md:group-hover:block hidden ">data Science</div>
           </button>
         </>
       )}
       {uid && (
         <>
-          <button
-            onMouseEnter={() => dispatch(barState({ new: true }))}
-            onMouseLeave={() => dispatch(barState(sideBArInitialState))}
-            // onClick={handleNewProject}
-          >
+          <button className="flex items-center justify-around mr-2 md:mr-5 md:group-hover:mr-0">
             <div>
               <Modal />
             </div>
-            {bar.new && <div>New Project</div>}
+            <div className="md:group-hover:block hidden ">New</div>
           </button>
           {projectId && uid === user.uid && (
             <>
               <>
                 <button
-                  onMouseEnter={() => dispatch(barState({ save: true }))}
-                  onMouseLeave={() => dispatch(barState(sideBArInitialState))}
                   onClick={handleUpdateTitle}
+                  className="flex items-center justify-around mr-2 md:mr-5 md:group-hover:mr-0"
                 >
                   <div>
-                    <AiFillSave className="w-7 h-7" />
+                    {!loading ? (
+                      <AiFillSave className="w-7 h-7" />
+                    ) : (
+                      <>
+                        <svg
+                          aria-hidden="true"
+                          className="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                          viewBox="0 0 100 101"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                            fill="currentColor"
+                          />
+                          <path
+                            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                            fill="currentFill"
+                          />
+                        </svg>
+                      </>
+                    )}{" "}
                   </div>
-                  {bar.save && <div>Save</div>}
+                  <div className="md:group-hover:block hidden ">Save</div>
                 </button>
                 <button
-                  onMouseEnter={() => dispatch(barState({ edit: true }))}
-                  onMouseLeave={() => dispatch(barState(sideBArInitialState))}
                   onClick={() => alerted("/create")}
+                  className="flex items-center justify-around mr-2 md:mr-5 md:group-hover:mr-0"
                 >
                   <div>
                     <AiFillEdit className="w-7 h-7" />{" "}
                   </div>
-                  {bar.edit && <div>Edit project's infos</div>}
+                  <div className="md:group-hover:block hidden ">Edit</div>
                 </button>
               </>
             </>
           )}
 
-          <s
-            onMouseEnter={() => dispatch(barState({ open: true }))}
-            onMouseLeave={() => dispatch(barState(sideBArInitialState))}
+          <button
+            className="flex items-center justify-around mr-2 md:mr-5 md:group-hover:mr-0"
             onClick={handleOpenProject}
           >
             <div>
               <AiOutlineFolderOpen className="w-7 h-7" />
             </div>
-            {bar.open && <div>Open Project</div>}
-          </s>
-          {projectId &&
-            uid === user.uid &&
-            !location.pathname.startsWith("/profile") && (
+            <div className="md:group-hover:block hidden ">Open</div>
+          </button>
+          {projectId && uid === user.uid && (
+            <button
+              className="flex items-center justify-around mr-2 md:mr-5 md:group-hover:mr-0"
+              onClick={handleDeleteProject}
+            >
+              <div>
+                <AiFillDelete className="w-7 h-7" />
+              </div>
+              <div className="md:group-hover:block hidden ">Delete</div>
+            </button>
+          )}
+          {uid !== user.uid && projectId && (
+            <>
               <button
-                onMouseEnter={() => dispatch(barState({ delete: true }))}
-                onMouseLeave={() => dispatch(barState(sideBArInitialState))}
-                onClick={handleDeleteProject}
+                className="flex items-center justify-around mr-2 md:mr-5 md:group-hover:mr-0"
+                onClick={handleClone}
               >
                 <div>
-                  <AiFillDelete className="w-7 h-7" />
+                  <FaRegClone className="w-6 h-6" />
                 </div>
-                {bar.delete && <div>Delete</div>}
+                <div className="md:group-hover:block hidden ">Clone</div>
               </button>
-            )}
-          {uid !== user.uid &&
-            params.id &&
-            !location.pathname.startsWith("/profile") && (
-              <>
-                <button
-                  onMouseEnter={() => dispatch(barState({ delete: true }))}
-                  onMouseLeave={() => dispatch(barState(sideBArInitialState))}
-                  onClick={handleClone}
-                >
-                  <div>
-                    <FaRegClone />
-                  </div>
-                  {bar.delete && <div>Clone Project</div>}
-                </button>
-                <button
-                  onMouseEnter={() => dispatch(barState({ edit: true }))}
-                  onMouseLeave={() => dispatch(barState(sideBArInitialState))}
-                  onClick={handleAuthorsProfile}
-                >
-                  <div>
-                    <ImProfile />
-                  </div>
-                  {bar.edit && <div>Authors's Profile</div>}
-                </button>
-                <button
-                  onMouseEnter={() => dispatch(barState({ star: true }))}
-                  onMouseLeave={() => dispatch(barState(sideBArInitialState))}
-                  onClick={handleStar}
-                >
-                  {!star.includes(uid) ? (
+              <button
+                className="flex items-center justify-around mr-2 md:mr-5 md:group-hover:mr-0"
+                onClick={handleAuthorsProfile}
+              >
+                <div>
+                  <ImProfile className="w-6 h-6" />
+                </div>
+                <div className="md:group-hover:block hidden ">Profile</div>
+              </button>
+              <button
+                className="flex items-center justify-around mr-2 md:mr-5 md:group-hover:mr-0"
+                onClick={handleStar}
+              >
+                {!star.includes(uid) ? (
+                  <div className="flex items-center justify-around w-full">
                     <div>
-                      <div>
-                        <AiOutlineStar />
-                      </div>
-                      {bar.star && <div>Give it a Star</div>}
+                      <AiOutlineStar className="w-7 h-7" />
                     </div>
-                  ) : (
+                    <div className="md:group-hover:block hidden ">Star</div>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-around w-full">
                     <div>
-                      <div>
-                        <AiTwotoneStar />
-                      </div>
-                      {bar.star && (
-                        <div>you rated this project. unrate it? </div>
-                      )}
+                      <AiTwotoneStar />
                     </div>
-                  )}
-                </button>
-              </>
-            )}
+                    {bar.star && (
+                      <div className="md:group-hover:block hidden ">
+                        unrate it?{" "}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </button>
+            </>
+          )}
         </>
       )}
     </nav>

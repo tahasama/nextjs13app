@@ -11,6 +11,7 @@ export default function ReactEdit() {
     <main className="bg-gray-950 min-h-screen">
       <div className="grid place-items-center  ml-16  w-[calc(100vw-5.1rem)]">
         <div className="mt-20"></div>
+
         <ReactCells />
       </div>
     </main>

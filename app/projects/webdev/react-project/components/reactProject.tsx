@@ -98,7 +98,7 @@ const ReactProject: React.FC<ReactProjectProps> = ({ cell }) => {
   };
 
   return (
-    <div className="my-16 flex flex-col ">
+    <div className="my-10 flex flex-col ">
       <button
         onClick={handleDeleteCells}
         className="hover:text-cyan-500 text-lg py-1 ml-auto rounded-md m-4 w-20 transition duration-700 ease-in-out
