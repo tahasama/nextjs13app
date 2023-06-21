@@ -52,7 +52,7 @@ export default function vanillaEdit() {
   );
 
   return (
-    <div className="flex flex-col items-center ml-16 w-[calc(100vw-4rem)] bg-gray-950 min-h-screen">
+    <div className="flex flex-col items-center md:ml-16 w-full md:w-[calc(100vw-4rem)] bg-gray-950 min-h-screen">
       {projectId && (
         <div className="mt-10 py-4 flex flex-col md:flex-row min-h-[150px] justify-around items-center w-full bg-gradient-to-r from-purple-900 to-indigo-950  shadow-lg text-white">
           {/* {saveMessage && <p className="saveMessage">{saveMessage}</p>} */}
@@ -60,8 +60,7 @@ export default function vanillaEdit() {
             <div className=" w-full md:w-2/3 mt-4">
               <h2 className="text-2xl md:text-4xl font-bold mb-2">{title}</h2>
               <h3 className="text-md md:text-lg text-gray-300 mb-4 line-clamp-3">
-                {/* {description} */} ojeyyyyyy ojeyyyyyy ojeyyyyyy ojeyyyyyy
-                ojeyyyyyy ojeyyyyyy ojeyyyyyy ojeyyyyyy
+                {description}
               </h3>
             </div>
           ) : (

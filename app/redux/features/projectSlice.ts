@@ -9,7 +9,7 @@ import {
 } from "@/app/projects/constatnts/example";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { uuid } from "uuidv4";
+import { v4 as uuid } from "uuid";
 
 import { RootState } from "../store";
 import {
@@ -152,8 +152,16 @@ export const cloneProject = createAsyncThunk(
       // email: val.user,
       title: val.title + "  " + uuid(),
     };
-    const res = await axios.post(POJECT_URL, object);
-    return res.data;
+    try {
+      const res = await addDoc(collection(db, "projects"), { object });
+      console.log(
+        "🚀 ~ file: projectSlice.ts:157 ~ res:000000000000000000000000",
+        res.id
+      );
+      return res;
+    } catch (error) {
+      console.log("errrrrrr3", error);
+    }
   }
 );
 

@@ -108,7 +108,7 @@ const ReactCells = () => {
       <div>
         {cells
           .filter((cell: any) => cell.cellId !== "")
-          .map((cell) => (
+          .map((cell: any) => (
             <div className="" key={cell.cellId}>
               <ReactProject cell={cell} />
             </div>

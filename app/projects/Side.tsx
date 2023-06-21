@@ -90,7 +90,7 @@ const Side = () => {
   }, []);
 
   const alerted = (destination: string) => {
-    if (!saved) {
+    if (!saved && uid === user.uid) {
       const result = window.confirm("are you sure you want to leave? ");
       setResult(result);
       console.log("DONT LEAVE....", result);
@@ -98,7 +98,7 @@ const Side = () => {
         dispatch(updateSaved(true));
         router.push(destination);
       } else {
-        router.push("");
+        ("none");
       }
     } else {
       router.push(destination);
@@ -163,7 +163,7 @@ const Side = () => {
   const handleAuthorsProfile = () => {
     dispatch(cleanUpProjects([projectInitialState]));
     dispatch(fetchProjectByUser(user));
-    alerted("/profile/" + user);
+    alerted("/profile/" + user.uid);
   };
 
   const handleUpdateTitle = (e: any) => {
@@ -208,7 +208,11 @@ const Side = () => {
         description: description,
         code: { html: code?.html, css: code?.css, js: code?.js },
         star: [],
-        projectType: "",
+        projectType: projectType,
+        cells: cells,
+        pythonCode: pythonCode,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       })
     );
     // setSaveMessage("Cloned ! ");

@@ -1,25 +1,29 @@
 "use client";
 import Modal from "@/app/modal";
-import { getAuthData } from "@/app/redux/features/authSlice";
+import { getAuthData, getUserByUid } from "@/app/redux/features/authSlice";
 import {
   fetchProjectByUser,
   getProjectData,
 } from "@/app/redux/features/projectSlice";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
+import { useParams } from "next/navigation";
 import React, { useEffect } from "react";
 import { FaGithub, FaTwitter, FaInstagram } from "react-icons/fa";
 
 const page = () => {
-  const { lastSignInTime, creationTime, image, displayName, bio, uid } =
+  const { uid } = useParams();
+  const { lastSignInTime, creationTime, image, displayName, bio } =
     useAppSelector(getAuthData);
+
   const dispatch = useAppDispatch();
   const { all } = useAppSelector(getProjectData);
-  console.log("🚀 ~ file: page.tsx:17 ~ page ~ all:", all);
+
   useEffect(() => {
+    dispatch(getUserByUid("9Y5s6S1gXVQwxCry9Gv8QvMsMKV2"));
     setTimeout(() => {
       dispatch(fetchProjectByUser(uid));
     }, 1000);
-  }, []);
+  }, [uid]);
 
   return (
     <section className="bg-gray-900 flex flex-col md:flex-row w-full text-white p-10  relative top-[58px] rounded-lg shadow-lg">
@@ -48,11 +52,12 @@ const page = () => {
               {/* <h1 className="text-base md:text-lg font-bold">{email}</h1> */}
               <p className="text-xs md:text-sm text-gray-400 mt-4">
                 Joined:
-                {new Date(creationTime.seconds * 1000)
-                  .toDateString()
-                  .slice(0, 16)}
+                {creationTime !== undefined &&
+                  new Date(creationTime.seconds * 1000)
+                    .toDateString()
+                    .slice(0, 16)}
               </p>
-              {lastSignInTime !== "" && (
+              {lastSignInTime !== undefined && (
                 <p className="text-xs md:text-sm text-gray-400 mt-1">
                   Last visited:
                   {new Date(lastSignInTime.seconds * 1000)

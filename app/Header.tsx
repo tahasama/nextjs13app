@@ -56,7 +56,7 @@ const Header = () => {
           flex flex-col`}
         >
           <Link
-            href={!uid ? "/login" : "profile"}
+            href={!uid ? "/login" : "/profile/" + uid}
             className={`block px-4 py-2 text-slate-200 hover:bg-sky-700   transition-all duration-700 `}
             onClick={() => dispatch(showHideDropdown(!dropDown))}
           >

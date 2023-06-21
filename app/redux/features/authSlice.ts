@@ -131,12 +131,15 @@ export const loginUser = createAsyncThunk(
 export const getUserByUid = createAsyncThunk(
   "getUserByUid",
   async ({ uid }: any) => {
+    console.log("🚀 ~ file: authSlice.ts:134 ~ uid:", uid);
     try {
       const userRef = doc(db, "users", uid);
       const userDoc = await getDoc(userRef);
       if (!userDoc.exists) {
         return { error: "this user do not exist" };
       }
+
+      console.log("🚀 ~ fiNNNNNNNNNNNNNNNNNNnnta():", userDoc.data());
       return userDoc.data();
     } catch (error) {
       return error;
