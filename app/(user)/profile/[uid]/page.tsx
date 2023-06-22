@@ -68,7 +68,7 @@ const page = () => {
           <div className="w-full px-4 flex flex-col  text-center  items-center">
             <div className="relative mb-4 w-fit">
               <div className="rounded-full overflow-hidden flex items-center justify-center">
-                {image || oimage ? (
+                {image !== "" || oimage !== "" ? (
                   <img
                     className=""
                     src={uid !== params.uid ? oimage : image}

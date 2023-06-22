@@ -16,7 +16,7 @@ const page = ({ params: { projectId } }: any) => {
   }, []);
   return (
     <div className="text-white grid h-full place-items-center">
-      <PythonEdit id={projectId} />
+      <PythonEdit />
     </div>
   );
 };
