@@ -1,6 +1,10 @@
 "use client";
 import Modal from "@/app/modal";
-import { getAuthData, getUserByUid } from "@/app/redux/features/authSlice";
+import {
+  getAuthData,
+  getOtherUserByUid,
+  getUserByUid,
+} from "@/app/redux/features/authSlice";
 import {
   fetchProjectByUser,
   getProjectData,
@@ -11,60 +15,81 @@ import React, { useEffect } from "react";
 import { FaGithub, FaTwitter, FaInstagram } from "react-icons/fa";
 
 const page = () => {
-  const { uid } = useParams();
-  const { lastSignInTime, creationTime, image, displayName, bio } =
-    useAppSelector(getAuthData);
+  const params = useParams();
+  const {
+    lastSignInTime,
+    creationTime,
+    image,
+    displayName,
+    bio,
+    uid,
+    odisplayName,
+    ocreationTime,
+    olastSignInTime,
+    oimage,
+  } = useAppSelector(getAuthData);
+  console.log("🚀 ~ file: page.tsx:30 ~ page ~ ocreationTime:", ocreationTime);
 
   const dispatch = useAppDispatch();
   const { all } = useAppSelector(getProjectData);
+  console.log("🚀 ~ file: page.tsx:37 ~ page ~ all:", all);
 
   useEffect(() => {
-    dispatch(getUserByUid("9Y5s6S1gXVQwxCry9Gv8QvMsMKV2"));
-    setTimeout(() => {
-      dispatch(fetchProjectByUser(uid));
-    }, 1000);
-  }, [uid]);
+    uid !== params.uid && dispatch(getOtherUserByUid({ uid: params.uid })),
+      setTimeout(() => {
+        dispatch(fetchProjectByUser(uid !== params.uid ? params.uid : uid));
+      }, 1000);
+  }, []);
 
   return (
-    <section className="bg-gray-900 flex flex-col md:flex-row w-full text-white p-10  relative top-[58px] rounded-lg shadow-lg">
+    <section className="bg-gray-900 flex flex-col md:flex-row w-full min-h-screen  text-white p-10  relative rounded-lg shadow-lg">
       <div
         className={`w-full ${
           bio ? "md:w-2/7" : "md:w-1/3"
-        }  flex items-center h-full flex-col relative top-6 `}
+        }  flex items-center h-full flex-col relative  mt-16`}
       >
-        <div className="flex items-center justify-start ">
+        <div className="flex items-center justify-start mt-16 ">
           <div className="w-full px-4 flex flex-col  text-center  items-center">
-            {image && (
-              <div className="relative w-32 mb-4 md:w-36 xl:w-40">
-                <div className=" rounded-full overflow-hidden">
+            <div className="relative mb-4 w-fit">
+              <div className="rounded-full overflow-hidden flex items-center justify-center">
+                {image || oimage ? (
                   <img
-                    className="object-cover object-center w-full h-full "
-                    src={image}
+                    className=""
+                    src={uid !== params.uid ? oimage : image}
                     alt="User's profile picture"
                   />
-                </div>
+                ) : (
+                  <h1 className="text-5xl w-24 h-24 flex items-center justify-center pb-5 bg-emerald-700 rounded-full">
+                    {uid !== params.uid
+                      ? odisplayName?.charAt(0)
+                      : displayName.charAt(0)}
+                  </h1>
+                )}
               </div>
-            )}
+            </div>
+
             <div className="">
               <h1 className="text-2xl md:text-2xl lg:text-3xl font-bold">
-                {displayName}
+                {uid !== params.uid ? odisplayName : displayName}
               </h1>
               {/* <h1 className="text-base md:text-lg font-bold">{email}</h1> */}
               <p className="text-xs md:text-sm text-gray-400 mt-4">
                 Joined:
                 {creationTime !== undefined &&
-                  new Date(creationTime.seconds * 1000)
-                    .toDateString()
-                    .slice(0, 16)}
+                creationTime !== "" &&
+                uid !== params.uid
+                  ? ocreationTime
+                  : creationTime.slice(0, 16)}
               </p>
-              {lastSignInTime !== undefined && (
-                <p className="text-xs md:text-sm text-gray-400 mt-1">
-                  Last visited:
-                  {new Date(lastSignInTime.seconds * 1000)
-                    .toDateString()
-                    .slice(0, 16)}
-                </p>
-              )}
+
+              <p className="text-xs md:text-sm text-gray-400 mt-1">
+                Last visited:{" "}
+                {lastSignInTime !== undefined &&
+                lastSignInTime !== "" &&
+                uid !== params.uid
+                  ? olastSignInTime
+                  : lastSignInTime.slice(0, 16)}
+              </p>
             </div>
           </div>
         </div>
@@ -96,23 +121,28 @@ const page = () => {
             <FaInstagram className="w-10 h-10 md:w-8 md:h-8" />
           </a>
         </div>
-        <div className="flex flex-row mb-3">
-          <Modal />
-          <button className="bg-violet-900 text-white hover:bg-violet-700 font-bold uppercase text-sm  ml-4 px-9 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
-            Edit Profile
-          </button>
-        </div>
+        {uid === params.uid && (
+          <div className="flex flex-row mb-3">
+            <Modal />
+            <button className="bg-violet-900 text-white hover:bg-violet-700 font-bold uppercase text-sm  ml-4 px-9 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+              Edit Profile
+            </button>
+          </div>
+        )}
 
         <div className="w-fit mb-8">
-          <p className="text-lg leading-relaxed mx-7 indent-10">
-            {bio} Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Tempore quasi reiciendis, earum alias repellat nisi ipsa sequi
-            maiores fugit, ullam provident reprehenderit, corporis ab?
-            Voluptatem sapiente esse enim. Beatae, veniam.
+          <p
+            className={`text-lg leading-relaxed ${
+              bio ? "indent-10" : "indent-10"
+            }mx-7`}
+          >
+            {bio
+              ? bio
+              : "no bio? talk a litle bit about yourself, hit edit profile"}
           </p>
         </div>
       </div>
-      <div className={`w-full  ${bio ? "md:w-5/7" : "md:w-2/3"}  `}>
+      <div className={`w-full  ${bio ? "md:w-5/7" : "md:w-2/3"} mt-16 `}>
         <div className="flex items-center justify-around ">
           <div className="flex flex-col md:flex-row items-center mb-6 md:mb-12 mt-5 w-full">
             <div className="flex flex-col justify-end gap-3 mt-10 md:mt-5 flex-1">
@@ -174,9 +204,11 @@ const page = () => {
               .slice(0, 6)
               // .sort((a: any, b: any) => b.stars - a.stars)
               .map((project: any) => (
-                <div className="flex flex-col w-1/3 bg-gray-800 rounded-lg p-4">
+                <div
+                  className="flex flex-col w-1/3 bg-gray-800 rounded-lg p-4"
+                  key={project._id}
+                >
                   <a
-                    key={project._id}
                     href={`/projects/${
                       project.projectType === "rj"
                         ? "webdev/react-project"

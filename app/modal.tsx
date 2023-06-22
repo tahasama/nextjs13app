@@ -107,10 +107,10 @@ export default function Modal() {
 
   return (
     <>
-      {pathname === "/profile" ? (
+      {pathname.includes("profile") ? (
         <button
           className={
-            pathname === "/profile"
+            pathname.includes("profile")
               ? "bg-pink-700 text-white hover:bg-pink-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               : ""
           }

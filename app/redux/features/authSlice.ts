@@ -32,26 +32,19 @@ interface providers {
 
 export const registerUser = createAsyncThunk(
   "registerUser",
-  async ({ email, password }: valueProps) => {
+  async ({ email, password, displayName }: valueProps) => {
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
       await setDoc(doc(db, "users", res.user.uid), {
-        displayName: res.user?.displayName,
-        email: res.user?.email,
+        displayName: displayName,
+        email: email,
         uid: res.user.uid,
-        creationTime: new Date(),
-        lastSignInTime: "",
+        creationTime: res.user.metadata.creationTime,
+        lastSignInTime: res.user.metadata.lastSignInTime,
         image: "",
       });
 
-      return {
-        displayName: res.user?.displayName,
-        email: res.user?.email,
-        uid: res.user.uid,
-        creationTime: new Date(),
-        lastSignInTime: "",
-        image: "",
-      };
+      return { uid: res.user.uid };
     } catch (error: any) {
       return error;
     }
@@ -147,6 +140,25 @@ export const getUserByUid = createAsyncThunk(
   }
 );
 
+export const getOtherUserByUid = createAsyncThunk(
+  "getOtherUserByUid",
+  async ({ uid }: any) => {
+    console.log("🚀 ~ file: authSlice.ts:134 ~ uid:", uid);
+    try {
+      const userRef = doc(db, "users", uid);
+      const userDoc = await getDoc(userRef);
+      if (!userDoc.exists) {
+        return { error: "this user do not exist" };
+      }
+
+      console.log("🚀 ~ fiNNNNNNNNNNNNNNNNNNnnta@@@@():", userDoc.data());
+      return userDoc.data();
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
 export const resetPassword = createAsyncThunk(
   "resetPassword",
   async (email: string) => {
@@ -171,6 +183,14 @@ export interface userProps {
     lastSignInTime: any;
     displayName: string;
     bio: string;
+
+    ouid?: string;
+    oemail?: string;
+    oimage?: string;
+    ocreationTime?: any;
+    olastSignInTime?: any;
+    odisplayName?: string;
+    obio?: string;
   };
 }
 
@@ -186,6 +206,14 @@ export const userInitialState = {
   lastSignInTime: "",
   displayName: "",
   bio: "",
+
+  ouid: "",
+  oemail: "",
+  oimage: "",
+  ocreationTime: "",
+  olastSignInTime: "",
+  odisplayName: "",
+  obio: "",
 };
 
 export const authSlice = createSlice({
@@ -218,6 +246,16 @@ export const authSlice = createSlice({
       state.lastSignInTime = action.payload.lastSignInTime;
       state.image = action.payload.image;
       state.bio = action.payload.bio;
+      state.error = action.payload;
+    });
+    builder.addCase(getOtherUserByUid.fulfilled, (state, action: any) => {
+      state.ouid = action.payload.uid;
+      state.odisplayName = action.payload.displayName;
+      state.oemail = action.payload.email;
+      state.ocreationTime = action.payload.creationTime;
+      state.olastSignInTime = action.payload.lastSignInTime;
+      state.oimage = action.payload.image;
+      state.obio = action.payload.bio;
       state.error = action.payload;
     });
     builder.addCase(registerUser.fulfilled, (state, action: any) => {

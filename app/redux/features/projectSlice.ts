@@ -27,8 +27,9 @@ import { db } from "@/app/firebase";
 const POJECT_URL: any = process.env.NEXT_PUBLIC_PROJECT_URL;
 
 export const fetchProjectByUser = createAsyncThunk(
-  "fetchAllProject",
+  "fetchProjectByUser",
   async (uid: any) => {
+    console.log("🚀 ~ file: projectSlice.ts:32 ~ uid:", uid);
     try {
       const getProjects = collection(db, "projects");
       const getUserProjects = query(getProjects, where("user.uid", "==", uid));

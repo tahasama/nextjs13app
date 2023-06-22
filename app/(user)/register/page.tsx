@@ -34,7 +34,7 @@ const Register = () => {
     dispatch(updateError(""));
   }
   useEffect(() => {
-    uid && (router.push("/profile"), dispatch(updateError("")));
+    uid && (router.push("/profile/" + uid), dispatch(updateError("")));
   }, [uid]);
 
   const handleSubmit = async (e: any) => {
@@ -43,6 +43,8 @@ const Register = () => {
       email: emailRef.current.value,
       password: passwordRef.current.value,
       displayName: displayNameRef.current.value,
+      // creationTime: new Date(),
+      // lastSignInTime: new Date(),
 
       // other serializable properties
     };
