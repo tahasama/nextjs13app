@@ -214,16 +214,20 @@ interface starProps {
 }
 export const StarProject = createAsyncThunk(
   "saveProject",
-  async (value: starProps) => {
+  async (value: any) => {
     const object = {
       _id: value._id,
       star: value.star,
     };
+
     try {
-      const res = await axios.put(POJECT_URL + "star/" + object._id, value);
-      return res.data;
+      const res = await updateDoc(
+        doc(db, "projects", object._id),
+        object // Pass the object containing the pythonCode field as the second argument
+      );
+      return res;
     } catch (error) {
-      return error;
+      console.log("eeeeeeeeeeeeeeeeeeerr", error);
     }
   }
 );

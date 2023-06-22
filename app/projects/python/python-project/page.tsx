@@ -178,9 +178,9 @@ export default function PythonEdit() {
               <>
                 <div className={`relative left-0 h-full w-full`}>
                   <span onClick={() => dispatch(updateSaved(false))}>
-                    <div className="w-full">
+                    <div className="w-full h-full">
                       <Editor
-                        height="100%"
+                        // height="100%"
                         defaultLanguage="python"
                         value={pythonCode}
                         onChange={handleEditorChange}

@@ -11,10 +11,14 @@ import {
 } from "@/app/redux/features/projectSlice";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
 import { useParams } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaGithub, FaTwitter, FaInstagram } from "react-icons/fa";
 
 const page = () => {
+  const { all } = useAppSelector(getProjectData);
+  const [filteredAll, setFilteredAll] = useState([]); // State for filtered results
+  console.log("🚀 ~ file: page.tsx:20 ~ page ~ filteredAll:", filteredAll);
+  const [selectedFilter, setSelectedFilter] = useState("");
   const params = useParams();
   const {
     lastSignInTime,
@@ -28,11 +32,8 @@ const page = () => {
     olastSignInTime,
     oimage,
   } = useAppSelector(getAuthData);
-  console.log("🚀 ~ file: page.tsx:30 ~ page ~ ocreationTime:", ocreationTime);
 
   const dispatch = useAppDispatch();
-  const { all } = useAppSelector(getProjectData);
-  console.log("🚀 ~ file: page.tsx:37 ~ page ~ all:", all);
 
   useEffect(() => {
     uid !== params.uid && dispatch(getOtherUserByUid({ uid: params.uid })),
@@ -40,6 +41,21 @@ const page = () => {
         dispatch(fetchProjectByUser(uid !== params.uid ? params.uid : uid));
       }, 1000);
   }, []);
+
+  const handleFilter = (filter: any) => {
+    setSelectedFilter(filter); // Update the selected filter state
+
+    // Filter the "all" array based on the selected filter
+    const filteredResults = all.filter(
+      (project: any) => project.projectType === filter
+    );
+    console.log(
+      "🚀 ~ file: page.tsx:52 ~ handleFilter ~ filteredResults:",
+      filteredResults
+    );
+
+    setFilteredAll(filteredResults); // Update the filteredAll state with the filtered results
+  };
 
   return (
     <section className="bg-gray-900 flex flex-col md:flex-row w-full min-h-screen  text-white p-10  relative rounded-lg shadow-lg">
@@ -147,15 +163,29 @@ const page = () => {
           <div className="flex flex-col md:flex-row items-center mb-6 md:mb-12 mt-5 w-full">
             <div className="flex flex-col justify-end gap-3 mt-10 md:mt-5 flex-1">
               <div className="bg-opacity-60 flex justify-center items-center gap-2">
-                <div className="text-center bg-indigo-950 w-24 md:40 lg:w-40 py-2 rounded-2xl">
+                <div
+                  onClick={() =>
+                    all
+                      .slice(0, 6)
+                      .sort((a: any, b: any) => b.star.length - a.star.length)
+                  }
+                  className="text-center cursor-pointer bg-indigo-950 w-24 md:40 lg:w-40 py-2 rounded-2xl"
+                >
                   <div className="text-base md:text-2xl lg:text-3xl font-semibold">
-                    3.5K
+                    {all.reduce(
+                      (accumulator, obj: any) => accumulator + obj.star.length,
+                      0
+                    )}
                   </div>
                   <div className="text-xs md:text-sm text-gray-400">Stars</div>
                 </div>
-                <div className="text-center bg-indigo-950 w-24 md:36 lg:w-40 py-2 rounded-2xl">
+
+                <div
+                  onClick={() => handleFilter("")}
+                  className="text-center cursor-pointer bg-indigo-950 w-24 md:36 lg:w-40 py-2 rounded-2xl"
+                >
                   <div className="text-base md:text-2xl lg:text-3xl font-semibold">
-                    50
+                    {all.length}
                   </div>
                   <div className="text-xs md:text-sm text-gray-400">
                     Projects
@@ -163,31 +193,43 @@ const page = () => {
                 </div>
               </div>
               <div className="bg-opacity-60 flex flex-wrap justify-center items-center gap-2 mt-3 md:mt-0">
-                <div className="text-center bg-violet-950 w-20 md:w-32 py-2 rounded-2xl">
+                <div
+                  onClick={() => handleFilter("rj")}
+                  className="text-center cursor-pointer bg-violet-950 w-20 md:w-32 py-2 rounded-2xl"
+                >
                   <div className="text-base md:text-xl lg:text-2xl font-semibold">
-                    3
+                    {all.filter((x: any) => x.projectType === "rj").length}
                   </div>
                   <div className="text-xs md:text-sm text-gray-400">
                     React js
                   </div>
                 </div>
-                <div className="text-center bg-violet-950 w-20 md:w-32 py-2 rounded-2xl">
+                <div
+                  onClick={() => handleFilter("vwd")}
+                  className="text-center  cursor-pointer bg-violet-950 w-20 md:w-32 py-2 rounded-2xl"
+                >
                   <div className="text-base md:text-xl lg:text-2xl font-semibold">
-                    20
+                    {all.filter((x: any) => x.projectType === "vwd").length}
                   </div>
                   <div className="text-xs md:text-sm text-gray-400">
                     Js Html Css
                   </div>
                 </div>
-                <div className="text-center bg-violet-950 w-20 md:w-32 py-2 rounded-2xl">
+                <div
+                  onClick={() => handleFilter("py")}
+                  className="text-center cursor-pointer bg-violet-950 w-20 md:w-32 py-2 rounded-2xl"
+                >
                   <div className="text-base md:text-xl lg:text-2xl font-semibold">
-                    5
+                    {all.filter((x: any) => x.projectType === "py").length}
                   </div>
                   <div className="text-xs md:text-sm text-gray-400">Python</div>
                 </div>
-                <div className="text-center bg-violet-950 w-20 md:w-32 py-2 rounded-2xl">
+                <div
+                  onClick={() => handleFilter("ds")}
+                  className="text-center cursor-pointer bg-violet-950 w-20 md:w-32 py-2 rounded-2xl"
+                >
                   <div className="text-base md:text-xl lg:text-2xl font-semibold">
-                    12
+                    {all.filter((x: any) => x.projectType === "ds").length}
                   </div>
                   <div className="text-xs md:text-sm text-gray-400">
                     Data Science
@@ -198,14 +240,14 @@ const page = () => {
           </div>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-3">
+        <div className="flex flex-wrap justify-center gap-3 md:overflow-auto h-80 scrollbar scrollbar-thumb-gray-800 scrollbar-track-gray-600">
           {all !== undefined &&
-            all
+            (selectedFilter !== "" ? filteredAll : all)
               .slice(0, 6)
               // .sort((a: any, b: any) => b.stars - a.stars)
               .map((project: any) => (
                 <div
-                  className="flex flex-col w-1/3 bg-gray-800 rounded-lg p-4"
+                  className="flex flex-col w-1/3 h-40 bg-gray-800 rounded-lg p-4"
                   key={project._id}
                 >
                   <a

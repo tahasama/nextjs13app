@@ -376,25 +376,14 @@ const Side = () => {
                 className="flex items-center justify-around mr-2 md:mr-5 md:group-hover:mr-0"
                 onClick={handleStar}
               >
-                {!star.includes(uid) ? (
-                  <div className="flex items-center justify-around w-full">
-                    <div>
-                      <AiOutlineStar className="w-7 h-7" />
-                    </div>
-                    <div className="md:group-hover:block hidden ">Star</div>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-around w-full">
-                    <div>
-                      <AiTwotoneStar />
-                    </div>
-                    {bar.star && (
-                      <div className="md:group-hover:block hidden ">
-                        unrate it?{" "}
-                      </div>
-                    )}
-                  </div>
-                )}
+                <div>
+                  {!star.includes(uid) ? (
+                    <AiOutlineStar className="w-7 h-7" />
+                  ) : (
+                    <AiTwotoneStar className="w-7 h-7" />
+                  )}
+                </div>
+                <div className="md:group-hover:block hidden ">Star</div>
               </button>
             </>
           )}
