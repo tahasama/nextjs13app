@@ -19,6 +19,7 @@ import React, {
 } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { MdAddCircleOutline } from "react-icons/md";
+import { AiOutlineCloseCircle } from "react-icons/ai";
 
 export default function Modal() {
   const router = useRouter();
@@ -26,9 +27,10 @@ export default function Modal() {
   const [showModal, setShowModal] = React.useState(false);
   const nameRef = useRef<any>(null);
   const descriptionRef = useRef<any>(null);
-  const [toUpdate, setToUpdate] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  // const [error, setError] = useState("");
+  const [errorProjectType, setErrorProjectType] = useState("");
+  const [errorTitle, setErrorTitle] = useState("");
   const { title, description, code, projectType } =
     useAppSelector(getProjectData);
   const { displayName, email, uid } = useAppSelector(getAuthData);
@@ -67,18 +69,16 @@ export default function Modal() {
     };
   }, []);
 
-  const schema = Yup.object().shape({
-    title: Yup.string().required("Please add a project name!!!!!"),
-    projectType: Yup.string().required("Please choose a project projectType!"),
-  });
+  // const schema = Yup.object().shape({
+  //   title: Yup.string().required("Please add a project name!!!!!"),
+  //   projectType: Yup.string().required("Please choose a project projectType!"),
+  // });
 
   const handleNewProjectCreate: FormEventHandler<HTMLFormElement> = async (
     e
   ) => {
     e.preventDefault();
 
-    await schema.validate({ title, projectType });
-    // Validation passed, create project
     const serializableProject = {
       user: { uid: uid, username: displayName },
       title: title,
@@ -88,21 +88,34 @@ export default function Modal() {
       createdAt: new Date(),
       updatedAt: new Date(),
     };
-    setToUpdate(false);
-    dispatch(createProject(serializableProject)).then(({ payload }: any) => {
-      dispatch(cleanState(projectInitialState)),
-        setShowModal(false),
-        // }) .then(({ payload }: any) => dispatch(fetchProjectById(payload.id)))
 
+    if (title === "") {
+      setErrorTitle("Please add a project name!");
+      return; // Prevent form submission
+    } else {
+      setErrorTitle("");
+    }
+
+    if (projectType === "") {
+      setErrorProjectType("Please choose a project type!");
+      return; // Prevent form submission
+    } else {
+      setErrorProjectType("");
+    }
+
+    if (errorProjectType === "" && errorTitle === "") {
+      dispatch(createProject(serializableProject)).then(({ payload }: any) => {
+        dispatch(cleanState(projectInitialState));
+        setLoading(true);
         setTimeout(() => {
-          payload._id &&
+          if (payload._id) {
             router.push(`/projects/${projectDestination}/${payload._id}`);
+            setLoading(false);
+            setShowModal(false);
+          }
         }, 500);
-    });
-    // );
-    // .then(() =>
-    //   router.push(`{projects/webdev/vanilla-project/${projectId}}`)
-    // );
+      });
+    }
   };
 
   return (
@@ -125,103 +138,110 @@ export default function Modal() {
           onClick={() => setShowModal(true)}
         />
       )}
-      {showModal ? (
-        <>
-          <div className="closeModal backdrop-blur-sm text-stone-200 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 ">
-            <div className=" relative w-[24rem] max-h-screen my-6 mx-auto max-w-4xl">
-              {/*content*/}
-              <div className="mt-16 border-0 px-6 pb-6 bg-indigo-950 rounded-lg shadow-lg relative flex flex-col w-full outline-none focus:outline-none">
-                {/*header*/}
-                <div className="flex justify-between font-bold items-center p-5 rounded-t">
-                  <button
-                    className="p-1 ml-auto border-0 text-black  float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={() => setShowModal(false)}
-                  >
-                    <span className=" text-black h-6 w-6 text-2xl block outline-none focus:outline-none">
-                      X
-                    </span>
-                  </button>
-                </div>
-                {/*body*/}
-                <form
-                  onSubmit={handleNewProjectCreate}
-                  className="flex flex-col gap-3"
-                >
-                  <header className="">
-                    <h4 className=""> Project name : </h4>
-                  </header>
-                  <footer className="">
-                    <input
-                      className="createInput border bg-slate-50 rounded w-full py-2 px-3 text-gray-900 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                      type="text"
-                      ref={nameRef}
-                      value={title}
-                      onChange={() =>
-                        dispatch(
-                          updateProjectInfos({ title: nameRef.current?.value })
-                        )
-                      }
-                    />
-                    {/* <p className="text-rose-600">{error}</p> */}
-                  </footer>
-                  <header className="modalHeader">
-                    <h4 className="modalHeaderTitle"> Description : </h4>
-                  </header>
-                  <textarea
-                    className="createInput border bg-slate-50 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                    rows={8}
-                    ref={descriptionRef}
-                    value={description}
+      {showModal && (
+        <div className="closeModal backdrop-brightness-50 backdrop-blur-sm -backdrop-hue-rotate-15  text-stone-200 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50">
+          <div className="relative w-[24rem] max-h-screen my-6 mx-auto max-w-4xl">
+            <div className="mt-16 border-0 font-semibold px-6 pb-6 bg-gray-900 outline-2  outline-slate-700 rounded-lg relative flex flex-col w-full outline-none focus:outline-none">
+              <button
+                className="absolute top-0 right-0 p-2 text-gray-400 hover:text-gray-500 focus:outline-none"
+                onClick={() => setShowModal(false)}
+              >
+                <AiOutlineCloseCircle size={28} />
+              </button>
+              <form
+                onSubmit={handleNewProjectCreate}
+                className="flex flex-col gap-3 mt-10"
+              >
+                <header>
+                  <h4>Project Name:</h4>
+                </header>
+                <footer>
+                  <input
+                    className="createInput border bg-slate-200 rounded w-full h-9 px-1 text-gray-900 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                    type="text"
+                    ref={nameRef}
+                    value={title}
                     onChange={() =>
                       dispatch(
-                        updateProjectInfos({
-                          description: descriptionRef.current?.value,
-                        })
+                        updateProjectInfos({ title: nameRef.current?.value })
                       )
                     }
                   />
-                  <label
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    htmlFor="project-projectType"
-                  >
-                    Select an option
-                  </label>
-                  <select
-                    ref={projectTypeRef}
-                    id="project-projectType"
-                    onChange={() =>
-                      dispatch(
-                        updateProjectInfos({
-                          projectType: projectTypeRef.current?.value,
-                        })
-                      )
-                    }
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  >
-                    <option defaultValue="">Choose a project</option>
-                    <option value="py">Python</option>
-                    <option value="ds">Data Science</option>
-                    <option value="vwd">Vanilla Web Dev</option>
-                    <option value="rj">React js</option>
-                  </select>
-                  {/* <p className="text-rose-600">{error}</p> */}
-
-                  <button
-                    className="createButton bg-blue-500 mb-8 mt-1 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    type="submit"
-                  >
-                    Create project
-                  </button>
-                </form>
-
-                {/*footer*/}
-              </div>
+                  <p className="text-rose-600">{errorTitle}</p>
+                </footer>
+                <header className="modalHeader">
+                  <h4 className="modalHeaderTitle">Description:</h4>
+                </header>
+                <textarea
+                  className="createInput border bg-slate-200  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                  rows={8}
+                  ref={descriptionRef}
+                  value={description}
+                  onChange={() =>
+                    dispatch(
+                      updateProjectInfos({
+                        description: descriptionRef.current?.value,
+                      })
+                    )
+                  }
+                />
+                <label
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  htmlFor="project-projectType"
+                >
+                  Select an option
+                </label>
+                <select
+                  ref={projectTypeRef}
+                  id="project-projectType"
+                  onChange={() =>
+                    dispatch(
+                      updateProjectInfos({
+                        projectType: projectTypeRef.current?.value,
+                      })
+                    )
+                  }
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                >
+                  <option defaultValue="">Choose a project</option>
+                  <option value="py">Python</option>
+                  <option value="ds">Data Science</option>
+                  <option value="vwd">Vanilla Web Dev</option>
+                  <option value="rj">React JS</option>
+                </select>
+                <p className="text-rose-600">{errorProjectType}</p>
+                <button
+                  className="createButton bg-blue-500 mb-4 mt-1 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  type="submit"
+                >
+                  {!loading ? (
+                    "Create Project"
+                  ) : (
+                    <>
+                      <svg
+                        aria-hidden="true"
+                        className="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                        viewBox="0 0 100 101"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                          fill="currentColor"
+                        />
+                        <path
+                          d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                          fill="currentFill"
+                        />
+                      </svg>
+                    </>
+                  )}
+                </button>
+              </form>
             </div>
           </div>
-          {/* {(title === "" || projectType === "") && ( */}
-          {/* )} */}
-        </>
-      ) : null}
+        </div>
+      )}
     </>
   );
 }

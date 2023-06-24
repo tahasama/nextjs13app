@@ -12,12 +12,12 @@ import {
 import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { AiOutlineStar, AiTwotoneStar } from "react-icons/ai";
 import { FaGithub, FaTwitter, FaInstagram } from "react-icons/fa";
 
 const page = () => {
   const { all } = useAppSelector(getProjectData);
   const [filteredAll, setFilteredAll] = useState([]); // State for filtered results
-  console.log("🚀 ~ file: page.tsx:20 ~ page ~ filteredAll:", filteredAll);
   const [selectedFilter, setSelectedFilter] = useState("");
   const params = useParams();
   const {
@@ -48,10 +48,6 @@ const page = () => {
     // Filter the "all" array based on the selected filter
     const filteredResults = all.filter(
       (project: any) => project.projectType === filter
-    );
-    console.log(
-      "🚀 ~ file: page.tsx:52 ~ handleFilter ~ filteredResults:",
-      filteredResults
     );
 
     setFilteredAll(filteredResults); // Update the filteredAll state with the filtered results
@@ -158,16 +154,14 @@ const page = () => {
           </p>
         </div>
       </div>
-      <div className={`w-full  ${bio ? "md:w-5/7" : "md:w-2/3"} mt-16 `}>
-        <div className="flex items-center justify-around ">
+      <div className={`w-full  ${bio ? "md:w-5/7" : "md:w-2/3"} mt-16`}>
+        <div className="flex items-center justify-around md:-ml-3">
           <div className="flex flex-col md:flex-row items-center mb-6 md:mb-12 mt-5 w-full">
             <div className="flex flex-col justify-end gap-3 mt-10 md:mt-5 flex-1">
               <div className="bg-opacity-60 flex justify-center items-center gap-2">
                 <div
                   onClick={() =>
-                    all
-                      .slice(0, 6)
-                      .sort((a: any, b: any) => b.star.length - a.star.length)
+                    all.sort((a: any, b: any) => b.star.length - a.star.length)
                   }
                   className="text-center cursor-pointer bg-indigo-950 w-24 md:40 lg:w-40 py-2 rounded-2xl"
                 >
@@ -240,33 +234,45 @@ const page = () => {
           </div>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-3 md:overflow-auto h-80 scrollbar scrollbar-thumb-gray-800 scrollbar-track-gray-600">
+        <div className="flex flex-wrap justify-center gap-3 md:overflow-auto h-80 scrollbar scrollbar-thumb-purple-700 scrollbar-track-violet-900">
           {all !== undefined &&
             (selectedFilter !== "" ? filteredAll : all)
-              .slice(0, 6)
+
               // .sort((a: any, b: any) => b.stars - a.stars)
               .map((project: any) => (
-                <div
-                  className="flex flex-col w-1/3 h-40 bg-gray-800 rounded-lg p-4"
-                  key={project._id}
-                >
-                  <a
-                    href={`/projects/${
-                      project.projectType === "rj"
-                        ? "webdev/react-project"
-                        : project.projectType === "vwd"
-                        ? "webdev/vanilla-project"
-                        : "python/python-project"
-                    }/${project._id}`}
-                    // target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-lg font-medium hover:text-gray-300 mb-2"
-                  >
-                    {project.title}
-                  </a>
-                  <p className="text-sm text-gray-400">
-                    Stars: {project.star.length}
+                <div className="card-container flex flex-col w-2/5 h-40 bg-gray-800 rounded-lg shadow-lg">
+                  <div className="flex justify-between items-center m-2">
+                    <a
+                      href={`/projects/${
+                        project.projectType === "rj"
+                          ? "webdev/react-project"
+                          : project.projectType === "vwd"
+                          ? "webdev/vanilla-project"
+                          : "python/python-project"
+                      }/${project._id}`}
+                      rel="noopener noreferrer"
+                      className="text-lg font-medium text-gray-200 hover:text-gray-300 truncate"
+                    >
+                      {project.title}
+                    </a>
+                    <div className="flex items-center">
+                      <AiTwotoneStar className="w-4 h-4 text-yellow-200" />
+                      <p className="text-sm text-gray-400 ml-1">
+                        {project.star.length}
+                      </p>
+                    </div>
+                  </div>
+                  <p className="mt-2 mx-2 indent-3 text-sm text-gray-400 line-clamp-2">
+                    {project.description}
                   </p>
+                  <div className="flex items-center justify-between px-4 py-2 mt-auto bg-gray-700 rounded-b-lg">
+                    <p className="text-sm text-gray-400">
+                      {project.user.username}
+                    </p>
+                    <p className="text-xs text-gray-400">
+                      {project.createdAt.toDate().toDateString()}
+                    </p>
+                  </div>
                 </div>
               ))}
         </div>

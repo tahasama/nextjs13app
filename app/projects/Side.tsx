@@ -235,13 +235,13 @@ const Side = () => {
 
   return (
     <nav
-      className={`z-50 bottom-0 fixed bg-black overflow-auto w-full h-16 md:w-36 md:h-[calc(100vh-64px)] md:border-r-2 border-slate-500 shadow-slate-700 text-md
+      className={`z-40 bottom-0 fixed bg-black overflow-auto w-full h-16 md:w-36 md:h-[calc(100vh-64px)] md:border-r-2 border-slate-500 shadow-slate-700 text-md
        py-3 text-slate-400 flex flex-row md:flex-col items-center md:items-end md:hover:items-stretch justify-around  ${kiwi.className} md:-translate-x-20 md:hover:translate-x-0 md:hover:w-28  transition-all duration-1000 ease-in-out group`}
     >
       {!uid && (
         <>
           <button
-            className="flex items-center justify-around mr-2 md:mr-5 md:group-hover:mr-0"
+            className="flex items-center hover:border-l-4 pb-2	 transition-all duration-150 border-red-700 justify-around mr-2 md:mr-5 md:group-hover:mr-0"
             onClick={handleCodeAndRun}
           >
             <div>
@@ -250,7 +250,7 @@ const Side = () => {
             <div className="md:group-hover:block hidden ">Code and Run</div>
           </button>
           <button
-            className="flex items-center justify-around mr-2 md:mr-5 md:group-hover:mr-0"
+            className="flex items-center hover:border-l-4 pb-2	 transition-all duration-150 border-red-700 justify-around mr-2 md:mr-5 md:group-hover:mr-0"
             onClick={handleReactCodeAndRun}
           >
             <div>
@@ -259,7 +259,7 @@ const Side = () => {
             <div className="md:group-hover:block hidden ">React and Run</div>
           </button>
           <button
-            className="flex items-center justify-around mr-2 md:mr-5 md:group-hover:mr-0"
+            className="flex items-center hover:border-l-4 pb-2	 transition-all duration-150 border-red-700 justify-around mr-2 md:mr-5 md:group-hover:mr-0"
             onClick={handlePython}
           >
             <div>
@@ -268,7 +268,7 @@ const Side = () => {
             <div className="md:group-hover:block hidden ">Python to go</div>
           </button>
           <button
-            className="flex items-center justify-around mr-2 md:mr-5 md:group-hover:mr-0"
+            className="flex items-center hover:border-l-4 pb-2	 transition-all duration-150 border-red-700 justify-around mr-2 md:mr-5 md:group-hover:mr-0"
             onClick={handleDataScience}
           >
             <div>
@@ -280,7 +280,7 @@ const Side = () => {
       )}
       {uid && (
         <>
-          <button className="flex items-center justify-around mr-2 md:mr-5 md:group-hover:mr-0">
+          <button className="flex items-center hover:border-l-4 pb-2	 transition-all duration-150 border-red-700 justify-around mr-2 md:mr-5 md:group-hover:mr-0">
             <div>
               <Modal />
             </div>
@@ -291,7 +291,7 @@ const Side = () => {
               <>
                 <button
                   onClick={handleUpdateTitle}
-                  className="flex items-center justify-around mr-2 md:mr-5 md:group-hover:mr-0"
+                  className="flex items-center  hover:border-l-4 pb-2	 transition-all duration-150 border-red-700 justify-around mr-2 md:mr-5 md:group-hover:mr-0"
                 >
                   <div>
                     {!loading ? (
@@ -321,7 +321,7 @@ const Side = () => {
                 </button>
                 <button
                   onClick={() => alerted("/create")}
-                  className="flex items-center justify-around mr-2 md:mr-5 md:group-hover:mr-0"
+                  className="flex items-center hover:border-l-4 pb-2	 transition-all duration-150 border-red-700 justify-around mr-2 md:mr-5 md:group-hover:mr-0"
                 >
                   <div>
                     <AiFillEdit className="w-7 h-7" />{" "}
@@ -333,7 +333,7 @@ const Side = () => {
           )}
 
           <button
-            className="flex items-center justify-around mr-2 md:mr-5 md:group-hover:mr-0"
+            className="flex items-center hover:border-l-4 pb-2	 transition-all duration-150 border-red-700 justify-around mr-2 md:mr-5 md:group-hover:mr-0"
             onClick={handleOpenProject}
           >
             <div>
@@ -343,7 +343,7 @@ const Side = () => {
           </button>
           {projectId && uid === user.uid && (
             <button
-              className="flex items-center justify-around mr-2 md:mr-5 md:group-hover:mr-0"
+              className="flex items-center hover:border-l-4 pb-2	 transition-all duration-150 border-red-700 justify-around mr-2 md:mr-5 md:group-hover:mr-0"
               onClick={handleDeleteProject}
             >
               <div>
@@ -355,7 +355,7 @@ const Side = () => {
           {uid !== user.uid && projectId && (
             <>
               <button
-                className="flex items-center justify-around mr-2 md:mr-5 md:group-hover:mr-0"
+                className="flex items-center hover:border-l-4 pb-2	 transition-all duration-150 border-red-700 justify-around mr-2 md:mr-5 md:group-hover:mr-0"
                 onClick={handleClone}
               >
                 <div>
@@ -364,7 +364,7 @@ const Side = () => {
                 <div className="md:group-hover:block hidden ">Clone</div>
               </button>
               <button
-                className="flex items-center justify-around mr-2 md:mr-5 md:group-hover:mr-0"
+                className="flex items-center hover:border-l-4 pb-2	 transition-all duration-150 border-red-700 justify-around mr-2 md:mr-5 md:group-hover:mr-0"
                 onClick={handleAuthorsProfile}
               >
                 <div>
@@ -373,7 +373,7 @@ const Side = () => {
                 <div className="md:group-hover:block hidden ">Profile</div>
               </button>
               <button
-                className="flex items-center justify-around mr-2 md:mr-5 md:group-hover:mr-0"
+                className="flex items-center hover:border-l-4 pb-2	 transition-all duration-150 border-red-700 justify-around mr-2 md:mr-5 md:group-hover:mr-0"
                 onClick={handleStar}
               >
                 <div>

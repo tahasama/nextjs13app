@@ -15,6 +15,7 @@ import { RootState } from "../store";
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -29,7 +30,6 @@ const POJECT_URL: any = process.env.NEXT_PUBLIC_PROJECT_URL;
 export const fetchProjectByUser = createAsyncThunk(
   "fetchProjectByUser",
   async (uid: any) => {
-    console.log("🚀 ~ file: projectSlice.ts:32 ~ uid:", uid);
     try {
       const getProjects = collection(db, "projects");
       const getUserProjects = query(getProjects, where("user.uid", "==", uid));
@@ -40,7 +40,6 @@ export const fetchProjectByUser = createAsyncThunk(
         return { ...docs.data(), _id: docs.id };
       });
       const result: any[] = await Promise.all(promises);
-      console.log("🚀 ~ file: projectSlice.ts:45 ~ result:", result);
       return result;
     } catch (error) {
       return error;
@@ -53,7 +52,6 @@ export const fetchProjectById = createAsyncThunk<any, string>(
   async (_id: string) => {
     try {
       const res = await getDoc(doc(db, "projects", _id));
-      console.log("🚀 ~ file: projectSlice.ts:54 ~ res:", res);
 
       return { ...res.data(), _id: res.id };
     } catch (error) {
@@ -100,7 +98,6 @@ export interface valueProps {
 export const createProject = createAsyncThunk(
   "createProject",
   async (value: valueProps) => {
-    console.log("🚀 ~ file: projectSlice.ts:118 ~ value:");
     if (value.projectType === "rj") {
       value = {
         ...value,
@@ -136,7 +133,7 @@ export const createProject = createAsyncThunk(
         code: value.code ? value.code : "",
         pythonCode: value.pythonCode ? value.pythonCode : "",
         createdAt: value.createdAt,
-        updatedAt: value.updatedAt,
+        updatedAt: value?.updatedAt,
       });
       return { _id: res.id, ...res };
     } catch (error) {
@@ -155,10 +152,7 @@ export const cloneProject = createAsyncThunk(
     };
     try {
       const res = await addDoc(collection(db, "projects"), { object });
-      console.log(
-        "🚀 ~ file: projectSlice.ts:157 ~ res:000000000000000000000000",
-        res.id
-      );
+
       return res;
     } catch (error) {
       console.log("errrrrrr3", error);
@@ -191,10 +185,6 @@ export const saveProject = createAsyncThunk(
           ? { html: "", css: "", js: "" }
           : { html: value.code.html, css: value.code.css, js: value.code.js }, // Include the pythonCode field in the object
     };
-    console.log(
-      "🚀 ~ file: projectSlice.ts:177 ~ objectWWWWWWWWWWWWWWWWWWWWWW:",
-      value
-    );
 
     try {
       const res = await updateDoc(
@@ -234,14 +224,48 @@ export const StarProject = createAsyncThunk(
 
 export const deleteProject = createAsyncThunk(
   "deleteProject",
-  async (id: string | undefined) => {
-    await axios.delete(POJECT_URL + id);
+
+  async (id: string) => {
+    try {
+      const res = await deleteDoc(doc(db, "stories", id));
+
+      return res;
+    } catch (e) {
+      // Alert.alert("action failed pleas", e);
+    }
   }
 );
+
+export const searchProjectsData = createAsyncThunk(
+  "searchProjectsData",
+  async (seria: any) => {
+    console.log(
+      "🚀 ~ file: projectSlice.ts:253 ~ seria:vvvvvvvvvvvvvvvv",
+      seria
+    );
+    const q = query(collection(db, "projects"), where("title", "==", seria));
+
+    // Search term
+    const documents: any[] = [];
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      console.log(
+        "🚀 ~ file: projectSlice.ts:257 ~ querySnapshot.forEach ~ data:",
+        data
+      );
+      documents.push(data);
+    });
+    console.log("🚀 ~ file: projectSlice.ts:261 ~ documents:", documents);
+    return documents; // Return the documents array
+  }
+);
+
 export interface projectProps {
   _id: string;
   projs: {
-    all: any[];
+    all?: any[];
     user: {
       uid: string | undefined;
       email?: string | undefined;
@@ -251,8 +275,8 @@ export interface projectProps {
     description: string;
     code?: { html: string; css: string; js: string };
     err: string;
-    createdAt: any;
-    updatedAt: any;
+    createdAt?: any;
+    updatedAt?: any;
     saved: boolean;
     star: string[];
     reactCode: string;
@@ -263,6 +287,7 @@ export interface projectProps {
     _id: string;
     searchAll: any[];
     loading: boolean;
+    search?: string;
   };
 }
 
@@ -289,6 +314,7 @@ export const projectInitialState = {
   selectedDiv: "html",
   searchAll: [{}],
   loading: true,
+  search: "",
 };
 
 export const projectSlice = createSlice({
@@ -348,8 +374,8 @@ export const projectSlice = createSlice({
     filteredProjects: (state, action) => {
       state.all = action.payload;
     },
+
     cleanUpProjects: (state, action) => {
-      // console.log("cleaning zooooooooone", action.payload);
       state.all = action.payload;
       state.searchAll = action.payload;
     },
@@ -358,15 +384,13 @@ export const projectSlice = createSlice({
     builder.addCase(fetchProjectByUser.fulfilled, (state, action) => {
       Object.assign(state.all, action.payload);
     });
+    builder.addCase(searchProjectsData.fulfilled, (state, action) => {
+      Object.assign(state.all, action.payload);
+    });
 
     builder.addCase(fetchProjectById.fulfilled, (state, action) => {
       Object.assign(state, action.payload);
     });
-    // builder.addCase(saveProject.fulfilled, (state, action) => {
-    //   state.updatedAt = action.payload.updatedAt;
-    //   state.cells = action.payload.cells;
-    //   state.code = action.payload.code;
-    // });
   },
 });
 
@@ -389,6 +413,7 @@ export const {
   updateLoading,
   filteredProjects,
   cleanUpProjects,
+  // searchProjects,
 } = projectSlice.actions;
 
 export default projectSlice.reducer;
