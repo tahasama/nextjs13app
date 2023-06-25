@@ -1,6 +1,7 @@
 import * as Yup from "yup";
 import { getAuthData } from "@/app/redux/features/authSlice";
 import {
+  cleanForm,
   cleanState,
   createProject,
   fetchProjectById,
@@ -29,16 +30,21 @@ export default function Modal() {
   const descriptionRef = useRef<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  const [errorProjectType, setErrorProjectType] = useState("");
-  const [errorTitle, setErrorTitle] = useState("");
+  // const [errorProjectType, setErrorProjectType] = useState("");
+  // const [errorTitle, setErrorTitle] = useState("");
   const { title, description, code, projectType } =
     useAppSelector(getProjectData);
   const { displayName, email, uid } = useAppSelector(getAuthData);
   const Proj = useAppSelector(getProjectData);
-  const { _id } = useAppSelector(getProjectData);
-  console.log("🚀 ~ file: modal.tsx:27 ~ Modal ~ Proj:", Proj);
+  const { _id, titleErr, projectTypeErr } = useAppSelector(getProjectData);
+  console.log(
+    "🚀 ~ file: modal.tsx:40 ~ Modal ~  titleErr",
+    titleErr,
+    " projectTypeErr :",
+
+    projectTypeErr
+  );
   const pathname = usePathname();
-  console.log("🚀 ~ file: modal.tsx:39 ~ Modal ~ pathname:", pathname);
 
   const projectDestination = useMemo(
     () =>
@@ -53,6 +59,9 @@ export default function Modal() {
   );
 
   useEffect(() => {
+    dispatch(
+      updateProjectInfos({ title: "", description: "", projectType: "" })
+    );
     const handleOutsideClick = (event: any) => {
       // Check if click event target is outside of the modal content
       if (event.target.classList.contains("closeModal")) {
@@ -74,11 +83,12 @@ export default function Modal() {
   //   projectType: Yup.string().required("Please choose a project projectType!"),
   // });
 
+  // console.log("errorProjectType", errorProjectType, "errorTitle", errorTitle);
   const handleNewProjectCreate: FormEventHandler<HTMLFormElement> = async (
     e
   ) => {
     e.preventDefault();
-
+    setLoading(true);
     const serializableProject = {
       user: { uid: uid, username: displayName },
       title: title,
@@ -90,26 +100,34 @@ export default function Modal() {
     };
 
     if (title === "") {
-      setErrorTitle("Please add a project name!");
+      setLoading(false);
+      dispatch(cleanForm({ titleErr: "Please add a project name!" }));
       return; // Prevent form submission
     } else {
-      setErrorTitle("");
+      dispatch(cleanForm({ titleErr: "" }));
     }
 
     if (projectType === "") {
-      setErrorProjectType("Please choose a project type!");
+      setLoading(false);
+      dispatch(cleanForm({ projectTypeErr: "Please choose a project type!" }));
       return; // Prevent form submission
     } else {
-      setErrorProjectType("");
+      dispatch(cleanForm({ projectTypeErr: "" }));
     }
+    console.log(
+      "hahahahahahaaaaaa",
+      projectTypeErr,
+      "projectTypejjjj",
+      projectType
+    );
 
-    if (errorProjectType === "" && errorTitle === "") {
+    if (title !== "" && projectType !== "") {
+      console.log("waaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
       dispatch(createProject(serializableProject)).then(({ payload }: any) => {
-        dispatch(cleanState(projectInitialState));
-        setLoading(true);
         setTimeout(() => {
           if (payload._id) {
             router.push(`/projects/${projectDestination}/${payload._id}`);
+
             setLoading(false);
             setShowModal(false);
           }
@@ -167,7 +185,7 @@ export default function Modal() {
                       )
                     }
                   />
-                  <p className="text-rose-600">{errorTitle}</p>
+                  <p className="text-rose-600">{titleErr}</p>
                 </footer>
                 <header className="modalHeader">
                   <h4 className="modalHeaderTitle">Description:</h4>
@@ -209,7 +227,7 @@ export default function Modal() {
                   <option value="vwd">Vanilla Web Dev</option>
                   <option value="rj">React JS</option>
                 </select>
-                <p className="text-rose-600">{errorProjectType}</p>
+                <p className="text-rose-600">{projectTypeErr}</p>
                 <button
                   className="createButton bg-blue-500 mb-4 mt-1 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                   type="submit"
@@ -217,7 +235,7 @@ export default function Modal() {
                   {!loading ? (
                     "Create Project"
                   ) : (
-                    <>
+                    <div className="flex w-full items-center justify-center">
                       <svg
                         aria-hidden="true"
                         className="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
@@ -234,7 +252,7 @@ export default function Modal() {
                           fill="currentFill"
                         />
                       </svg>
-                    </>
+                    </div>
                   )}
                 </button>
               </form>

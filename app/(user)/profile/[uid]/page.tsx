@@ -241,7 +241,10 @@ const page = () => {
 
               // .sort((a: any, b: any) => b.stars - a.stars)
               .map((project: any) => (
-                <div className="card-container flex flex-col w-2/5 h-40 bg-gray-800 rounded-lg shadow-lg">
+                <div
+                  className="card-container flex flex-col w-2/5 h-40 bg-gray-800 rounded-lg shadow-lg"
+                  key={project._id}
+                >
                   <div className="flex justify-between items-center m-2">
                     <a
                       href={`/projects/${

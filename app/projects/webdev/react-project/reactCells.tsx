@@ -25,7 +25,7 @@ const ReactCells = () => {
   const { description, title, updatedAt, createdAt } =
     useAppSelector(getProjectData);
   const { uid } = useAppSelector(getAuthData);
-  const projectId = useParams();
+  const { projectId } = useParams();
   const updatedAt1 = new Date(
     // @ts-ignore
     updatedAt.seconds * 1000 + updatedAt.nanoseconds / 1000000
@@ -51,26 +51,21 @@ const ReactCells = () => {
   return (
     <div
       className={`${
-        title !== "" ? "mt-20" : "mt-0"
+        title !== "" ? "mt-20" : "mt-20"
       } flex flex-col items-center  justify-center w-full`}
     >
-      {projectId && (
-        <div className=" py-4 flex flex-col md:flex-row min-h-[150px] justify-around items-center w-full bg-gradient-to-r from-purple-900 to-indigo-950  shadow-lg text-white">
-          {/* {saveMessage && <p className="saveMessage">{saveMessage}</p>} */}
-          {uid ? (
+      <div className=" py-4 flex flex-col min-h-[150px] justify-around items-center w-full bg-gradient-to-r from-purple-900 to-indigo-950  shadow-lg text-white">
+        {/* {saveMessage && <p className="saveMessage">{saveMessage}</p>} */}
+
+        {projectId !== undefined && (
+          <div className="flex flex-col md:flex-row w-full justify-around items-center">
             <div className="text-center">
               <h2 className="text-2xl md:text-4xl font-bold mb-2">{title}</h2>
               <h3 className="text-md md:text-lg text-gray-300 mb-4">
                 {description}
               </h3>
             </div>
-          ) : (
-            <p className="text-red-500 text-md mb-4">
-              This work can't be saved. Please log in to create, save, or clone
-              projects.
-            </p>
-          )}
-          {uid && (
+
             <div className="flex flex-col items-center">
               <p className="text-sm text-gray-400">
                 Created:{" "}
@@ -99,13 +94,21 @@ const ReactCells = () => {
                 </span>
               </p>
             </div>
-          )}
-        </div>
-      )}
+          </div>
+        )}
+
+        {!uid && (
+          <p className="text-red-500  text-md italic mb-4">
+            This work can't be saved. Please log in to create, save, or clone
+            projects.
+          </p>
+        )}
+      </div>
+
       <button
         onClick={handleAddCells}
         className="
-       text-slate-50 hover:text-emerald-500 border-2 bg-emerald-700 hover:bg-transparent transition duration-700 border-emerald-500  text-lg p-2  rounded-md mt-5 w-56"
+       text-slate-50 hover:text-emerald-500 border-2 bg-emerald-700 hover:bg-transparent transition duration-700 border-emerald-500  text-lg p-2  rounded-md mt-8 w-56"
       >
         Add Cell
       </button>

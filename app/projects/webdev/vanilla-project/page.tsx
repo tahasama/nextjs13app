@@ -30,6 +30,7 @@ export default function vanillaEdit() {
   const dispatch = useAppDispatch();
   const { uid, email } = useAppSelector(getAuthData);
   const { projectId } = useParams();
+  console.log("🚀 ~ file: page.tsx:33 ~ vanillaEdit ~ projectId:", projectId);
   const {
     title,
     description,
@@ -52,24 +53,22 @@ export default function vanillaEdit() {
   );
 
   return (
-    <div className="flex flex-col items-center md:ml-16 w-full md:w-[calc(100vw-4rem)] bg-gray-950 min-h-screen">
-      {projectId && (
-        <div className="mt-10 py-4 flex flex-col md:flex-row min-h-[150px] justify-around items-center w-full bg-gradient-to-r from-purple-900 to-indigo-950  shadow-lg text-white">
-          {/* {saveMessage && <p className="saveMessage">{saveMessage}</p>} */}
-          {uid ? (
+    <div
+      className={`flex flex-col items-center md:ml-16 w-full md:w-[calc(100vw-5.1rem)] bg-gray-950 min-h-screen  ${
+        title !== "" ? "mt-10" : "mt-10"
+      }`}
+    >
+      <div className="mt-10 py-4 flex flex-col  min-h-[150px] justify-around items-center w-full bg-gradient-to-r from-purple-900 to-indigo-950  shadow-lg text-white">
+        {/* {saveMessage && <p className="saveMessage">{saveMessage}</p>} */}
+        {projectId !== undefined && (
+          <div className="flex flex-col md:flex-row justify-around items-center w-full">
             <div className=" w-full md:w-2/3 mt-4">
               <h2 className="text-2xl md:text-4xl font-bold mb-2">{title}</h2>
               <h3 className="text-md md:text-lg text-gray-300 mb-4 line-clamp-3">
                 {description}
               </h3>
             </div>
-          ) : (
-            <p className="text-red-500 text-md mb-4">
-              This work can't be saved. Please log in to create, save, or clone
-              projects.
-            </p>
-          )}
-          {uid && (
+
             <div className="flex flex-col items-center">
               <p className="text-sm text-gray-400">
                 Created:{" "}
@@ -98,9 +97,16 @@ export default function vanillaEdit() {
                 </span>
               </p>
             </div>
-          )}
-        </div>
-      )}
+          </div>
+        )}
+
+        {!uid && (
+          <p className="text-red-500  text-md italic mb-4">
+            This work can't be saved. Please log in to create, save, or clone
+            projects.
+          </p>
+        )}
+      </div>
 
       <div className="my-16 flex flex-col ">
         <div

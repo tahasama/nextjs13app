@@ -38,7 +38,7 @@ interface linksProps {
 const links: linksProps[] = [
   { id: 1, name: "Home", link: "/" },
   { id: 2, name: "Python", link: "projects/python" },
-  { id: 3, name: "web dev", link: "projects/webdev" },
+  { id: 3, name: "webdev", link: "projects/webdev" },
 ];
 
 const Header = () => {
@@ -73,20 +73,21 @@ const Header = () => {
     <div
       className={` flex overflow-visible justify-between items-center w-screen   h-20 z-50 text-white fixed top-0 bg-black `}
     >
-      <ul className="hidden overflow-hidden sm:flex mx-12">
+      <ul className=" overflow-hidden hidden md:flex justify-around flex-grow lg:flex-grow-0 lg:gap-12 lg:w-auto mx-16  text-lg text text-gray-300 font-semibold">
         {links.map((l: linksProps) => (
-          <li
-            key={l.id}
-            className={`capitalize font-medium px-4 cursor-pointer text-lg hover:scale-105 duration-100 text-gray-300`}
-          >
-            <Link href={l.link}>{l.name}</Link>
+          <li key={l.id} className="relative h-full">
+            <Link href={l.link} className="group transition duration-300">
+              <span className="relative">{l.name}</span>
+              <span className="absolute left-0 -bottom-0 w-full h-0.5 bg-sky-600 transform scale-x-0 origin-left transition-transform duration-1000 group-hover:scale-x-100"></span>
+            </Link>
           </li>
         ))}
       </ul>
-      <div className="hidden sm:flex md:order-2 w-96 ">
+
+      <div className="hidden md:flex md:order-2  lg:w-[30rem]">
         <form
           onSubmit={handleProjectSearch}
-          className=" inset-y-0 left-0 flex flex-grow items-center pl-3 pointer-events-auto"
+          className="flex items-center pointer-events-auto  lg:w-96"
         >
           <input
             type="text"
@@ -110,7 +111,7 @@ const Header = () => {
       </div>
       <div
         onClick={() => setNav(!nav)}
-        className="cursor-pointer mx-3 text-gray-400 z-10 sm:hidden flex"
+        className="cursor-pointer mx-3 text-gray-400 z-10 md:hidden flex"
       >
         {nav ? (
           <>
@@ -123,6 +124,51 @@ const Header = () => {
           </>
         )}
       </div>
+      {dropDown && (
+        <div
+          className="z-50 absolute top-16 right-4 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+          id="user-dropdown"
+        >
+          <div className="px-4 py-3">
+            <span className="block text-sm text-gray-900 dark:text-white">
+              {displayName}
+            </span>
+            <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">
+              {email}
+            </span>
+          </div>
+          <ul className="py-2" aria-labelledby="user-menu-button">
+            <li>
+              <Link
+                href={!uid ? "/login" : "/profile/" + uid}
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                onClick={() => dispatch(showHideDropdown(!dropDown))}
+              >
+                {!uid ? "Login" : " Dashboard"}
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                href={uid ? "/" : "/register"}
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                onClick={() => {
+                  dispatch(showHideDropdown(!dropDown));
+                  uid &&
+                    signOut(auth).then(
+                      () => (
+                        dispatch(resetUser(userInitialState)),
+                        dispatch(cleanState(projectInitialState))
+                      )
+                    );
+                }}
+              >
+                {uid ? " Sign out" : "Register"}
+              </Link>
+            </li>
+          </ul>
+        </div>
+      )}
       <div className="flex items-center md:order-2 ">
         <button
           type="button"
@@ -149,55 +195,10 @@ const Header = () => {
             <FaUserCircle size={30} color="gray" />
           )}
         </button>
-        {dropDown && (
-          <div
-            className="z-50 absolute top-16 right-4 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
-            id="user-dropdown"
-          >
-            <div className="px-4 py-3">
-              <span className="block text-sm text-gray-900 dark:text-white">
-                {displayName}
-              </span>
-              <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">
-                {email}
-              </span>
-            </div>
-            <ul className="py-2" aria-labelledby="user-menu-button">
-              <li>
-                <Link
-                  href={!uid ? "/login" : "/profile/" + uid}
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                  onClick={() => dispatch(showHideDropdown(!dropDown))}
-                >
-                  {!uid ? "Login" : " Dashboard"}
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href={uid ? "/" : "/register"}
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                  onClick={() => {
-                    dispatch(showHideDropdown(!dropDown));
-                    uid &&
-                      signOut(auth).then(
-                        () => (
-                          dispatch(resetUser(userInitialState)),
-                          dispatch(cleanState(projectInitialState))
-                        )
-                      );
-                  }}
-                >
-                  {uid ? " Sign out" : "Register"}
-                </Link>
-              </li>
-            </ul>
-          </div>
-        )}
       </div>
 
       {nav && (
-        <ul className="sm:hidden flex flex-col justify-around items-center absolute top-0 left-0 w-full h-screen bg-gray-900 text-gray-500">
+        <ul className="md:hidden flex flex-col justify-around items-center absolute top-0 left-0 w-full h-screen bg-gray-900 text-gray-500">
           <div className="flex md:order-2 gap-2 w-full ">
             <form
               onSubmit={handleProjectSearch}

@@ -40,7 +40,7 @@ export default function PythonEdit() {
   const { pythonCode, title, updatedAt, createdAt, description } =
     useAppSelector(getProjectData);
   const { uid } = useAppSelector(getAuthData);
-  const projectId = useParams();
+  const { projectId } = useParams();
 
   console.log("🚀 ~ file: page.tsx:34 ~ pythonCode000000000000:", pythonCode);
   const ffffffff = useAppSelector(getProjectData);
@@ -57,7 +57,7 @@ export default function PythonEdit() {
     // @ts-ignore
     createdAt.seconds * 1000 + createdAt.nanoseconds / 1000000
   );
-  console.log("ooooooooooooooooooooooooooooooooooo", createdAt);
+  console.log("ooooooooooooooooooooooooooooooooooo", projectId);
 
   useEffect(() => {
     if (!projectId) {
@@ -67,7 +67,7 @@ export default function PythonEdit() {
     } else {
       dispatch(fetchProjectById("projectId"));
     }
-  }, []);
+  }, [query]);
 
   useEffect(() => {
     // Define function to handle window resize
@@ -116,55 +116,58 @@ export default function PythonEdit() {
   };
 
   return (
-    <div className=" flex flex-col items-center ml-0 justify-center w-full mt-4 md:w-[calc(100vw-1.4rem)] ">
-      {projectId && (
-        <div className="mt-10 py-4 flex flex-col md:flex-row min-h-[150px] justify-around items-center w-full bg-gradient-to-r from-purple-900 to-indigo-950  shadow-lg text-white">
+    <div className=" flex flex-col items-center ml-0 justify-center w-full mt-10 md:w-[calc(100vw-1.35rem)] ">
+      {
+        <div className="mt-10 py-4 flex flex-col min-h-[150px] justify-around items-center w-full bg-gradient-to-r from-purple-900 to-indigo-950  shadow-lg text-white">
           {/* {saveMessage && <p className="saveMessage">{saveMessage}</p>} */}
-          {uid ? (
-            <div className="text-center">
-              <h2 className="text-2xl md:text-4xl font-bold mb-2">{title}</h2>
-              <h3 className="text-md md:text-lg text-gray-300 mb-4">
-                {description}
-              </h3>
+
+          {projectId !== undefined && (
+            <div className="flex flex-col md:flex-row justify-around items-center w-full">
+              <div className="text-center">
+                <h2 className="text-2xl md:text-4xl font-bold mb-2">{title}</h2>
+                <h3 className="text-md md:text-lg text-gray-300 mb-4">
+                  {description}
+                </h3>
+              </div>
+              <div className="flex flex-col items-center">
+                <p className="text-sm text-gray-400">
+                  Created:{" "}
+                  <span className={`text-emerald-500 ${orbitron.className}`}>
+                    {" "}
+                    {createdAt1.toLocaleDateString("en-US", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "2-digit",
+                    })}
+                    &nbsp;
+                    {createdAt1.toLocaleTimeString("en-US")}
+                  </span>
+                </p>
+                <p className="text-sm text-gray-400">
+                  Updated:{" "}
+                  <span className={`text-emerald-500 ${orbitron.className}`}>
+                    {" "}
+                    {createdAt1.toLocaleDateString("en-US", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "2-digit",
+                    })}
+                    &nbsp;
+                    {createdAt1.toLocaleTimeString("en-US")}
+                  </span>
+                </p>
+              </div>
             </div>
-          ) : (
-            <p className="text-red-500 text-md mb-4">
+          )}
+
+          {!uid && (
+            <p className="text-red-500  text-md italic mb-4">
               This work can't be saved. Please log in to create, save, or clone
               projects.
             </p>
           )}
-          {uid && (
-            <div className="flex flex-col items-center">
-              <p className="text-sm text-gray-400">
-                Created:{" "}
-                <span className={`text-emerald-500 ${orbitron.className}`}>
-                  {" "}
-                  {createdAt1.toLocaleDateString("en-US", {
-                    day: "2-digit",
-                    month: "short",
-                    year: "2-digit",
-                  })}
-                  &nbsp;
-                  {createdAt1.toLocaleTimeString("en-US")}
-                </span>
-              </p>
-              <p className="text-sm text-gray-400">
-                Updated:{" "}
-                <span className={`text-emerald-500 ${orbitron.className}`}>
-                  {" "}
-                  {createdAt1.toLocaleDateString("en-US", {
-                    day: "2-digit",
-                    month: "short",
-                    year: "2-digit",
-                  })}
-                  &nbsp;
-                  {createdAt1.toLocaleTimeString("en-US")}
-                </span>
-              </p>
-            </div>
-          )}
         </div>
-      )}
+      }
 
       <div className=" bg-gradient-to-b from-gray-800 to-black rounded-md mt-3 py-3 px-0 ">
         <Resizable direction="vertical-react" handleWidth={handleWidth}>

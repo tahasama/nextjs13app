@@ -323,6 +323,8 @@ export interface projectProps {
     searchAll: any[];
     loading: boolean;
     search?: string;
+    projectTypeErr?: string;
+    titleErr?: string;
   };
 }
 
@@ -350,6 +352,8 @@ export const projectInitialState = {
   searchAll: [{}],
   loading: true,
   search: "",
+  projectTypeErr: "",
+  titleErr: "",
 };
 
 export const projectSlice = createSlice({
@@ -385,6 +389,16 @@ export const projectSlice = createSlice({
     },
     updateDate: (state, action) => {
       state.updatedAt = action.payload;
+    },
+
+    cleanForm: (state, action) => {
+      state.titleErr = action.payload.titleErr;
+      console.log(
+        "🚀 ~ file: projectSlice.ts:396 ~ action.payload.titleErr:",
+        action.payload.titleErr
+      );
+
+      state.projectTypeErr = action.payload.projectTypeErr;
     },
     // updateId: (state, action) => {
     //   state.uid = action.payload._id;
@@ -449,6 +463,7 @@ export const {
   filteredProjects,
   cleanUpProjects,
   // searchProjects,
+  cleanForm,
 } = projectSlice.actions;
 
 export default projectSlice.reducer;
