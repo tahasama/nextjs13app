@@ -49,9 +49,13 @@ const ReactCells = () => {
   };
 
   return (
-    <div className=" flex flex-col items-center  justify-center w-full mt-4 ">
+    <div
+      className={`${
+        title !== "" ? "mt-20" : "mt-0"
+      } flex flex-col items-center  justify-center w-full`}
+    >
       {projectId && (
-        <div className="mt-10 py-4 flex flex-col md:flex-row min-h-[150px] justify-around items-center w-full bg-gradient-to-r from-purple-900 to-indigo-950  shadow-lg text-white">
+        <div className=" py-4 flex flex-col md:flex-row min-h-[150px] justify-around items-center w-full bg-gradient-to-r from-purple-900 to-indigo-950  shadow-lg text-white">
           {/* {saveMessage && <p className="saveMessage">{saveMessage}</p>} */}
           {uid ? (
             <div className="text-center">

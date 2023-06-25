@@ -17,6 +17,7 @@ import { FaGithub, FaTwitter, FaInstagram } from "react-icons/fa";
 
 const page = () => {
   const { all } = useAppSelector(getProjectData);
+  console.log("🚀 ~ file: page.tsx:20 ~ page ~ all1111123456789:", all);
   const [filteredAll, setFilteredAll] = useState([]); // State for filtered results
   const [selectedFilter, setSelectedFilter] = useState("");
   const params = useParams();
@@ -32,7 +33,7 @@ const page = () => {
     olastSignInTime,
     oimage,
   } = useAppSelector(getAuthData);
-
+  console.log("222222222222", image);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -167,7 +168,7 @@ const page = () => {
                 >
                   <div className="text-base md:text-2xl lg:text-3xl font-semibold">
                     {all.reduce(
-                      (accumulator, obj: any) => accumulator + obj.star.length,
+                      (accumulator, obj: any) => accumulator + obj.star?.length,
                       0
                     )}
                   </div>

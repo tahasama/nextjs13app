@@ -243,21 +243,56 @@ export const searchProjectsData = createAsyncThunk(
       "🚀 ~ file: projectSlice.ts:253 ~ seria:vvvvvvvvvvvvvvvv",
       seria
     );
-    const q = query(collection(db, "projects"), where("title", "==", seria));
+    const q1 = query(
+      collection(db, "users"),
+      where("displayName", "==", seria)
+    );
+    const q4 = query(collection(db, "users"), where("email", "==", seria));
+    const q2 = query(
+      collection(db, "projects"),
+      where("description", ">=", seria)
+    );
+    const q3 = query(collection(db, "projects"), where("title", ">=", seria));
 
     // Search term
-    const documents: any[] = [];
+    const documents1: any[] = [];
+    const documents2: any[] = [];
+    const documents3: any[] = [];
+    const documents4: any[] = [];
 
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
+    const querySnapshot1 = await getDocs(q1);
+    querySnapshot1.forEach((doc) => {
       const data = doc.data();
-      console.log(
-        "🚀 ~ file: projectSlice.ts:257 ~ querySnapshot.forEach ~ data:",
-        data
-      );
-      documents.push(data);
+      documents1.push(data);
     });
-    console.log("🚀 ~ file: projectSlice.ts:261 ~ documents:", documents);
+    const querySnapshot2 = await getDocs(q2);
+    querySnapshot2.forEach((doc) => {
+      const data = doc.data();
+      documents2.push(data);
+    });
+    const querySnapshot3 = await getDocs(q3);
+    querySnapshot3.forEach((doc) => {
+      const data = doc.data();
+      documents3.push(data);
+    });
+    const querySnapshot4 = await getDocs(q4);
+    querySnapshot4.forEach((doc) => {
+      const data = doc.data();
+      documents4.push(data);
+    });
+    console.log("🚀 ~ file: projectSlice.ts:261 ~ documents1:", documents1);
+    console.log("🚀 ~ file: projectSlice.ts:261 ~ documents2:", documents2);
+    console.log("🚀 ~ file: projectSlice.ts:261 ~ documents3:", documents3);
+    console.log("🚀 ~ file: projectSlice.ts:261 ~ documents4:", documents4);
+    const documents: any[] = [
+      ...documents1,
+      ...documents2,
+      ...documents3,
+      ...documents4,
+    ];
+    // const documentsSet = new Set(documents);
+    // const documentsArr = new Array(documentsSet);
+    console.log("🚀 ~ file: projectSlice.ts:277 ~ documents:", documents);
     return documents; // Return the documents array
   }
 );

@@ -6,16 +6,22 @@ import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import { getBarData, showHideDropdown } from "./redux/features/barSlice";
 import { signOut } from "firebase/auth";
 import { auth } from "./firebase";
-import { getAuthData, resetUser } from "./redux/features/authSlice";
+import {
+  getAuthData,
+  resetUser,
+  userInitialState,
+} from "./redux/features/authSlice";
 import { AiOutlineSearch } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FormEventHandler, useRef, useState } from "react";
 import { FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
 import {
   getProjectData,
+  projectInitialState,
   // searchProjects,
   searchProjectsData,
   updateProjectInfos,
+  cleanState,
 } from "./redux/features/projectSlice";
 
 const kiwi = Kiwi_Maru({
@@ -26,12 +32,13 @@ const kiwi = Kiwi_Maru({
 interface linksProps {
   id: number;
   link: string;
+  name: string;
 }
 
 const links: linksProps[] = [
-  { id: 1, link: "Home" },
-  { id: 2, link: "Python" },
-  { id: 3, link: "web dev" },
+  { id: 1, name: "Home", link: "/" },
+  { id: 2, name: "Python", link: "projects/python" },
+  { id: 3, name: "web dev", link: "projects/webdev" },
 ];
 
 const Header = () => {
@@ -40,6 +47,11 @@ const Header = () => {
   // const { search } = useAppSelector(getProjectData);
   // console.log("🚀 ~ file: Header.tsx:39 ~ Header ~ search:", search);
   const { uid, displayName, email, image } = useAppSelector(getAuthData);
+  const user = useAppSelector(getAuthData);
+  console.log(
+    "🚀 ~ file: Header.tsx:44 ~ Header ~ user:lllllllllllllllllll",
+    user
+  );
   const [openUserMenu, setOpenUserMenu] = useState(false);
   const searchRef = useRef<any>(null);
   const [errorTitle, setErrorTitle] = useState("");
@@ -65,21 +77,21 @@ const Header = () => {
         {links.map((l: linksProps) => (
           <li
             key={l.id}
-            className={`capitalize font-medium px-4 cursor-pointer text-lg hover:scale-105 duration-100 `}
+            className={`capitalize font-medium px-4 cursor-pointer text-lg hover:scale-105 duration-100 text-gray-300`}
           >
-            <Link href={l.link}>{l.link}</Link>
+            <Link href={l.link}>{l.name}</Link>
           </li>
         ))}
       </ul>
-      <div className="hidden sm:flex md:order-2 ">
+      <div className="hidden sm:flex md:order-2 w-96 ">
         <form
           onSubmit={handleProjectSearch}
-          className=" inset-y-0 left-0 flex items-center pl-3 pointer-events-auto gap-2"
+          className=" inset-y-0 left-0 flex flex-grow items-center pl-3 pointer-events-auto"
         >
           <input
             type="text"
             id="search-navbar"
-            className="block w-full p-2 pl-10 text-sm text-gray-100 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="block p-2 w-full  text-sm text-gray-100 border border-gray-300 rounded-md bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Search..."
             ref={searchRef}
             value={term}
@@ -90,17 +102,26 @@ const Header = () => {
             data-collapse-toggle="navbar-search"
             aria-controls="navbar-search"
             aria-expanded="false"
-            className=" text-gray-500 dark:text-gray-400 hover:bg-gray-700 focus:outline-none ring-2 ring-gray-700  rounded-lg text-sm p-2.5 mr-1"
+            className=" text-gray-500 dark:text-gray-400 hover:bg-gray-700 focus:outline-none    text-sm p-2.5 mr-1"
           >
-            <AiOutlineSearch />
+            <AiOutlineSearch size={24} />
           </button>
         </form>
       </div>
       <div
         onClick={() => setNav(!nav)}
-        className="cursor-pointer mr-4 text-gray-400 z-10 sm:hidden"
+        className="cursor-pointer mx-3 text-gray-400 z-10 sm:hidden flex"
       >
-        {nav ? <FaTimes size={30} /> : <FaBars size={30} className="mr-5" />}
+        {nav ? (
+          <>
+            <FaTimes size={30} />
+          </>
+        ) : (
+          <>
+            <FaBars size={30} className="mr-5" />
+            <AiOutlineSearch size={30} />
+          </>
+        )}
       </div>
       <div className="flex items-center md:order-2 ">
         <button
@@ -110,17 +131,27 @@ const Header = () => {
           aria-expanded="false"
           data-dropdown-toggle="user-dropdown"
           data-dropdown-placement="bottom"
-          onClick={() => setOpenUserMenu(!openUserMenu)}
+          onClick={() => dispatch(showHideDropdown(!dropDown))}
         >
-          <img
-            className="w-10 h-10 rounded-full"
-            src={image}
-            alt="user photo"
-          />
+          {uid && image ? (
+            image !== "" ? (
+              <img
+                className="w-10 h-10 rounded-full"
+                src={image}
+                alt="user photo"
+              />
+            ) : (
+              <h1 className="text-5xl w-24 h-24 flex items-center justify-center pb-5 bg-emerald-700 rounded-full">
+                {displayName.charAt(0)}
+              </h1>
+            )
+          ) : (
+            <FaUserCircle size={30} color="gray" />
+          )}
         </button>
-        {openUserMenu && (
+        {dropDown && (
           <div
-            className="z-50 absolute top-16 right-2 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+            className="z-50 absolute top-16 right-4 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
             id="user-dropdown"
           >
             <div className="px-4 py-3">
@@ -149,8 +180,11 @@ const Header = () => {
                   onClick={() => {
                     dispatch(showHideDropdown(!dropDown));
                     uid &&
-                      signOut(auth).then(() =>
-                        dispatch(resetUser({ uid: "", email: "" }))
+                      signOut(auth).then(
+                        () => (
+                          dispatch(resetUser(userInitialState)),
+                          dispatch(cleanState(projectInitialState))
+                        )
                       );
                   }}
                 >
@@ -163,43 +197,45 @@ const Header = () => {
       </div>
 
       {nav && (
-        <ul className="sm:hidden flex flex-col justify-center items-center absolute top-0 left-0 w-full h-screen bg-gray-900 text-gray-500">
-          {links.map((l: linksProps) => (
-            <li
-              key={l.id}
-              className="px-4 py-4 capitalize cursor-pointer text-xl text-gray-300 hover:text-white hover:underline transition duration-200"
+        <ul className="sm:hidden flex flex-col justify-around items-center absolute top-0 left-0 w-full h-screen bg-gray-900 text-gray-500">
+          <div className="flex md:order-2 gap-2 w-full ">
+            <form
+              onSubmit={handleProjectSearch}
+              className=" inset-y-0 left-0 flex items-center pl-3 pointer-events-auto gap-2 w-full mx-3"
             >
-              <div className="h-10 w-44 border-b-2 border-r-2 border-pink-500 rounded-r-md">
-                <Link href={l.link} onClick={() => setNav(!nav)}>
-                  {l.link}
-                </Link>
-              </div>
-            </li>
-          ))}
-          <div className="flex md:order-2 gap-2 mt-16">
-            <div className=" inset-y-0 left-0 flex items-center pl-3 pointer-events-auto">
               <input
                 type="text"
                 id="search-navbar"
                 className="block w-full p-2 pl-10 text-sm text-gray-100 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Search...!"
+                placeholder="Search..."
                 ref={searchRef}
                 value={term}
-                // onChange={() =>
-                //   dispatch(searchProjects(searchRef.current?.value))
-                // }
+                onChange={() => setTerm(searchRef.current?.value)}
               />
-            </div>
-            <button
-              onClick={() => dispatch(searchProjectsData(term))}
-              type="button"
-              data-collapse-toggle="navbar-search"
-              aria-controls="navbar-search"
-              aria-expanded="false"
-              className="md:hidden text-gray-500 dark:text-gray-400 hover:bg-gray-700 focus:outline-none ring-2 ring-gray-700 rounded-lg text-sm p-2.5 mr-1"
-            >
-              <AiOutlineSearch />
-            </button>
+              <button
+                type="button"
+                data-collapse-toggle="navbar-search"
+                aria-controls="navbar-search"
+                aria-expanded="false"
+                className=" text-gray-500 dark:text-gray-400 hover:bg-gray-700 focus:outline-none ring-2 ring-gray-700  rounded-lg text-sm p-2.5 mr-1"
+              >
+                <AiOutlineSearch />
+              </button>
+            </form>
+          </div>
+          <div className="relative -top-20">
+            {links.map((l: linksProps) => (
+              <li
+                key={l.id}
+                className="px-4 py-4 capitalize cursor-pointer text-xl text-gray-300 hover:text-white hover:underline transition duration-200"
+              >
+                <div className=" w-36 border-b-2 border-l-2 px-4 py-2 border-red-700 rounded-md">
+                  <Link href={l.link} onClick={() => setNav(!nav)}>
+                    {l.link}
+                  </Link>
+                </div>
+              </li>
+            ))}
           </div>
         </ul>
       )}

@@ -6,6 +6,7 @@ import html from "./images/html.png";
 import css from "./images/css.png";
 import javascript from "./images/javascript.png";
 import python from "./images/python.png";
+import Side from "./projects/Side";
 
 const novaOval = Nova_Oval({
   subsets: ["latin"],
@@ -19,6 +20,7 @@ export default function Home() {
   const codeArr2 = code2.split(/(?!^)/u); //regular expression to keep the empty space
   return (
     <main className="">
+      <Side />
       <div className="flex flex-row h-[calc(100vh-4rem)] justify-around items-center">
         <div
           className="w-screen md:w-3/4 text-7xl md:text-[4.35rem] lg:text-8xl xl:text-9xl 

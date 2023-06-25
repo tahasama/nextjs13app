@@ -21,7 +21,7 @@ import { MdAddCircleOutline } from "react-icons/md";
 import { DiPython } from "react-icons/di";
 
 import { useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import {
   StarProject,
@@ -62,6 +62,8 @@ const Side = () => {
   const [saveMessage, setSaveMessage] = useState("");
   const { uid, email } = useAppSelector(getAuthData);
   const [loading, setLoading] = useState(false);
+  const url = usePathname();
+  console.log("🚀 ~ file: Side.tsx:66 ~ Side ~ url:", url);
   const {
     title,
     description,
@@ -235,8 +237,14 @@ const Side = () => {
 
   return (
     <nav
-      className={`z-40 bottom-0 fixed bg-black overflow-auto w-full h-16 md:w-36 md:h-[calc(100vh-64px)] md:border-r-2 border-slate-500 shadow-slate-700 text-md
-       py-3 text-slate-400 flex flex-row md:flex-col items-center md:items-end md:hover:items-stretch justify-around  ${kiwi.className} md:-translate-x-20 md:hover:translate-x-0 md:hover:w-28  transition-all duration-1000 ease-in-out group`}
+      className={`z-40 bottom-0 fixed bg-black overflow-auto w-full h-16 md:w-36 md:h-[calc(100vh-64px)] ${
+        url !== "/" && "md:border-r-2"
+      } border-slate-500 shadow-slate-700 text-md
+       py-3 text-slate-400 flex flex-row md:flex-col items-center md:items-end md:hover:items-stretch justify-around  ${
+         kiwi.className
+       } md:-translate-x-20 md:hover:translate-x-0 md:hover:${
+        !uid && url === "/" ? "w-80" : "w-28"
+      } transition-all duration-1000 ease-in-out group`}
     >
       {!uid && (
         <>
@@ -247,7 +255,7 @@ const Side = () => {
             <div>
               <HiOutlineCode className="w-7 h-7 " />
             </div>{" "}
-            <div className="md:group-hover:block hidden ">Code and Run</div>
+            <div className="md:group-hover:block hidden ">Code & run</div>
           </button>
           <button
             className="flex items-center hover:border-l-4 pb-2	 transition-all duration-150 border-red-700 justify-around mr-2 md:mr-5 md:group-hover:mr-0"
@@ -256,7 +264,7 @@ const Side = () => {
             <div>
               <DiReact className="w-8 h-8 " />
             </div>{" "}
-            <div className="md:group-hover:block hidden ">React and Run</div>
+            <div className="md:group-hover:block hidden ">React & run</div>
           </button>
           <button
             className="flex items-center hover:border-l-4 pb-2	 transition-all duration-150 border-red-700 justify-around mr-2 md:mr-5 md:group-hover:mr-0"
@@ -265,16 +273,16 @@ const Side = () => {
             <div>
               <DiPython className="w-8 h-8 " />
             </div>{" "}
-            <div className="md:group-hover:block hidden ">Python to go</div>
+            <div className="md:group-hover:block hidden ">Python & go</div>
           </button>
           <button
-            className="flex items-center hover:border-l-4 pb-2	 transition-all duration-150 border-red-700 justify-around mr-2 md:mr-5 md:group-hover:mr-0"
+            className="flex items-center hover:border-l-4 pb-2 transition-all duration-150 border-red-700 justify-around mr-2 md:mr-5 md:group-hover:mr-0"
             onClick={handleDataScience}
           >
             <div>
               <FaChartLine className="w-6 h-6 " />
             </div>{" "}
-            <div className="md:group-hover:block hidden ">data Science</div>
+            <div className="md:group-hover:block hidden ">Data Science</div>
           </button>
         </>
       )}

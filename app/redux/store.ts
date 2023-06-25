@@ -3,7 +3,6 @@ import authReducer from "./features/authSlice";
 import projectsReducer from "./features/projectSlice";
 import barReducer from "./features/barSlice";
 import sideBarReducer from "./features/sideBarSlice";
-
 import { usersNextApi } from "./services/users/usersApi";
 
 export const store = configureStore({
@@ -13,6 +12,7 @@ export const store = configureStore({
     proj: projectsReducer,
     bar: barReducer,
     sideBar: sideBarReducer,
+
     // reducer of API Created in App in Api directory
     [usersNextApi.reducerPath]: usersNextApi.reducer,
   },
