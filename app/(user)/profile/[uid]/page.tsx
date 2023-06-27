@@ -156,7 +156,7 @@ const page = () => {
           </p>
         </div>
       </div>
-      <div className={`w-full  ${bio ? "md:w-5/7" : "md:w-2/3"} mt-16`}>
+      <div className={`w-full  ${bio ? "md:w-5/7" : "md:w-2/3"} mt-20`}>
         <div className="flex items-center justify-around md:-ml-3">
           <div className="flex flex-col md:flex-row items-center mb-6 md:mb-12 mt-5 w-full">
             <div className="flex flex-col justify-end gap-3 mt-10 md:mt-5 flex-1">

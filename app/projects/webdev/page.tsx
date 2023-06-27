@@ -79,7 +79,7 @@ const page = () => {
       </section>
       <section
         id="getting-started"
-        className="py-20 bg-gray-900"
+        className="pb-20 bg-gray-900"
         ref={gettingStartedRef}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -149,7 +149,7 @@ const page = () => {
         ref={browsingTutorialsRef}
         className="bg-gray-900 "
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 ">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:pb-24 ">
           <div className="text-center">
             <h2 className="text-3xl font-extrabold text-white sm:text-4xl md:text-5xl">
               <span className="block">Learn with our</span>
@@ -214,42 +214,7 @@ const page = () => {
               </a>
             </div>
             {/* <div className="col-span-3 sm:col-span-2 lg:col-span-3 flex justify-center items-center"> */}
-            <div className="flex flex-col items-center md:w-80 p-4 my-4 bg-gradient-to-br rounded-md from-slate-900 via-slate-900 to-slate-800">
-              <div className="w-20 h-20 rounded-full bg-sky-600 flex items-center justify-center">
-                <SiTypescript className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="mt-8 text-xl font-medium text-white">
-                Typescript
-              </h3>
-              <p className="mt-6 text-base text-gray-300 text-center">
-                Learn the basics of TypeScript and how it can improve your
-                JavaScript code.
-              </p>
-              <a
-                href="/projects/python/tutorials/machineLearning"
-                className="mt-8 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md bg-sky-600 hover:bg-sky-700"
-              >
-                <RiArrowRightSLine className="w-5 h-5 mr-2" />
-                Start tutorial
-              </a>
-            </div>
-            <div className="flex flex-col items-center md:w-80 p-4 my-4 bg-gradient-to-br rounded-md from-slate-900 via-slate-900 to-slate-800 ">
-              <div className="w-20 h-20 rounded-full bg-sky-600 flex items-center justify-center">
-                <FaReact className="w-10 h-10 text-white" />
-              </div>
-              <h3 className="mt-8 text-xl font-medium text-white">React js</h3>
-              <p className="mt-6 text-base text-gray-300 text-center">
-                Learn the basics of React, for building innovative user
-                interfaces.
-              </p>
-              <a
-                href="/projects/python/tutorials/machineLearning"
-                className="mt-8 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md bg-sky-600 hover:bg-sky-700"
-              >
-                <RiArrowRightSLine className="w-5 h-5 mr-2" />
-                Start tutorial
-              </a>
-            </div>
+
             {/* </div> */}
           </div>{" "}
         </div>
@@ -258,7 +223,7 @@ const page = () => {
         id="examples"
         className=" flex flex-row justify-around bg-gray-900"
       >
-        <div className="container mx-10 px-4 py-16">
+        <div className="container mx-10 px-4 pb-16">
           <div className="text-center mb-10">
             <h2 className="text-3xl font-semibold text-white">Examples</h2>
             <p className="mt-4 text-white">

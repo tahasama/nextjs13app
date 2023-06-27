@@ -49,6 +49,7 @@ const Header = () => {
   // const { search } = useAppSelector(getProjectData);
   // console.log("🚀 ~ file: Header.tsx:39 ~ Header ~ search:", search);
   const { uid, displayName, email, image } = useAppSelector(getAuthData);
+  console.log("🚀 ~ file: Header.tsx:52 ~ Header ~ image:", image);
   const user = useAppSelector(getAuthData);
   console.log(
     "🚀 ~ file: Header.tsx:44 ~ Header ~ user:lllllllllllllllllll",
@@ -205,7 +206,7 @@ const Header = () => {
           {uid && image ? (
             image !== "" ? (
               <img
-                className="w-10 h-10 rounded-full"
+                className="rounded-full h-10 w-10"
                 src={image}
                 alt="user photo"
               />
