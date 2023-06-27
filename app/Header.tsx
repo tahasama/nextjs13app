@@ -2,6 +2,7 @@
 
 import { Kiwi_Maru } from "next/font/google";
 import Link from "next/link";
+import Image from "next/image";
 import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import { getBarData, showHideDropdown } from "./redux/features/barSlice";
 import { signOut } from "firebase/auth";
@@ -23,6 +24,7 @@ import {
   updateProjectInfos,
   cleanState,
 } from "./redux/features/projectSlice";
+import Logo from "./images/Logo.png";
 
 const kiwi = Kiwi_Maru({
   subsets: ["latin"],
@@ -73,12 +75,21 @@ const Header = () => {
     <div
       className={` flex overflow-visible justify-between items-center w-screen   h-20 z-50 text-white fixed top-0 bg-black `}
     >
-      <ul className=" overflow-hidden hidden md:flex justify-around flex-grow lg:flex-grow-0 lg:gap-12 lg:w-auto mx-16  text-lg text text-gray-300 font-semibold">
+      <ul className=" overflow-hidden hidden ml-0 md:flex justify-around items-center flex-grow lg:flex-grow-0 lg:gap-12 lg:w-auto mx-16  text-xl text text-gray-300 font-semibold">
+        <Link href={"/"}>
+          <Image
+            src={Logo}
+            alt="Logo"
+            width={220}
+            className="p-0 m-0 relative left-0 xl:-top-1 cursor-pointer w-36 lg:w-full flex-shrink-0"
+          />
+        </Link>
+
         {links.map((l: linksProps) => (
-          <li key={l.id} className="relative h-full">
+          <li key={l.id} className="relative h-full ">
             <Link href={l.link} className="group transition duration-300">
-              <span className="relative">{l.name}</span>
-              <span className="absolute left-0 -bottom-0 w-full h-0.5 bg-sky-600 transform scale-x-0 origin-left transition-transform duration-1000 group-hover:scale-x-100"></span>
+              <span className="relative pb-1">{l.name}</span>
+              <span className="absolute left-0 -bottom-0  w-full h-0.5 bg-sky-600 transform scale-x-0 origin-left transition-transform duration-1000 group-hover:scale-x-100"></span>
             </Link>
           </li>
         ))}
@@ -124,24 +135,36 @@ const Header = () => {
           </>
         )}
       </div>
+      <Link href={"/"}>
+        <Image
+          src={Logo}
+          alt="Logo"
+          width={220}
+          className="p-0 m-0 relative md:hidden left-0 xl:-top-1 cursor-pointer lg:w-full flex-shrink-0"
+        />
+      </Link>
       {dropDown && (
         <div
-          className="z-50 absolute top-16 right-4 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+          className={`z-50 absolute ${
+            uid ? "w-fit" : "w-28"
+          } top-16 right-4 my-4 text-base list-none  divide-y  rounded-lg shadow bg-gray-700 divide-gray-600`}
           id="user-dropdown"
         >
-          <div className="px-4 py-3">
-            <span className="block text-sm text-gray-900 dark:text-white">
-              {displayName}
-            </span>
-            <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">
-              {email}
-            </span>
-          </div>
-          <ul className="py-2" aria-labelledby="user-menu-button">
+          {uid && (
+            <div className="px-4 py-3">
+              <span className="block text-sm text-gray-900 dark:text-white">
+                {displayName}
+              </span>
+              <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">
+                {email}
+              </span>
+            </div>
+          )}
+          <ul className="" aria-labelledby="user-menu-button ">
             <li>
               <Link
                 href={!uid ? "/login" : "/profile/" + uid}
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                className="block px-4 py-3 text-md tracking-wider duration-300 transition-all rounded-t-md h-full text-cyan-500 hover:bg-gray-600 hover:text-white"
                 onClick={() => dispatch(showHideDropdown(!dropDown))}
               >
                 {!uid ? "Login" : " Dashboard"}
@@ -151,7 +174,7 @@ const Header = () => {
             <li>
               <Link
                 href={uid ? "/" : "/register"}
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                className="block px-4 py-3 text-md tracking-wider duration-300 transition-all rounded-b-md h-full text-cyan-500 hover:bg-gray-600 hover:text-white"
                 onClick={() => {
                   dispatch(showHideDropdown(!dropDown));
                   uid &&
@@ -232,7 +255,7 @@ const Header = () => {
               >
                 <div className=" w-36 border-b-2 border-l-2 px-4 py-2 border-red-700 rounded-md">
                   <Link href={l.link} onClick={() => setNav(!nav)}>
-                    {l.link}
+                    {l.name}
                   </Link>
                 </div>
               </li>

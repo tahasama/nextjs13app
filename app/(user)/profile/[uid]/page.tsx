@@ -11,9 +11,10 @@ import {
 } from "@/app/redux/features/projectSlice";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { AiOutlineStar, AiTwotoneStar } from "react-icons/ai";
 import { FaGithub, FaTwitter, FaInstagram } from "react-icons/fa";
+import Loading from "../Loading";
 
 const page = () => {
   const { all } = useAppSelector(getProjectData);
@@ -234,52 +235,53 @@ const page = () => {
             </div>
           </div>
         </div>
+        <Suspense fallback={<Loading />}>
+          <div className="flex flex-wrap justify-center gap-3 md:overflow-auto h-80 scrollbar scrollbar-thumb-purple-700 scrollbar-track-violet-900">
+            {all !== undefined &&
+              (selectedFilter !== "" ? filteredAll : all)
 
-        <div className="flex flex-wrap justify-center gap-3 md:overflow-auto h-80 scrollbar scrollbar-thumb-purple-700 scrollbar-track-violet-900">
-          {all !== undefined &&
-            (selectedFilter !== "" ? filteredAll : all)
-
-              // .sort((a: any, b: any) => b.stars - a.stars)
-              .map((project: any) => (
-                <div
-                  className="card-container flex flex-col w-2/5 h-40 bg-gray-800 rounded-lg shadow-lg"
-                  key={project._id}
-                >
-                  <div className="flex justify-between items-center m-2">
-                    <a
-                      href={`/projects/${
-                        project.projectType === "rj"
-                          ? "webdev/react-project"
-                          : project.projectType === "vwd"
-                          ? "webdev/vanilla-project"
-                          : "python/python-project"
-                      }/${project._id}`}
-                      rel="noopener noreferrer"
-                      className="text-lg font-medium text-gray-200 hover:text-gray-300 truncate"
-                    >
-                      {project.title}
-                    </a>
-                    <div className="flex items-center">
-                      <AiTwotoneStar className="w-4 h-4 text-yellow-200" />
-                      <p className="text-sm text-gray-400 ml-1">
-                        {project.star.length}
+                // .sort((a: any, b: any) => b.stars - a.stars)
+                .map((project: any) => (
+                  <div
+                    className="card-container flex flex-col w-2/5 h-40 bg-gray-800 rounded-lg shadow-lg"
+                    key={project._id}
+                  >
+                    <div className="flex justify-between items-center m-2">
+                      <a
+                        href={`/projects/${
+                          project.projectType === "rj"
+                            ? "webdev/react-project"
+                            : project.projectType === "vwd"
+                            ? "webdev/vanilla-project"
+                            : "python/python-project"
+                        }/${project._id}`}
+                        rel="noopener noreferrer"
+                        className="text-lg font-medium text-gray-200 hover:text-gray-300 truncate"
+                      >
+                        {project.title}
+                      </a>
+                      <div className="flex items-center">
+                        <AiTwotoneStar className="w-4 h-4 text-yellow-200" />
+                        <p className="text-sm text-gray-400 ml-1">
+                          {project.star.length}
+                        </p>
+                      </div>
+                    </div>
+                    <p className="mt-2 mx-2 indent-3 text-sm text-gray-400 line-clamp-2">
+                      {project.description}
+                    </p>
+                    <div className="flex items-center justify-between px-4 py-2 mt-auto bg-gray-700 rounded-b-lg">
+                      <p className="text-sm text-gray-400">
+                        {project.user.username}
+                      </p>
+                      <p className="text-xs text-gray-400">
+                        {project.createdAt.toDate().toDateString()}
                       </p>
                     </div>
                   </div>
-                  <p className="mt-2 mx-2 indent-3 text-sm text-gray-400 line-clamp-2">
-                    {project.description}
-                  </p>
-                  <div className="flex items-center justify-between px-4 py-2 mt-auto bg-gray-700 rounded-b-lg">
-                    <p className="text-sm text-gray-400">
-                      {project.user.username}
-                    </p>
-                    <p className="text-xs text-gray-400">
-                      {project.createdAt.toDate().toDateString()}
-                    </p>
-                  </div>
-                </div>
-              ))}
-        </div>
+                ))}
+          </div>
+        </Suspense>
       </div>
     </section>
   );

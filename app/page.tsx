@@ -74,7 +74,7 @@ export default function Home() {
                     } hover:text-slate-900 hover:px-3 hover:mx-3 
                     ${
                       i === 5 &&
-                      "md:bg-transparent bg-[#8bc34ae4] md:text-transparent  rounded text-slate-900 md:px-0 px-3 md:mx-3 mx-3 hover:bg-[#76b020] "
+                      "md:bg-transparent bg-[#8bc34ae4] md:text-transparent md:-ml-1 rounded text-slate-900 md:px-0 px-3 md:mx-3 mx-3 hover:bg-[#76b020] "
                     }
                     `}
                   >
