@@ -46,15 +46,10 @@ const links: linksProps[] = [
 const Header = () => {
   const dispatch = useAppDispatch();
   const { dropDown } = useAppSelector(getBarData);
-  // const { search } = useAppSelector(getProjectData);
-  // console.log("🚀 ~ file: Header.tsx:39 ~ Header ~ search:", search);
+
   const { uid, displayName, email, image } = useAppSelector(getAuthData);
-  console.log("🚀 ~ file: Header.tsx:52 ~ Header ~ image:", image);
   const user = useAppSelector(getAuthData);
-  console.log(
-    "🚀 ~ file: Header.tsx:44 ~ Header ~ user:lllllllllllllllllll",
-    user
-  );
+
   const [openUserMenu, setOpenUserMenu] = useState(false);
   const searchRef = useRef<any>(null);
   const [errorTitle, setErrorTitle] = useState("");
@@ -67,10 +62,6 @@ const Header = () => {
 
     dispatch(searchProjectsData(searchRef.current?.value));
   };
-  console.log(
-    "🚀 ~ file: Header.tsx:55 ~ consthandleProjectSearch:FormEventHandler<HTMLFormElement>= ~ searchRef.current?.value:",
-    searchRef.current?.value
-  );
 
   return (
     <div

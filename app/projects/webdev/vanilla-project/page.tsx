@@ -30,7 +30,6 @@ export default function vanillaEdit() {
   const dispatch = useAppDispatch();
   const { uid, email } = useAppSelector(getAuthData);
   const { projectId } = useParams();
-  console.log("🚀 ~ file: page.tsx:33 ~ vanillaEdit ~ projectId:", projectId);
   const {
     title,
     description,

@@ -37,13 +37,7 @@ export default function Modal() {
   const { displayName, email, uid } = useAppSelector(getAuthData);
   const Proj = useAppSelector(getProjectData);
   const { _id, titleErr, projectTypeErr } = useAppSelector(getProjectData);
-  console.log(
-    "🚀 ~ file: modal.tsx:40 ~ Modal ~  titleErr",
-    titleErr,
-    " projectTypeErr :",
 
-    projectTypeErr
-  );
   const pathname = usePathname();
 
   const projectDestination = useMemo(
@@ -83,7 +77,6 @@ export default function Modal() {
   //   projectType: Yup.string().required("Please choose a project projectType!"),
   // });
 
-  // console.log("errorProjectType", errorProjectType, "errorTitle", errorTitle);
   const handleNewProjectCreate: FormEventHandler<HTMLFormElement> = async (
     e
   ) => {
@@ -114,15 +107,8 @@ export default function Modal() {
     } else {
       dispatch(cleanForm({ projectTypeErr: "" }));
     }
-    console.log(
-      "hahahahahahaaaaaa",
-      projectTypeErr,
-      "projectTypejjjj",
-      projectType
-    );
 
     if (title !== "" && projectType !== "") {
-      console.log("waaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
       dispatch(createProject(serializableProject)).then(({ payload }: any) => {
         setTimeout(() => {
           if (payload._id) {

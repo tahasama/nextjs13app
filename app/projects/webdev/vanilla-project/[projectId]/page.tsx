@@ -11,7 +11,6 @@ import VanillaEdit from "../page";
 const page = ({ params: { projectId } }: any) => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(getProjectData);
-  console.log("🚀 ~ file: page.tsx:10 ~ page ~ project:", project);
   useEffect(() => {
     dispatch(fetchProjectById(projectId));
   }, []);

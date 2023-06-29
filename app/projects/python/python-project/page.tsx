@@ -34,7 +34,6 @@ export default function PythonEdit() {
     result_images: "",
   });
   const [images, setImages] = useState<any>([]);
-  console.log("🚀 ~ file: page.tsx:30 ~ images:", images);
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const { pythonCode, title, updatedAt, createdAt, description } =
@@ -42,12 +41,10 @@ export default function PythonEdit() {
   const { uid } = useAppSelector(getAuthData);
   const { projectId } = useParams();
 
-  console.log("🚀 ~ file: page.tsx:34 ~ pythonCode000000000000:", pythonCode);
   const ffffffff = useAppSelector(getProjectData);
   const [handleWidth, setHandleWidth] = useState(x.innerWidth * 0.8);
 
   const query = useSearchParams().get("type");
-  console.log("🚀 ~ file: page.tsx:41 ~ projectId:", projectId);
 
   const updatedAt1 = new Date(
     // @ts-ignore
@@ -57,7 +54,6 @@ export default function PythonEdit() {
     // @ts-ignore
     createdAt.seconds * 1000 + createdAt.nanoseconds / 1000000
   );
-  console.log("ooooooooooooooooooooooooooooooooooo", projectId);
 
   useEffect(() => {
     if (!projectId) {
@@ -97,7 +93,6 @@ export default function PythonEdit() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("IIIIIIII", data?.result_images);
         setLoading(false);
         setImages([...data?.result_images]);
         setData(data);

@@ -239,10 +239,6 @@ export const deleteProject = createAsyncThunk(
 export const searchProjectsData = createAsyncThunk(
   "searchProjectsData",
   async (seria: any) => {
-    console.log(
-      "🚀 ~ file: projectSlice.ts:253 ~ seria:vvvvvvvvvvvvvvvv",
-      seria
-    );
     const q1 = query(
       collection(db, "users"),
       where("displayName", "==", seria)
@@ -280,10 +276,7 @@ export const searchProjectsData = createAsyncThunk(
       const data = doc.data();
       documents4.push(data);
     });
-    console.log("🚀 ~ file: projectSlice.ts:261 ~ documents1:", documents1);
-    console.log("🚀 ~ file: projectSlice.ts:261 ~ documents2:", documents2);
-    console.log("🚀 ~ file: projectSlice.ts:261 ~ documents3:", documents3);
-    console.log("🚀 ~ file: projectSlice.ts:261 ~ documents4:", documents4);
+
     const documents: any[] = [
       ...documents1,
       ...documents2,
@@ -292,7 +285,6 @@ export const searchProjectsData = createAsyncThunk(
     ];
     // const documentsSet = new Set(documents);
     // const documentsArr = new Array(documentsSet);
-    console.log("🚀 ~ file: projectSlice.ts:277 ~ documents:", documents);
     return documents; // Return the documents array
   }
 );
@@ -393,11 +385,6 @@ export const projectSlice = createSlice({
 
     cleanForm: (state, action) => {
       state.titleErr = action.payload.titleErr;
-      console.log(
-        "🚀 ~ file: projectSlice.ts:396 ~ action.payload.titleErr:",
-        action.payload.titleErr
-      );
-
       state.projectTypeErr = action.payload.projectTypeErr;
     },
     // updateId: (state, action) => {

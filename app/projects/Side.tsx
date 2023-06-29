@@ -63,7 +63,6 @@ const Side = () => {
   const { uid, email } = useAppSelector(getAuthData);
   const [loading, setLoading] = useState(false);
   const url = usePathname();
-  console.log("🚀 ~ file: Side.tsx:66 ~ Side ~ url:", url);
   const {
     title,
     description,
@@ -78,14 +77,6 @@ const Side = () => {
     projectType,
     pythonCode,
   } = useAppSelector(getProjectData);
-  console.log("🚀 ~ saved121342423424234234234:", saved);
-  console.log(
-    "🚀 ~ file: Side.tsx:79 ~ Side ~ pythonCode:777777777777777777",
-    pythonCode
-  );
-
-  console.log("2222222222", projectId && uid === user.uid);
-  console.log("5555555555", uid, "7777777777", user);
 
   useEffect(() => {
     dispatch(updateSaved(false));
@@ -95,7 +86,6 @@ const Side = () => {
     if (!saved && uid === user.uid) {
       const result = window.confirm("are you sure you want to leave? ");
       setResult(result);
-      console.log("DONT LEAVE....", result);
       if (result) {
         dispatch(updateSaved(true));
         router.push(destination);
