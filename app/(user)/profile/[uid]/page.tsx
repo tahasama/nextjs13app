@@ -13,7 +13,7 @@ import { useParams, useRouter } from "next/navigation";
 import React, { Suspense, useEffect, useState } from "react";
 import { AiOutlineStar, AiTwotoneStar } from "react-icons/ai";
 import { FaGithub, FaTwitter, FaInstagram } from "react-icons/fa";
-import { BiDownArrow } from "react-icons/bi";
+import { BiDownArrow, BiUpArrow } from "react-icons/bi";
 import Loading from "../Loading";
 import ModalUser from "./modal";
 import Modal from "@/app/modal";
@@ -167,10 +167,13 @@ const page = () => {
                   onClick={() =>
                     all.sort((a: any, b: any) => b.star.length - a.star.length)
                   }
-                  className="relative text-center  cursor-pointer bg-indigo-950 w-24 md:40 lg:w-40 py-2 rounded-2xl"
+                  className="relative text-center cursor-pointer bg-indigo-950 w-24 md:40 lg:w-40 py-2 rounded-2xl"
                 >
-                  <div className="w-full absolute ">
-                    <BiDownArrow className="w-full absolute bg-red-400 top-5 right-0" />
+                  <div className="w-full relative">
+                    <div className="absolute top-0 right-0 mt-2 mr-2 gap-0">
+                      <BiUpArrow className="w-full" />
+                      <BiDownArrow className="w-full" />
+                    </div>
                   </div>
                   <div className="text-base md:text-2xl lg:text-3xl font-semibold">
                     {all.reduce(
@@ -185,6 +188,12 @@ const page = () => {
                   onClick={() => handleFilter("")}
                   className="text-center cursor-pointer bg-indigo-950 w-24 md:36 lg:w-40 py-2 rounded-2xl"
                 >
+                  <div className="w-full relative">
+                    <div className="absolute top-0 right-0 mt-2 mr-2 gap-0">
+                      <BiUpArrow className="w-full" />
+                      <BiDownArrow className="w-full" />
+                    </div>
+                  </div>
                   <div className="text-base md:text-2xl lg:text-3xl font-semibold">
                     {all.length}
                   </div>
@@ -193,11 +202,18 @@ const page = () => {
                   </div>
                 </div>
               </div>
+
               <div className="bg-opacity-60 flex flex-wrap justify-center items-center gap-2 mt-3 md:mt-0">
                 <div
                   onClick={() => handleFilter("rj")}
                   className="text-center cursor-pointer bg-violet-950 w-20 md:w-32 py-2 rounded-2xl"
                 >
+                  <div className="w-full relative">
+                    <div className="absolute top-0 right-0 mt-2 mr-2 gap-0">
+                      <BiUpArrow className="w-full" />
+                      <BiDownArrow className="w-full" />
+                    </div>
+                  </div>
                   <div className="text-base md:text-xl lg:text-2xl font-semibold">
                     {all.filter((x: any) => x.projectType === "rj").length}
                   </div>
@@ -209,6 +225,12 @@ const page = () => {
                   onClick={() => handleFilter("vwd")}
                   className="text-center  cursor-pointer bg-violet-950 w-20 md:w-32 py-2 rounded-2xl"
                 >
+                  <div className="w-full relative">
+                    <div className="absolute top-0 right-0 mt-2 mr-2 gap-0">
+                      <BiUpArrow className="w-full" />
+                      <BiDownArrow className="w-full" />
+                    </div>
+                  </div>
                   <div className="text-base md:text-xl lg:text-2xl font-semibold">
                     {all.filter((x: any) => x.projectType === "vwd").length}
                   </div>
@@ -220,6 +242,12 @@ const page = () => {
                   onClick={() => handleFilter("py")}
                   className="text-center cursor-pointer bg-violet-950 w-20 md:w-32 py-2 rounded-2xl"
                 >
+                  <div className="w-full relative">
+                    <div className="absolute top-0 right-0 mt-2 mr-2 gap-0">
+                      <BiUpArrow className="w-full" />
+                      <BiDownArrow className="w-full" />
+                    </div>
+                  </div>
                   <div className="text-base md:text-xl lg:text-2xl font-semibold">
                     {all.filter((x: any) => x.projectType === "py").length}
                   </div>
@@ -229,6 +257,12 @@ const page = () => {
                   onClick={() => handleFilter("ds")}
                   className="text-center cursor-pointer bg-violet-950 w-20 md:w-32 py-2 rounded-2xl"
                 >
+                  <div className="w-full relative">
+                    <div className="absolute top-0 right-0 mt-2 mr-2 gap-0">
+                      <BiUpArrow className="w-full" />
+                      <BiDownArrow className="w-full" />
+                    </div>
+                  </div>
                   <div className="text-base md:text-xl lg:text-2xl font-semibold">
                     {all.filter((x: any) => x.projectType === "ds").length}
                   </div>
