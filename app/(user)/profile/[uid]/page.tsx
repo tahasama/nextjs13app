@@ -36,7 +36,12 @@ const page = () => {
     ocreationTime,
     olastSignInTime,
     oimage,
+    github,
+    twitter,
+    insta,
   } = useAppSelector(getAuthData);
+  const xxx = useAppSelector(getAuthData);
+  console.log("🚀 ~ file: page.tsx:41 ~ page ~ social:0000000000", xxx);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -108,32 +113,38 @@ const page = () => {
           </div>
         </div>
         <div className="flex  gap-12 justify-center m-8 items-center">
-          <a
-            href=""
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-gray-400 hover:text-gray-300"
-          >
-            <FaGithub className="w-10 h-10 md:w-8 md:h-8" />
-          </a>
+          {github !== "" && github !== undefined && (
+            <a
+              href={github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-gray-300"
+            >
+              <FaGithub className="w-10 h-10 md:w-8 md:h-8" />
+            </a>
+          )}
 
-          <a
-            href=""
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-gray-400 hover:text-gray-300"
-          >
-            <FaTwitter className="w-10 h-10 md:w-8 md:h-8" />
-          </a>
+          {twitter !== "" && twitter !== undefined && (
+            <a
+              href={twitter}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-gray-300"
+            >
+              <FaTwitter className="w-10 h-10 md:w-8 md:h-8" />
+            </a>
+          )}
 
-          <a
-            href=""
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-gray-400 hover:text-gray-300"
-          >
-            <FaInstagram className="w-10 h-10 md:w-8 md:h-8" />
-          </a>
+          {insta !== "" && insta !== undefined && (
+            <a
+              href={insta}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-gray-300"
+            >
+              <FaInstagram className="w-10 h-10 md:w-8 md:h-8" />
+            </a>
+          )}
         </div>
         {uid === params.uid && (
           <div className="flex flex-row mb-3 gap-5">

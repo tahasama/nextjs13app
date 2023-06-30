@@ -41,7 +41,9 @@ export default function ModalUser() {
   // const [errorProjectType, setErrorProjectType] = useState("");
   // const [errorTitle, setErrorTitle] = useState("");
 
-  const { displayName, email, uid, social, bio } = useAppSelector(getAuthData);
+  const { displayName, email, uid, bio, github, twitter, insta } =
+    useAppSelector(getAuthData);
+  console.log("🚀 ~ file: modal.tsx:45 ~ ModalUser ~ social:", github);
 
   const pathname = usePathname();
 
@@ -66,9 +68,15 @@ export default function ModalUser() {
     e.preventDefault();
     setLoading(true);
     const serializableProject = {
-      user: { uid: uid, displayName: nameRef.current.value },
-      bio: bio,
+      uid: uid,
+      displayName: nameRef.current.value,
+      bio: bio !== undefined ? bio : "",
+
+      twitter: twitter !== undefined ? twitter : "",
+      insta: insta !== undefined ? insta : "",
+      github: github !== undefined ? github : "",
     };
+
     dispatch(updateUser(serializableProject)).then(() => {
       setLoading(false), setShowModal(false), barState(false);
     });
@@ -147,7 +155,7 @@ export default function ModalUser() {
                       className="createInput border  bg-slate-200 w-full h-full p-2 "
                       type="text"
                       ref={githubRef}
-                      value={social?.github}
+                      value={github}
                       onChange={() =>
                         dispatch(
                           updateUserInfos({
@@ -165,7 +173,7 @@ export default function ModalUser() {
                       className="createInput border  bg-slate-200 w-full h-full p-2 "
                       type="text"
                       ref={twitterRef}
-                      value={social?.twitter}
+                      value={twitter}
                       onChange={() =>
                         dispatch(
                           updateUserInfos({
@@ -174,19 +182,21 @@ export default function ModalUser() {
                         )
                       }
                     />
-                  </div>{" "}
+                  </div>
                 </div>
                 <div className="flex w-full gap-2">
                   <FaInstagram size={28} />
-                  <div className="border   rounded w-full h-9  text-gray-900 leading-tight focus:outline-none focus:shadow-outline">
+                  <div className="border   rounded w-full h-9 text-gray-900 leading-tight focus:outline-none focus:shadow-outline">
                     <input
                       className="createInput border text-black bg-slate-200 w-full h-full p-2 "
                       type="text"
                       ref={instaRef}
-                      value={social?.insta}
+                      value={insta}
                       onChange={() =>
                         dispatch(
-                          updateUserInfos({ insta: instaRef.current?.value })
+                          updateUserInfos({
+                            insta: instaRef.current?.value,
+                          })
                         )
                       }
                     />

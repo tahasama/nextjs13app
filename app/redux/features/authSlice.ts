@@ -12,6 +12,7 @@ import {
 import { auth, db } from "../../firebase";
 import { doc, setDoc } from "@firebase/firestore";
 import { collection, getDoc, updateDoc } from "firebase/firestore";
+import { stat } from "fs";
 
 const USER_URL: any = process.env.REACT_APP_USER_URL;
 
@@ -126,14 +127,17 @@ export const updateUser = createAsyncThunk(
   async (value: any) => {
     console.log("🚀 ~ file: authSlice.ts:127 ~ value:", value);
     const object = {
-      user: { uid: value.user.uid, displayName: value.user.displayName }, // Include the pythonCode field in the object
+      displayName: value.displayName, // Include the pythonCode field in the object
       bio: value.bio, // Include the pythonCode field in the object
+      twitter: value.twitter,
+      insta: value.insta,
+      github: value.github,
     };
     console.log("🚀 ~ file: authSlice.ts:132 ~ object:", object);
 
     try {
       const res = await updateDoc(
-        doc(db, "users", object.user.uid),
+        doc(db, "users", value.uid),
         object // Pass the object containing the pythonCode field as the second argument
       );
       return res;
@@ -169,6 +173,10 @@ export const getOtherUserByUid = createAsyncThunk(
       if (!userDoc.exists) {
         return { error: "this user do not exist" };
       }
+      console.log(
+        "🚀 ~ file: authSlice.ts:176 ~ userDoc.data():",
+        userDoc.data()
+      );
       return userDoc.data();
     } catch (error) {
       return error;
@@ -200,7 +208,6 @@ export interface userProps {
     lastSignInTime: any;
     displayName: string;
     bio: string;
-
     ouid?: string;
     oemail?: string;
     oimage?: string;
@@ -208,11 +215,9 @@ export interface userProps {
     olastSignInTime?: any;
     odisplayName?: string;
     obio?: string;
-    social?: {
-      twitter: string;
-      insta: string;
-      github: string;
-    };
+    twitter?: string;
+    insta?: string;
+    github?: string;
   };
 }
 
@@ -236,11 +241,9 @@ export const userInitialState = {
   olastSignInTime: "",
   odisplayName: "",
   obio: "",
-  social: {
-    twitter: "",
-    insta: "",
-    github: "",
-  },
+  twitter: "",
+  insta: "  ",
+  github: "",
 };
 
 export const authSlice = createSlice({
@@ -287,6 +290,9 @@ export const authSlice = createSlice({
       state.oimage = action.payload.image;
       state.obio = action.payload.bio;
       state.error = action.payload;
+      state.github = action.payload.github;
+      state.twitter = action.payload.twitter;
+      state.insta = action.payload.insta;
     });
     builder.addCase(registerUser.fulfilled, (state, action: any) => {
       state.uid = action.payload.uid;
