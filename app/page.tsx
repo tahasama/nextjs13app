@@ -23,15 +23,15 @@ export default function Home() {
       <Side />
       <div className="flex flex-row h-[calc(100vh-4rem)] justify-around items-center">
         <div
-          className="w-screen md:w-3/4 text-7xl md:text-[4.35rem] lg:text-8xl xl:text-9xl 
+          className="w-screen md:w-3/4 text-5xl md:text-[4.35rem] lg:text-8xl xl:text-9xl 
          mt-24 flex flex-col items-center md:items-start md:text-start text-center gap-10 "
         >
-          <p className="md:indent-10 lg:indent-28 w-[100vw]  md:w-full bg-white bg-gradient-to-l pb-6 from-[#2c3e50] via-[#3498db] to-[#2c3e50]">
+          <p className="md:indent-10 lg:indent-28 w-[100vw]  md:w-full bg-white bg-gradient-to-l pb-4 pt-3 md:pt-0 md:pb-6  from-[#2c3e50] via-[#3498db] to-[#2c3e50]">
             Code Simpler
           </p>
 
           <div
-            className="md:ml-16 lg:ml-28 flex flex-row text-transparent pb-8  bg-clip-text bg-gradient-to-l
+            className="md:ml-16 lg:ml-28 flex flex-row text-transparent pb-8  tracking-wider md:tracking-normal bg-clip-text bg-gradient-to-l
            from-[#004a4d] via-[#64ecf6] to-[#004a4d]"
           >
             {codeArr2.map((l: string, i: number) => {
@@ -74,7 +74,7 @@ export default function Home() {
                     } hover:text-slate-900 hover:px-3 hover:mx-3 
                     ${
                       i === 5 &&
-                      "md:bg-transparent bg-[#8bc34ae4] md:text-transparent md:-ml-1 rounded text-slate-900 md:px-0 px-3 md:mx-3 mx-3 hover:bg-[#76b020] "
+                      "md:bg-transparent bg-[#8bc34ae4] md:text-transparent md:-ml-1 mx-1 rounded text-slate-900  md:px-0 px-3 md:mx-3  hover:bg-[#76b020] "
                     }
                     `}
                   >

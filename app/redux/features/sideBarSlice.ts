@@ -1,7 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
+
+export interface sideBarProps {
+  sideBar: {
+    home: boolean;
+    newP: boolean;
+    save: boolean;
+    open: boolean;
+    delete: boolean;
+    edit: boolean;
+    code: boolean;
+    star: boolean;
+    react: boolean;
+    data: boolean;
+    python: boolean;
+    isedit: boolean;
+  };
+}
 export const sideBArInitialState = {
   home: false,
-  new: false,
+  newP: false,
   save: false,
   open: false,
   delete: false,
@@ -11,17 +28,22 @@ export const sideBArInitialState = {
   react: false,
   data: false,
   python: false,
- 
+  isedit: false,
 };
 export const sideBarSlice = createSlice({
   name: "bar-redux",
   initialState: sideBArInitialState,
   reducers: {
     barState: (state, action) => {
-      Object.assign(state, action.payload);
+      state.newP = action.payload;
+    },
+    iseditState: (state, action) => {
+      state.isedit = action.payload;
     },
   },
 });
-export const { barState } = sideBarSlice.actions;
+
+export const getSideBarData = (state: sideBarProps) => state.sideBar;
+export const { barState, iseditState } = sideBarSlice.actions;
 
 export default sideBarSlice.reducer;

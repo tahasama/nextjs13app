@@ -24,6 +24,10 @@ const orbitron = Orbitron({
 const ReactCells = () => {
   const { description, title, updatedAt, createdAt } =
     useAppSelector(getProjectData);
+
+  const hhh = useAppSelector(getProjectData);
+  console.log("🚀 ~ file: reactCells.tsx:29 ~ ReactCells ~ hhh:", hhh);
+
   const { uid } = useAppSelector(getAuthData);
   const { projectId } = useParams();
   const updatedAt1 = new Date(

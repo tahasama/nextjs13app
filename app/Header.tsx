@@ -16,6 +16,8 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FormEventHandler, useRef, useState } from "react";
 import { FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
+import { useParams, usePathname, useRouter } from "next/navigation";
+
 import {
   getProjectData,
   projectInitialState,
@@ -23,6 +25,7 @@ import {
   searchProjectsData,
   updateProjectInfos,
   cleanState,
+  updateSaved,
 } from "./redux/features/projectSlice";
 import Logo from "./images/Logo.png";
 
@@ -46,6 +49,23 @@ const links: linksProps[] = [
 const Header = () => {
   const dispatch = useAppDispatch();
   const { dropDown } = useAppSelector(getBarData);
+  const [result, setResult] = useState(false);
+  const router = useRouter();
+  const { projectId } = useParams();
+
+  const {
+    title,
+    description,
+    selectedDiv,
+    code,
+    updatedAt,
+    saved,
+    reactCode,
+    cells,
+    star,
+    projectType,
+    pythonCode,
+  } = useAppSelector(getProjectData);
 
   const { uid, displayName, email, image } = useAppSelector(getAuthData);
   const user = useAppSelector(getAuthData);
@@ -54,13 +74,66 @@ const Header = () => {
   const searchRef = useRef<any>(null);
   const [errorTitle, setErrorTitle] = useState("");
   const [term, setTerm] = useState("");
+  const [logout, setLogout] = useState(false);
 
   const [nav, setNav] = useState<boolean>(false);
+  const alerted = (destination: string) => {
+    if (!saved && uid === user.uid) {
+      const result = window.confirm(
+        "This work hasn't been saved!\n\n a - Hit 'Cancel' then 'Save' button if you want to save yout work \n b - Hit 'Ok' of you want to leave without saving"
+      );
+      setResult(result);
+      if (result) {
+        dispatch(updateSaved(true));
+
+        router.push(destination);
+      } else {
+        ("none");
+
+        setLogout(false);
+      }
+    } else {
+      router.push(destination);
+    }
+  };
+
+  const alertedLogOut = (destination: string) => {
+    console.log(
+      "🚀 ~ file: Header.tsx:110 ~ alertedLogOut ~ destination:fffffffffff",
+      destination
+    );
+    if (!saved && uid === user.uid) {
+      const result = window.confirm(
+        "This work hasn't beenoooooooooo saved!\n\n a - Hit 'Cancel' then 'Save' button if you want to save yout work \n b - Hit 'Ok' of you want to leave without saving"
+      );
+      setResult(result);
+      if (result) {
+        dispatch(updateSaved(true));
+
+        setTimeout(() => {
+          destination !== "/register" &&
+            signOut(auth).then(
+              () => (
+                dispatch(resetUser(userInitialState)),
+                dispatch(cleanState(projectInitialState)),
+                router.push(destination)
+              )
+            );
+        }, 600);
+      } else {
+        ("none");
+      }
+    } else {
+      router.push(destination);
+    }
+  };
 
   const handleProjectSearch: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
     dispatch(searchProjectsData(searchRef.current?.value));
+
+    projectId ? alerted("/searchResult") : router.push("/searchResult");
   };
 
   return (
@@ -68,26 +141,31 @@ const Header = () => {
       className={` flex overflow-visible justify-between items-center w-screen   h-20 z-50 text-white fixed top-0 bg-black `}
     >
       <ul className=" overflow-hidden hidden ml-0 md:flex justify-around items-center flex-grow lg:flex-grow-0 lg:gap-12 lg:w-auto mx-16  text-xl text text-gray-300 font-semibold">
-        <Link href={"/"}>
+        <div onClick={() => (projectId ? alerted("/") : router.push("/"))}>
           <Image
             src={Logo}
             alt="Logo"
             width={220}
-            className="p-0 m-0 relative left-0 xl:-top-1 cursor-pointer w-36 lg:w-full flex-shrink-0"
+            className="p-0 m-0 relative left-0 xl:-top-1 w-fit cursor-pointer flex-shrink-0"
           />
-        </Link>
+        </div>
 
         {links.map((l: linksProps) => (
-          <li key={l.id} className="relative h-full ">
-            <Link href={l.link} className="group transition duration-300">
+          <li key={l.id} className="relative h-full cursor-pointer">
+            <div
+              onClick={() =>
+                projectId ? alerted(l.link) : router.push(l.link)
+              }
+              className="group transition duration-300"
+            >
               <span className="relative pb-1">{l.name}</span>
               <span className="absolute left-0 -bottom-0  w-full h-0.5 bg-sky-600 transform scale-x-0 origin-left transition-transform duration-1000 group-hover:scale-x-100"></span>
-            </Link>
+            </div>
           </li>
         ))}
       </ul>
 
-      <div className="hidden md:flex md:order-2  lg:w-[30rem]">
+      <div className="hidden md:flex md:order-2 lg:w-[30rem]">
         <form
           onSubmit={handleProjectSearch}
           className="flex items-center pointer-events-auto  lg:w-96"
@@ -113,8 +191,10 @@ const Header = () => {
         </form>
       </div>
       <div
-        onClick={() => setNav(!nav)}
-        className="cursor-pointer mx-3 text-gray-400 z-10 md:hidden flex"
+        onClick={() => {
+          setNav(!nav);
+        }}
+        className="cursor-pointer mx-1 md:mx-0 text-gray-400 z-10 md:hidden flex"
       >
         {nav ? (
           <>
@@ -122,19 +202,12 @@ const Header = () => {
           </>
         ) : (
           <>
-            <FaBars size={30} className="mr-5" />
+            <FaBars size={30} className="mr-2 md:mr-5" />
             <AiOutlineSearch size={30} />
           </>
         )}
       </div>
-      <Link href={"/"}>
-        <Image
-          src={Logo}
-          alt="Logo"
-          width={220}
-          className="p-0 m-0 relative md:hidden left-0 xl:-top-1 cursor-pointer lg:w-full flex-shrink-0"
-        />
-      </Link>
+
       {dropDown && (
         <div
           className={`z-50 absolute ${
@@ -154,40 +227,55 @@ const Header = () => {
           )}
           <ul className="" aria-labelledby="user-menu-button ">
             <li>
-              <Link
-                href={!uid ? "/login" : "/profile/" + uid}
+              <div
                 className="block px-4 py-3 text-md tracking-wider duration-300 transition-all rounded-t-md h-full text-cyan-500 hover:bg-gray-600 hover:text-white"
-                onClick={() => dispatch(showHideDropdown(!dropDown))}
+                onClick={() => {
+                  dispatch(showHideDropdown(!dropDown));
+                  projectId
+                    ? alerted(!uid ? "/login" : "/profile/" + uid)
+                    : router.push(!uid ? "/login" : "/profile/" + uid);
+                }}
               >
                 {!uid ? "Login" : " Dashboard"}
-              </Link>
+              </div>
             </li>
 
             <li>
-              <Link
-                href={uid ? "/" : "/register"}
+              <div
                 className="block px-4 py-3 text-md tracking-wider duration-300 transition-all rounded-b-md h-full text-cyan-500 hover:bg-gray-600 hover:text-white"
                 onClick={() => {
                   dispatch(showHideDropdown(!dropDown));
-                  uid &&
-                    signOut(auth).then(
-                      () => (
-                        dispatch(resetUser(userInitialState)),
-                        dispatch(cleanState(projectInitialState))
-                      )
-                    );
+                  projectId
+                    ? alertedLogOut(uid ? "/" : "/register")
+                    : (uid &&
+                        signOut(auth).then(
+                          () => (
+                            dispatch(resetUser(userInitialState)),
+                            dispatch(cleanState(projectInitialState))
+                          )
+                        ),
+                      router.push(uid ? "/" : "/register"));
                 }}
               >
                 {uid ? " Sign out" : "Register"}
-              </Link>
+              </div>
             </li>
           </ul>
         </div>
       )}
+      <Link href={"/"}>
+        <Image
+          src={Logo}
+          alt="Logo"
+          width={0}
+          className="p-0 m-0 relative md:hidden left-0 -top-[3px] w-fit cursor-pointer scale-110 z-0"
+        />
+      </Link>
+      {/* full screen */}
       <div className="flex items-center md:order-2 ">
         <button
           type="button"
-          className="flex mr-3 text-sm bg-gray-800 rounded-full md:mx-10  focus:ring-4 focus:ring-gray-600"
+          className="flex text-sm items-center justify-center bg-gray-800 rounded-full mx-1 md:mr-8 focus:ring-4 focus:ring-gray-600 h-10 w-10"
           id="user-menu-button"
           aria-expanded="false"
           data-dropdown-toggle="user-dropdown"
@@ -196,11 +284,7 @@ const Header = () => {
         >
           {uid && image ? (
             image !== "" ? (
-              <img
-                className="rounded-full h-10 w-10"
-                src={image}
-                alt="user photo"
-              />
+              <img className="rounded-full z-10" src={image} alt="user photo" />
             ) : (
               <h1 className="text-5xl w-24 h-24 flex items-center justify-center pb-5 bg-emerald-700 rounded-full">
                 {displayName.charAt(0)}

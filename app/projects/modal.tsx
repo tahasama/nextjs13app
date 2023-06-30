@@ -8,6 +8,7 @@ import {
   fetchProjectByUser,
   getProjectData,
   projectInitialState,
+  updateProject,
   updateProjectInfos,
 } from "@/app/redux/features/projectSlice";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
@@ -20,15 +21,14 @@ import React, {
 } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { MdAddCircleOutline } from "react-icons/md";
-import { AiOutlineCloseCircle } from "react-icons/ai";
+import { AiFillEdit, AiOutlineCloseCircle } from "react-icons/ai";
 import {
   barState,
   getSideBarData,
   iseditState,
-} from "./redux/features/sideBarSlice";
-import { getBarData } from "./redux/features/barSlice";
+} from "../redux/features/sideBarSlice";
 
-export default function Modal() {
+export default function ModalEdit({}) {
   const router = useRouter();
   const projectTypeRef = useRef<any>(null);
   const [showModal, setShowModal] = React.useState(false);
@@ -61,17 +61,6 @@ export default function Modal() {
   );
 
   useEffect(() => {
-    // showModal
-    //   ? dispatch(
-    //       updateProjectInfos({ title: "", description: "", projectType: "" })
-    //     )
-    //   : dispatch(
-    //       updateProjectInfos({
-    //         title: title,
-    //         description: description,
-    //         projectType: projectType,
-    //       })
-    //     );
     const handleOutsideClick = (event: any) => {
       // Check if click event target is outside of the modal content
       if (event.target.classList.contains("closeModal")) {
@@ -87,14 +76,14 @@ export default function Modal() {
     return () => {
       window.removeEventListener("click", handleOutsideClick);
     };
-  }, [showModal]);
+  }, []);
 
   // const schema = Yup.object().shape({
   //   title: Yup.string().required("Please add a project name!!!!!"),
   //   projectType: Yup.string().required("Please choose a project projectType!"),
   // });
 
-  const handleNewProjectCreate: FormEventHandler<HTMLFormElement> = async (
+  const handleNewProjectUpdate: FormEventHandler<HTMLFormElement> = async (
     e
   ) => {
     e.preventDefault();
@@ -107,33 +96,15 @@ export default function Modal() {
       star: [],
       createdAt: new Date(),
       updatedAt: new Date(),
+      _id: _id,
     };
 
-    if (title === "") {
-      setLoading(false);
-      dispatch(cleanForm({ titleErr: "Please add a project name!" }));
-      return; // Prevent form submission
-    } else {
-      dispatch(cleanForm({ titleErr: "" }));
-    }
-
-    if (projectType === "") {
-      setLoading(false);
-      dispatch(cleanForm({ projectTypeErr: "Please choose a project type!" }));
-      return; // Prevent form submission
-    } else {
-      dispatch(cleanForm({ projectTypeErr: "" }));
-    }
-
-    if (title !== "" && projectType !== "") {
-      dispatch(createProject(serializableProject)).then(({ payload }: any) => {
+    {
+      dispatch(updateProject(serializableProject)).then(({ payload }: any) => {
         setTimeout(() => {
-          if (payload._id) {
-            router.push(`/projects/${projectDestination}/${payload._id}`);
-
-            setLoading(false);
-            setShowModal(false);
-          }
+          dispatch(barState(false));
+          setLoading(false);
+          setShowModal(false);
         }, 500);
       });
     }
@@ -141,33 +112,20 @@ export default function Modal() {
 
   return (
     <>
-      {pathname.includes("profile") ? (
-        <button
-          className={
-            pathname.includes("profile")
-              ? "bg-pink-700 text-white hover:bg-pink-800 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-              : ""
-          }
-          type="button"
-          onClick={() => {
-            setShowModal(true);
-            dispatch(iseditState(false));
-          }}
-        >
-          Create Project
-        </button>
-      ) : (
-        <div
-          className="flex gap-14 "
-          onClick={() => {
-            setShowModal(true);
-            dispatch(barState(!newP));
-          }}
-        >
-          <MdAddCircleOutline className="w-7 h-7" />
-          <div className="md:group-hover:block hidden ">New</div>
+      <button
+        onClick={() => {
+          setShowModal(true);
+          dispatch(barState(!newP));
+          dispatch(iseditState(true));
+        }}
+        className="flex items-center  hover:md:border-l-4 hover:md:border-b-0 hover:border-b-4 hover:border-l-0 pb-1	 transition-all duration-150 border-red-700 justify-around mr-2 md:mr-7 md:group-hover:mr-0"
+      >
+        <div>
+          <AiFillEdit className="w-7 h-7" />
         </div>
-      )}
+        <div className="md:group-hover:block hidden ">Edit</div>
+      </button>
+
       {showModal && (
         <div className="closeModal backdrop-brightness-50 backdrop-blur-sm -backdrop-hue-rotate-15  text-stone-200 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50">
           <div className="relative w-[24rem] max-h-screen my-6 mx-auto max-w-4xl">
@@ -182,7 +140,7 @@ export default function Modal() {
                 <AiOutlineCloseCircle size={28} />
               </button>
               <form
-                onSubmit={handleNewProjectCreate}
+                onSubmit={handleNewProjectUpdate}
                 className="flex flex-col gap-3 mt-10"
               >
                 <header>
@@ -248,7 +206,7 @@ export default function Modal() {
                   type="submit"
                 >
                   {!loading ? (
-                    "Create Project"
+                    "Update Project"
                   ) : (
                     <div className="flex w-full items-center justify-center">
                       <svg

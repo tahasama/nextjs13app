@@ -30,6 +30,7 @@ const POJECT_URL: any = process.env.NEXT_PUBLIC_PROJECT_URL;
 export const fetchProjectByUser = createAsyncThunk(
   "fetchProjectByUser",
   async (uid: any) => {
+    console.log("🚀 ~ file: projectSlice.ts:33 ~ uid:", uid);
     try {
       const getProjects = collection(db, "projects");
       const getUserProjects = query(getProjects, where("user.uid", "==", uid));
@@ -39,6 +40,10 @@ export const fetchProjectByUser = createAsyncThunk(
       const promises = querySnapshot.docs.map(async (docs: any) => {
         return { ...docs.data(), _id: docs.id };
       });
+      console.log(
+        "🚀 ~ file: projectSlice.ts:43 ~ promises ~ promises:",
+        promises
+      );
       const result: any[] = await Promise.all(promises);
       return result;
     } catch (error) {
@@ -145,15 +150,18 @@ export const createProject = createAsyncThunk(
 export const cloneProject = createAsyncThunk(
   "cloneProject",
   async (val: valueProps) => {
+    console.log("🚀 ~ file: projectSlice.ts:153 ~ val:", val);
     const object: any = {
       ...val,
       // email: val.user,
       title: val.title + "  " + uuid(),
     };
     try {
-      const res = await addDoc(collection(db, "projects"), { object });
+      const res = await addDoc(collection(db, "projects"), {
+        ...{ ...object },
+      });
 
-      return res;
+      return { _id: res.id, ...res };
     } catch (error) {
       console.log("errrrrrr3", error);
     }
@@ -171,6 +179,30 @@ interface saveProps {
   };
   cells?: { cellId: string; cellCode: string }[];
 }
+
+export const updateProject = createAsyncThunk(
+  "saveProject",
+  async (value: any) => {
+    const object = {
+      updatedAt: new Date(),
+      _id: value._id,
+      title: value.title, // Include the pythonCode field in the object
+      description: value.description, // Include the pythonCode field in the object
+      projectType: value.projectType,
+    };
+
+    try {
+      const res = await updateDoc(
+        doc(db, "projects", object._id),
+        object // Pass the object containing the pythonCode field as the second argument
+      );
+      return res;
+    } catch (error) {
+      console.log("eeeeeeeeeeeeeeeeeeerr", error);
+    }
+    console.log("🚀 ~ file: projectSlice.ts:203 ~ object._id:", value);
+  }
+);
 
 export const saveProject = createAsyncThunk(
   "saveProject",

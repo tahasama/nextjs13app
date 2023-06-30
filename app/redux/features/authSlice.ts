@@ -186,6 +186,11 @@ export interface userProps {
     olastSignInTime?: any;
     odisplayName?: string;
     obio?: string;
+    social?: {
+      twitter: string;
+      insta: string;
+      github: string;
+    };
   };
 }
 
@@ -209,6 +214,11 @@ export const userInitialState = {
   olastSignInTime: "",
   odisplayName: "",
   obio: "",
+  social: {
+    twitter: "",
+    insta: "",
+    github: "",
+  },
 };
 
 export const authSlice = createSlice({
@@ -229,6 +239,9 @@ export const authSlice = createSlice({
       // state.image = action.payload.photoURL;
     },
     resetUser: (state, action) => {
+      Object.assign(state, action.payload);
+    },
+    updateUserInfos: (state, action) => {
       Object.assign(state, action.payload);
     },
   },
@@ -277,5 +290,6 @@ export const authSlice = createSlice({
 });
 
 export const getAuthData = (state: userProps) => state.authUser;
-export const { updateError, saveUser, resetUser } = authSlice.actions;
+export const { updateError, saveUser, resetUser, updateUserInfos } =
+  authSlice.actions;
 export default authSlice.reducer;
