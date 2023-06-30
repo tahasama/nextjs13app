@@ -170,9 +170,9 @@ const page = () => {
                   className="relative text-center cursor-pointer bg-indigo-950 w-24 md:40 lg:w-40 py-2 rounded-2xl"
                 >
                   <div className="w-full relative">
-                    <div className="absolute top-0 right-0 mt-2 mr-2 gap-0">
-                      <BiUpArrow className="w-full" />
-                      <BiDownArrow className="w-full" />
+                    <div className="absolute top-0 right-0 mt-1 mr-2 gap-0">
+                      <BiUpArrow className="w-full" size={13} />
+                      <BiDownArrow className="w-full" size={13} />
                     </div>
                   </div>
                   <div className="text-base md:text-2xl lg:text-3xl font-semibold">
@@ -189,9 +189,9 @@ const page = () => {
                   className="text-center cursor-pointer bg-indigo-950 w-24 md:36 lg:w-40 py-2 rounded-2xl"
                 >
                   <div className="w-full relative">
-                    <div className="absolute top-0 right-0 mt-2 mr-2 gap-0">
-                      <BiUpArrow className="w-full" />
-                      <BiDownArrow className="w-full" />
+                    <div className="absolute top-0 right-0 mt-1 mr-2 gap-0">
+                      <BiUpArrow className="w-full" size={13} />
+                      <BiDownArrow className="w-full" size={13} />
                     </div>
                   </div>
                   <div className="text-base md:text-2xl lg:text-3xl font-semibold">
@@ -209,9 +209,9 @@ const page = () => {
                   className="text-center cursor-pointer bg-violet-950 w-20 md:w-32 py-2 rounded-2xl"
                 >
                   <div className="w-full relative">
-                    <div className="absolute top-0 right-0 mt-2 mr-2 gap-0">
-                      <BiUpArrow className="w-full" />
-                      <BiDownArrow className="w-full" />
+                    <div className="absolute top-0 right-0 mt-1 mr-2 gap-0">
+                      <BiUpArrow className="w-full" size={13} />
+                      <BiDownArrow className="w-full" size={13} />
                     </div>
                   </div>
                   <div className="text-base md:text-xl lg:text-2xl font-semibold">
@@ -226,9 +226,9 @@ const page = () => {
                   className="text-center  cursor-pointer bg-violet-950 w-20 md:w-32 py-2 rounded-2xl"
                 >
                   <div className="w-full relative">
-                    <div className="absolute top-0 right-0 mt-2 mr-2 gap-0">
-                      <BiUpArrow className="w-full" />
-                      <BiDownArrow className="w-full" />
+                    <div className="absolute top-0 right-0 mt-1 mr-2 gap-0">
+                      <BiUpArrow className="w-full" size={13} />
+                      <BiDownArrow className="w-full" size={13} />
                     </div>
                   </div>
                   <div className="text-base md:text-xl lg:text-2xl font-semibold">
@@ -243,9 +243,9 @@ const page = () => {
                   className="text-center cursor-pointer bg-violet-950 w-20 md:w-32 py-2 rounded-2xl"
                 >
                   <div className="w-full relative">
-                    <div className="absolute top-0 right-0 mt-2 mr-2 gap-0">
-                      <BiUpArrow className="w-full" />
-                      <BiDownArrow className="w-full" />
+                    <div className="absolute top-0 right-0 mt-1 mr-2 gap-0">
+                      <BiUpArrow className="w-full" size={13} />
+                      <BiDownArrow className="w-full" size={13} />
                     </div>
                   </div>
                   <div className="text-base md:text-xl lg:text-2xl font-semibold">
@@ -258,9 +258,9 @@ const page = () => {
                   className="text-center cursor-pointer bg-violet-950 w-20 md:w-32 py-2 rounded-2xl"
                 >
                   <div className="w-full relative">
-                    <div className="absolute top-0 right-0 mt-2 mr-2 gap-0">
-                      <BiUpArrow className="w-full" />
-                      <BiDownArrow className="w-full" />
+                    <div className="absolute top-0 right-0 mt-1 mr-2 gap-0">
+                      <BiUpArrow className="w-full" size={13} />
+                      <BiDownArrow className="w-full" size={13} />
                     </div>
                   </div>
                   <div className="text-base md:text-xl lg:text-2xl font-semibold">

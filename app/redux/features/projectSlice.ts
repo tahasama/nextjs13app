@@ -349,6 +349,7 @@ export interface projectProps {
     search?: string;
     projectTypeErr?: string;
     titleErr?: string;
+    newTitle?: string;
   };
 }
 
@@ -378,6 +379,7 @@ export const projectInitialState = {
   search: "",
   projectTypeErr: "",
   titleErr: "",
+  newTitle: "",
 };
 
 export const projectSlice = createSlice({

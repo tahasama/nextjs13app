@@ -1,5 +1,9 @@
 import * as Yup from "yup";
-import { getAuthData, updateUserInfos } from "@/app/redux/features/authSlice";
+import {
+  getAuthData,
+  updateUser,
+  updateUserInfos,
+} from "@/app/redux/features/authSlice";
 import {
   cleanForm,
   cleanState,
@@ -21,6 +25,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { MdAddCircleOutline } from "react-icons/md";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { FaGithub, FaTwitter, FaInstagram } from "react-icons/fa";
+import { barState } from "@/app/redux/features/sideBarSlice";
 
 export default function ModalUser() {
   const router = useRouter();
@@ -57,7 +62,17 @@ export default function ModalUser() {
     };
   }, []);
 
-  const handleUpdateUser = () => {};
+  const handleUpdateUser: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const serializableProject = {
+      user: { uid: uid, displayName: nameRef.current.value },
+      bio: bio,
+    };
+    dispatch(updateUser(serializableProject)).then(() => {
+      setLoading(false), setShowModal(false), barState(false);
+    });
+  };
 
   // const schema = Yup.object().shape({
   //   title: Yup.string().required("Please add a project name!!!!!"),
@@ -103,13 +118,13 @@ export default function ModalUser() {
                     value={displayName ? displayName : email}
                     onChange={() =>
                       dispatch(
-                        updateUserInfos({ title: nameRef.current?.value })
+                        updateUserInfos({ displayName: nameRef.current?.value })
                       )
                     }
                   />
                 </footer>
                 <header className="modalHeader">
-                  <h4 className="modalHeaderTitle">bion:</h4>
+                  <h4 className="modalHeaderTitle">bio:</h4>
                 </header>
                 <textarea
                   className="createInput border bg-slate-200  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"

@@ -151,7 +151,7 @@ export default function ModalEdit({}) {
                     className="createInput border bg-slate-200 rounded w-full h-9 px-1 text-gray-900 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                     type="text"
                     ref={nameRef}
-                    value={isedit ? title : ""}
+                    value={title}
                     onChange={() =>
                       dispatch(
                         updateProjectInfos({ title: nameRef.current?.value })
@@ -167,7 +167,7 @@ export default function ModalEdit({}) {
                   className="createInput border bg-slate-200  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                   rows={8}
                   ref={descriptionRef}
-                  value={isedit ? description : ""}
+                  value={description}
                   onChange={() =>
                     dispatch(
                       updateProjectInfos({

@@ -126,16 +126,19 @@ export default function Modal() {
     }
 
     if (title !== "" && projectType !== "") {
-      dispatch(createProject(serializableProject)).then(({ payload }: any) => {
-        setTimeout(() => {
+      dispatch(createProject(serializableProject))
+        .then(({ payload }: any) => {
           if (payload._id) {
             router.push(`/projects/${projectDestination}/${payload._id}`);
-
+          }
+        })
+        .then(() =>
+          setTimeout(() => {
+            dispatch(barState(false));
             setLoading(false);
             setShowModal(false);
-          }
-        }, 500);
-      });
+          }, 3000)
+        );
     }
   };
 
@@ -193,7 +196,7 @@ export default function Modal() {
                     className="createInput border bg-slate-200 rounded w-full h-9 px-1 text-gray-900 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                     type="text"
                     ref={nameRef}
-                    value={isedit ? title : ""}
+                    value={nameRef.current?.value}
                     onChange={() =>
                       dispatch(
                         updateProjectInfos({ title: nameRef.current?.value })
@@ -209,7 +212,7 @@ export default function Modal() {
                   className="createInput border bg-slate-200  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                   rows={8}
                   ref={descriptionRef}
-                  value={isedit ? description : ""}
+                  value={descriptionRef.current?.value}
                   onChange={() =>
                     dispatch(
                       updateProjectInfos({

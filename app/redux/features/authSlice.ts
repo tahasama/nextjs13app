@@ -11,7 +11,7 @@ import {
 
 import { auth, db } from "../../firebase";
 import { doc, setDoc } from "@firebase/firestore";
-import { collection, getDoc } from "firebase/firestore";
+import { collection, getDoc, updateDoc } from "firebase/firestore";
 
 const USER_URL: any = process.env.REACT_APP_USER_URL;
 
@@ -117,6 +117,28 @@ export const loginUser = createAsyncThunk(
       };
     } catch (error: any) {
       return error;
+    }
+  }
+);
+
+export const updateUser = createAsyncThunk(
+  "saveProject",
+  async (value: any) => {
+    console.log("🚀 ~ file: authSlice.ts:127 ~ value:", value);
+    const object = {
+      user: { uid: value.user.uid, displayName: value.user.displayName }, // Include the pythonCode field in the object
+      bio: value.bio, // Include the pythonCode field in the object
+    };
+    console.log("🚀 ~ file: authSlice.ts:132 ~ object:", object);
+
+    try {
+      const res = await updateDoc(
+        doc(db, "users", object.user.uid),
+        object // Pass the object containing the pythonCode field as the second argument
+      );
+      return res;
+    } catch (error) {
+      console.log("eeeeeeeeeeeeeeeeeeerr", error);
     }
   }
 );
