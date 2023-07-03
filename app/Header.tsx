@@ -26,6 +26,7 @@ import {
   updateProjectInfos,
   cleanState,
   updateSaved,
+  cleanUpSearch,
 } from "./redux/features/projectSlice";
 import Logo from "./images/Untitled1.png";
 
@@ -130,10 +131,14 @@ const Header = () => {
 
   const handleProjectSearch: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
+    dispatch(cleanUpSearch([]));
+    dispatch(searchProjectsData(searchRef.current?.value)).then(() =>
+      setTerm("")
+    );
 
-    dispatch(searchProjectsData(searchRef.current?.value));
-
-    projectId ? alerted("/searchResult") : router.push("/searchResult");
+    projectId
+      ? alerted("/projects/searchResult")
+      : router.push("/projects/searchResult");
   };
 
   return (
@@ -180,11 +185,11 @@ const Header = () => {
             onChange={() => setTerm(searchRef.current?.value)}
           />
           <button
-            type="button"
+            type="submit"
             data-collapse-toggle="navbar-search"
             aria-controls="navbar-search"
             aria-expanded="false"
-            className=" text-gray-500 dark:text-gray-400 hover:bg-gray-700 focus:outline-none    text-sm p-2.5 mr-1"
+            className=" text-gray-500 dark:text-gray-400 hover:bg-gray-700 focus:outline-none  rounded-full text-sm p-2.5 mx-1 transition-all duration-200 ease-in-out"
           >
             <AiOutlineSearch size={24} />
           </button>
@@ -212,7 +217,7 @@ const Header = () => {
         <div
           className={`z-50 absolute ${
             uid ? "w-fit" : "w-28"
-          } top-16 right-4 my-4 text-base list-none  divide-y  rounded-lg shadow bg-gray-700 divide-gray-600`}
+          } top-16 right-5 my-4 text-base list-none  divide-y  rounded-lg shadow bg-gray-700 divide-gray-600`}
           id="user-dropdown"
         >
           {uid && (
@@ -317,7 +322,7 @@ const Header = () => {
                 data-collapse-toggle="navbar-search"
                 aria-controls="navbar-search"
                 aria-expanded="false"
-                className=" text-gray-500 dark:text-gray-400 hover:bg-gray-700 focus:outline-none ring-2 ring-gray-700  rounded-lg text-sm p-2.5 mr-1"
+                className=" text-gray-500 dark:text-gray-400 hover:bg-gray-700 focus:outline-none  rounded-full text-sm p-2.5 mr-1 transition-all duration-100 ease-in-out"
               >
                 <AiOutlineSearch />
               </button>

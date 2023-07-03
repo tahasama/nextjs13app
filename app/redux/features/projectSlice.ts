@@ -272,15 +272,15 @@ export const searchProjectsData = createAsyncThunk(
   "searchProjectsData",
   async (seria: any) => {
     const q1 = query(
-      collection(db, "users"),
-      where("displayName", "==", seria)
+      collection(db, "projects"),
+      where("user.username", "==", seria)
     );
-    const q4 = query(collection(db, "users"), where("email", "==", seria));
+
     const q2 = query(
       collection(db, "projects"),
       where("description", ">=", seria)
     );
-    const q3 = query(collection(db, "projects"), where("title", ">=", seria));
+    const q3 = query(collection(db, "projects"), where("title", "==", seria));
 
     // Search term
     const documents1: any[] = [];
@@ -303,17 +303,17 @@ export const searchProjectsData = createAsyncThunk(
       const data = doc.data();
       documents3.push(data);
     });
-    const querySnapshot4 = await getDocs(q4);
-    querySnapshot4.forEach((doc) => {
-      const data = doc.data();
-      documents4.push(data);
-    });
+    // const querySnapshot4 = await getDocs(q4);
+    // querySnapshot4.forEach((doc) => {
+    //   const data = doc.data();
+    //   documents4.push(data);
+    // });
 
     const documents: any[] = [
       ...documents1,
       ...documents2,
       ...documents3,
-      ...documents4,
+      // ...documents4,
     ];
     // const documentsSet = new Set(documents);
     // const documentsArr = new Array(documentsSet);
@@ -344,7 +344,7 @@ export interface projectProps {
     selectedDiv: string;
     projectType: string;
     _id: string;
-    searchAll: any[];
+    searchAll?: any[];
     loading: boolean;
     search?: string;
     projectTypeErr?: string;
@@ -374,7 +374,7 @@ export const projectInitialState = {
   projectType: "",
   pythonCode: "",
   selectedDiv: "html",
-  searchAll: [{}],
+  searchAll: [],
   loading: true,
   search: "",
   projectTypeErr: "",
@@ -449,13 +449,16 @@ export const projectSlice = createSlice({
       state.all = action.payload;
       state.searchAll = action.payload;
     },
+    cleanUpSearch: (state, action) => {
+      state.searchAll = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchProjectByUser.fulfilled, (state, action) => {
       Object.assign(state.all, action.payload);
     });
     builder.addCase(searchProjectsData.fulfilled, (state, action) => {
-      Object.assign(state.all, action.payload);
+      Object.assign(state.searchAll, action.payload);
     });
 
     builder.addCase(fetchProjectById.fulfilled, (state, action) => {
@@ -472,6 +475,7 @@ export const {
   updateProjectInfos,
   cleanState,
   updateDate,
+  cleanUpSearch,
   // updateId,
   updateSaved,
   updateStar,
