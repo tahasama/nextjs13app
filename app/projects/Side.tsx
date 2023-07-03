@@ -127,7 +127,7 @@ const Side = () => {
   const handleOpenProject = () => {
     dispatch(cleanUpProjects([projectInitialState]));
     dispatch(fetchProjectByUser(uid));
-    alerted("/projects");
+    alerted("/profile/" + uid);
   };
   const handleNewProject = () => {
     if (!saved) {
