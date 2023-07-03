@@ -8,8 +8,10 @@ const RegularExpressions = () => {
   return (
     <div className="mx-auto max-w-[68rem] p-8 indent-10 w-full">
       <button
-        className={`flex flex-row items-start justify-between text-2xl  md:min-w-[33.3rem] min-w-[27rem]
-        font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
+        className={`${
+          ShowSection ? "sticky top-20 bg-slate-500" : ""
+        } flex flex-row items-start justify-between md:text-2xl text-xl md:min-w-[33.3rem] min-w-full
+          font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
         onClick={() => setShowSection(!ShowSection)}
       >
         Regular Expressions{" "}
@@ -36,7 +38,7 @@ const RegularExpressions = () => {
           number. Let's take a look at an example of using a regular expression
           for email validation:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`const email = "example@example.com";
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -51,7 +53,7 @@ if (emailRegex.test(email)) {
           {`/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/`} for email
           validation. Let's break it down:
         </p>
-        <ul className="list-disc ml-6 mb-4">
+        <ul className="list-disc ml-6 mb-4 overflow-auto">
           <li>
             <code>^</code> - Matches the beginning of the string.
           </li>
@@ -95,7 +97,7 @@ if (emailRegex.test(email)) {
           string using a regular expression in JavaScript
         </p>
 
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`const text = 'Contact us at 123-456-7890 or 987-654-3210.';
 const phoneRegex = /\d{3}-\d{3}-\d{4}/g;
 const phoneNumbers = text.match(phoneRegex);
@@ -121,7 +123,7 @@ console.log(phoneNumbers);
           Regular expressions consist of patterns and optional modifiers. Here
           are some commonly used patterns and modifiers:
         </p>
-        <ul className="list-disc ml-6 mb-4">
+        <ul className="list-disc ml-6 mb-4 overflow-auto">
           <li>
             <code>^</code> - Matches the beginning of a string.
           </li>

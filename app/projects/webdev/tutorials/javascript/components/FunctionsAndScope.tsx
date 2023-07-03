@@ -8,8 +8,10 @@ const FunctionsAndScope = () => {
   return (
     <div className="mx-auto max-w-[68rem] p-8 indent-10 w-full">
       <button
-        className={`flex flex-row items-start justify-between text-2xl  md:min-w-[33.3rem] min-w-[27rem]
-font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
+        className={`${
+          ShowSection ? "sticky top-20 bg-slate-500" : ""
+        } flex flex-row items-start justify-between md:text-2xl text-xl md:min-w-[33.3rem] min-w-full
+          font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
         onClick={() => setShowSection(!ShowSection)}
       >
         Functions and Scope
@@ -31,7 +33,7 @@ font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 
         <p className="mb-2">
           You can declare a function using the <code>function</code> keyword:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`function greet() {
   console.log('Hello, world!');
 }`}
@@ -41,7 +43,7 @@ font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 
         <p className="mb-2">
           You can call a function by using its name followed by parentheses:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`greet();`}
         </pre>
 
@@ -50,7 +52,7 @@ font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 
           Functions can accept parameters, which are values passed to the
           function:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`function greet(name) {
   console.log('Hello, ' + name + '!');
 }
@@ -62,7 +64,7 @@ greet('John');`}
         <p className="mb-2">
           Functions can return a value using the <code>return</code> statement:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`function add(a, b) {
   return a + b;
 }
@@ -82,7 +84,7 @@ console.log(result); // Output: 8`}
           Variables declared outside of any function have global scope and can
           be accessed anywhere in the code:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`const globalVariable = 'I am global';
 
 function printGlobal() {
@@ -97,7 +99,7 @@ printGlobal(); // Output: I am global`}
           Variables declared inside a function have local scope and can only be
           accessed within that function:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`function printLocal() {
   const localVariable = 'I am local';
   console.log(localVariable);
@@ -117,7 +119,7 @@ console.log(localVariable); // Throws an error: localVariable is not defined`}
           block scope and are only accessible within the block they are defined
           in:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`function printBlock() {
   if (true) {
     let blockVariable = 'I am inside a block';
@@ -134,7 +136,7 @@ printBlock(); // Output: I am inside a block`}
           Each function creates its own scope, and variables declared inside a
           function are only accessible within that function:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`function outerFunction() {
   const outerVariable = 'I am outer';
 

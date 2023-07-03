@@ -8,8 +8,10 @@ const WorkingWithAPIs = () => {
   return (
     <div className="mx-auto max-w-[68rem] p-8 indent-10 w-full">
       <button
-        className={`flex flex-row items-start justify-between text-2xl  md:min-w-[33.3rem] min-w-[27rem]
-  font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
+        className={`${
+          ShowSection ? "sticky top-20 bg-slate-500" : ""
+        } flex flex-row items-start justify-between md:text-2xl text-xl md:min-w-[33.3rem] min-w-full
+          font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
         onClick={() => setShowSection(!ShowSection)}
       >
         Working with APIs{" "}
@@ -39,7 +41,7 @@ const WorkingWithAPIs = () => {
           <code>Axios</code>. Here's an example using the <code>fetch</code>{" "}
           method:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`// GET request
 fetch("https://api.example.com/data")
   .then((response) => response.json())
@@ -76,7 +78,7 @@ fetch("https://api.example.com/data", {
           HTTP requests without using <code>then</code>. Here's an example using{" "}
           <code>async/await</code> with <code>fetch</code>:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`async function fetchData() {
   try {
     const response = await fetch("https://api.example.com/data");
@@ -102,7 +104,7 @@ fetchData();`}
           typically need an API key or access token, which you include in your
           requests. Here's an example of making a request to a weather API:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`fetch("https://api.weatherapi.com/v1/current.json?key=YOUR_API_KEY&q=London")
   .then((response) => response.json())
   .then((data) => {

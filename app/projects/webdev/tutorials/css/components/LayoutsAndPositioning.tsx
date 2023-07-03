@@ -9,8 +9,10 @@ const LayoutsAndPositioning = () => {
   return (
     <div className="mx-auto max-w-[68rem] p-8 indent-10 w-full">
       <button
-        className={`flex flex-row items-start justify-between text-2xl  md:min-w-[33.3rem] min-w-[27rem]
-font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
+        className={`${
+          ShowSection ? "sticky top-20 bg-slate-500" : ""
+        } flex flex-row items-start justify-between md:text-2xl text-xl md:min-w-[33.3rem] min-w-full
+          font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
         onClick={() => setShowSection(!ShowSection)}
       >
         Layouts and Positioning
@@ -226,7 +228,7 @@ font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 
             modify the CSS properties to adjust the layout, font sizes, or
             hide/show certain elements.
           </p>
-          <pre className="bg-gray-800 rounded-md p-4 mb-2">
+          <pre className="bg-gray-800 rounded-md p-4 mb-2 overflow-auto">
             {`/* CSS Media Query Example */
 @media screen and (max-width: 768px) {
   /* CSS styles for tablets and smaller screens */

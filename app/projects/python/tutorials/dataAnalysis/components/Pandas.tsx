@@ -13,8 +13,10 @@ const Pandas = () => {
       </Head>
       <div className="mx-auto max-w-[68rem] p-8 indent-10  w-full">
         <button
-          className={`flex flex-row items-start justify-between text-2xl  md:min-w-[33.3rem] min-w-[27rem]
-        font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
+          className={`${
+            ShowSection ? "sticky top-20 bg-slate-500" : ""
+          } flex flex-row items-start justify-between md:text-2xl text-xl md:min-w-[33.3rem] min-w-full
+          font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
           onClick={() => setShowSection(!ShowSection)}
         >
           Pandas{" "}
@@ -53,7 +55,7 @@ const Pandas = () => {
               Pandas DataFrame. Here's an example of how to load a CSV file into
               a DataFrame:
             </p>
-            <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0">
+            <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0  overflow-auto">
               <code>
                 {`
         import pandas as pd
@@ -100,32 +102,32 @@ print(df.info())
               <li>Dealing with outliers</li>
             </ul>
             <p className="mb-4 text-xl leading-loose">Here's some examples :</p>
-            <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0">
+            <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0  overflow-auto">
               <code>
                 {`     
       # remove rows with missing values
       df = df.dropna() `}
               </code>
             </pre>
-            <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0">
+            <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0  overflow-auto">
               <code>
                 {`  # remove duplicate rows
       df = df.drop_duplicates() `}
               </code>
             </pre>
-            <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0">
+            <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0  overflow-auto">
               <code>
                 {`  # rename columns
       df = df.rename(columns={'old_col_name_1': 'new_col_name_1', 'old_col_name_2': 'new_col_name_2'}) `}
               </code>
             </pre>
-            <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0">
+            <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0  overflow-auto">
               <code>
                 {`  # change data type of a column
       df['some_col_name'] = df['some_col_name'].astype(float) `}
               </code>
             </pre>
-            <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0">
+            <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0  overflow-auto">
               <code>
                 {` # deal with outliers by removing any rows that fall outside of a certain range
       q1 = df['some_col_name'].quantile(0.25)
@@ -148,36 +150,36 @@ print(df.info())
               Once the data is loaded and cleaned, you can start analyzing it.
               Here's some examples of how to select from a DataFrame:
             </p>
-            <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0">
+            <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0  overflow-auto">
               <code>
                 {`
-      # select a single column
-      col1 = df['buying_price']
-      
-      # select multiple columns
-      cols = df[['buying_price', 'maint_price']]
-      
-      # select rows based on a condition
-      subset = df[df['safety'] == 'high']
-      
-      # select rows based on multiple conditions
-      subset = df[(df['buying_price'] == 'high') & (df['doors'] == 2)]
-      
-      # select rows and columns using the loc method
-      subset = df.loc[df['lug_boot'] == 'big', ['buying_price', 'maint_price']]
-      
-      # select rows and columns using the iloc method
-      subset = df.iloc[1:5, 0:2]
-      
-      # set a value in a specific cell
-      df.loc[0, 'buying_price'] = 'low'
-      
-      # set values in a specific column based on a condition
-      df.loc[df['buying_price'] == 'high', 'maint_price'] = 'low'
-      
-      # create a new column based on existing columns
-      df['new_col'] = df['buying_price'] + "_" + df['maint_price']
-      
+# select a single column
+col1 = df['buying_price']
+
+# select multiple columns
+cols = df[['buying_price', 'maint_price']]
+
+# select rows based on a condition
+subset = df[df['safety'] == 'high']
+
+# select rows based on multiple conditions
+subset = df[(df['buying_price'] == 'high') & (df['doors'] == 2)]
+
+# select rows and columns using the loc method
+subset = df.loc[df['lug_boot'] == 'big', ['buying_price', 'maint_price']]
+
+# select rows and columns using the iloc method
+subset = df.iloc[1:5, 0:2]
+
+# set a value in a specific cell
+df.loc[0, 'buying_price'] = 'low'
+
+# set values in a specific column based on a condition
+df.loc[df['buying_price'] == 'high', 'maint_price'] = 'low'
+
+# create a new column based on existing columns
+df['new_col'] = df['buying_price'] + "_" + df['maint_price']
+
       
         `}
               </code>
@@ -200,7 +202,7 @@ print(df.info())
                 Let's group the data by the 'buying' column and compute the mean
                 of the 'safety' column:
               </p>
-              <pre className="bg-gray-800 text-gray-100 rounded-md p-4 overflow-x-auto">
+              <pre className="bg-gray-800 text-gray-100 rounded-md p-4 overflow-x-auto ">
                 {`import pandas as pd
 
 # Load the car evaluation dataset

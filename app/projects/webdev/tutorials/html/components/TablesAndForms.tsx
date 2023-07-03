@@ -9,8 +9,10 @@ const TablesAndForms = () => {
   return (
     <div className="mx-auto max-w-[68rem] p-8 indent-10 w-full">
       <button
-        className={`flex flex-row items-start justify-between text-2xl  md:min-w-[33.3rem] min-w-[27rem]
-font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
+        className={`${
+          ShowSection ? "sticky top-20 bg-slate-500" : ""
+        } flex flex-row items-start justify-between md:text-2xl text-xl md:min-w-[33.3rem] min-w-full
+          font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
         onClick={() => setShowSection(!ShowSection)}
       >
         Tables and Forms
@@ -30,7 +32,7 @@ font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 
         <p className="mb-2">
           Tables are used to display data in rows and columns:
         </p>
-        <table className="w-full table-auto mb-4">
+        <table className="w-full table-auto mb-4 md:text-lg text-xs ">
           <thead>
             <tr>
               <th className="px-4 py-2">Name</th>
@@ -57,32 +59,33 @@ font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 
           </tbody>
         </table>
         <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-x-auto">
-          {`    <table>
-           <thead>
-             <tr>
-               <th>Name</th>
-               <th>Age</th>
-               <th>Email</th>
-             </tr>
-           </thead>
-           <tbody>
-             <tr>
-               <td>John Smith</td>
-               <td>35</td>
-               <td>john@example.com</td>
-             </tr>
-             <tr>
-               <td>Jane Doe</td>
-               <td>28</td>
-               <td>jane@example.com</td>
-             </tr>
-             <tr>
-               <td>Bob Johnson</td>
-               <td>42</td>
-               <td>bob@example.com</td>
-             </tr>
-           </tbody>
-         </table>`}
+          {`    
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>John Smith</td>
+      <td>35</td>
+      <td>john@example.com</td>
+    </tr>
+    <tr>
+      <td>Jane Doe</td>
+      <td>28</td>
+      <td>jane@example.com</td>
+    </tr>
+    <tr>
+      <td>Bob Johnson</td>
+      <td>42</td>
+      <td>bob@example.com</td>
+    </tr>
+  </tbody>
+</table>`}
         </pre>
         <h2 className="text-2xl font-bold mb-4">Forms</h2>
 
@@ -126,36 +129,37 @@ font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 
           </button>
         </form>
         <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-x-auto">
-          {`   <form>
-         <label htmlFor="name">
-           Name:
-         </label>
-         <input type="text" id="name" name="name" />
- 
-         <label htmlFor="email">
-           Email:
-         </label>
-         <input
-           type="email"
-           id="email"
-           name="email"
-         />
- 
-         <label htmlFor="password">
-           Password:
-         </label>
-         <input
-           type="password"
-           id="password"
-           name="password"
-         />
- 
-         <button
-           type="submit"
-         >
-           Submit
-         </button>
-       </form>`}
+          {`   
+<form>
+  <label htmlFor="name">
+    Name:
+  </label>
+  <input type="text" id="name" name="name" />
+
+  <label htmlFor="email">
+    Email:
+  </label>
+  <input
+    type="email"
+    id="email"
+    name="email"
+  />
+
+  <label htmlFor="password">
+    Password:
+  </label>
+  <input
+    type="password"
+    id="password"
+    name="password"
+  />
+
+  <button
+    type="submit"
+  >
+    Submit
+  </button>
+</form>`}
         </pre>
       </div>
     </div>

@@ -115,9 +115,9 @@ export default function ModalUser() {
       </button>
 
       {showModal && (
-        <div className="closeModal backdrop-brightness-50 backdrop-blur-sm -backdrop-hue-rotate-15  text-stone-200 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50">
+        <div className="closeModal mt-16 backdrop-brightness-50 backdrop-blur-sm -backdrop-hue-rotate-15 text-stone-200 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50">
           <div className="relative w-[24rem] max-h-screen my-6 mx-auto max-w-4xl">
-            <div className="mt-16 border-0 font-semibold px-6 pb-6 bg-gray-900 outline-2  outline-slate-700 rounded-lg relative flex flex-col w-full outline-none focus:outline-none">
+            <div className=" border-0 font-semibold px-6 pb-6 bg-gray-900 outline-2  outline-slate-700 rounded-lg relative flex flex-col w-full outline-none focus:outline-none">
               <button
                 className="absolute top-0 right-0 p-2 text-gray-400 hover:text-gray-500 focus:outline-none"
                 onClick={() => setShowModal(false)}
@@ -145,7 +145,7 @@ export default function ModalUser() {
                   />
                 </footer>
                 <header className="modalHeader">
-                  <h4 className="modalHeaderTitle">bio:</h4>
+                  <h4 className="modalHeaderTitle">Bio:</h4>
                 </header>
                 <textarea
                   className="createInput border bg-slate-200  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
@@ -161,7 +161,7 @@ export default function ModalUser() {
                   }
                 />
 
-                <div className="flex w-full gap-2">
+                <div className="flex w-full gap-2 items-center justify-center">
                   <FaGithub size={28} />
                   <div className="border   rounded w-full h-9  text-gray-900 leading-tight focus:outline-none focus:shadow-outline">
                     <input
@@ -179,7 +179,7 @@ export default function ModalUser() {
                     />
                   </div>{" "}
                 </div>
-                <div className="flex w-full gap-2 items-center">
+                <div className="flex w-full gap-2 items-center justify-center">
                   <FaTwitter size={28} />
                   <div className="border   rounded w-full h-9  text-gray-900 leading-tight focus:outline-none focus:shadow-outline">
                     <input
@@ -197,7 +197,7 @@ export default function ModalUser() {
                     />
                   </div>
                 </div>
-                <div className="flex w-full gap-2">
+                <div className="flex w-full gap-2 items-center justify-center">
                   <FaInstagram size={28} />
                   <div className="border   rounded w-full h-9 text-gray-900 leading-tight focus:outline-none focus:shadow-outline">
                     <input
@@ -215,7 +215,7 @@ export default function ModalUser() {
                     />
                   </div>{" "}
                 </div>
-                <div className="flex w-full gap-2">
+                <div className="flex w-full gap-2 items-center justify-center">
                   <AiOutlineLink size={28} />
                   <div className="border   rounded w-full h-9 text-gray-900 leading-tight focus:outline-none focus:shadow-outline">
                     <input

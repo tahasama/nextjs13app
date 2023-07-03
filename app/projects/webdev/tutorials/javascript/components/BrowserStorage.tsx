@@ -8,8 +8,10 @@ const BrowserStorage = () => {
   return (
     <div className="mx-auto max-w-[68rem] p-8 indent-10 w-full">
       <button
-        className={`flex flex-row items-start justify-between text-2xl  md:min-w-[33.3rem] min-w-[27rem]
-    font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
+        className={`${
+          ShowSection ? "sticky top-20 bg-slate-500" : ""
+        } flex flex-row items-start justify-between md:text-2xl text-xl md:min-w-[33.3rem] min-w-full
+          font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
         onClick={() => setShowSection(!ShowSection)}
       >
         Browser Storage{" "}
@@ -31,7 +33,7 @@ const BrowserStorage = () => {
           read, write, and delete cookies. Here's an example of setting a
           cookie:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`document.cookie = "name=value; expires=Fri, 31 Dec 2023 23:59:59 GMT; path=/";`}
         </pre>
         <p className="mb-2">
@@ -50,7 +52,7 @@ const BrowserStorage = () => {
           browser is closed, while Session Storage data is cleared when the
           browser session ends. Here's an example of using Local Storage:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`// Storing data in Local Storage
 localStorage.setItem("key", "value");
 
@@ -78,7 +80,7 @@ localStorage.clear();`}
           databases. Here's an example of using IndexedDB to store and retrieve
           data:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`// Opening a database
           const request = indexedDB.open('yourDatabaseName', versionNumber);
 // Replace 'yourDatabaseName' with the desired name for your database 

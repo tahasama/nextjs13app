@@ -13,11 +13,13 @@ export default function FileIO() {
   return (
     <div className="mx-auto max-w-[68rem] p-4 w-full">
       <button
-        className={`flex flex-row items-start justify-between text-2xl  md:min-w-[33.3rem] min-w-[29rem]
-         font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
+        className={`${
+          ShowSection ? "sticky top-20 bg-slate-500" : ""
+        } flex flex-row items-start justify-between md:text-2xl text-xl md:min-w-[33.3rem] min-w-full
+          font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
         onClick={() => setShowSection(!ShowSection)}
       >
-        File Input/Output in Python{" "}
+        File Input/Output
         {!ShowSection ? (
           <FaCaretDown size={24} className="ml-8" />
         ) : (
@@ -44,7 +46,7 @@ export default function FileIO() {
           for writing, or "a" for appending. For example, to open a file called
           "example.txt" for reading, we would use the following code:
         </p>
-        <div className="bg-gray-800 rounded-md p-4 mb-8">
+        <div className="bg-gray-800 rounded-md p-4 mb-8  overflow-auto">
           <code>{`file = open("example.txt", "r") # you can use a path like '/Users/ProjectsFolder/example.txt'`}</code>
         </div>
         <p className="mb-4">

@@ -8,8 +8,10 @@ const Numpy = () => {
   return (
     <div className="mx-auto max-w-[68rem] p-8 indent-10  w-full">
       <button
-        className={`flex flex-row items-start justify-between text-2xl  md:min-w-[33.3rem] min-w-[27rem]
-        font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
+        className={`${
+          ShowSection ? "sticky top-20 bg-slate-500" : ""
+        } flex flex-row items-start justify-between md:text-2xl text-xl md:min-w-[33.3rem] min-w-full
+          font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
         onClick={() => setShowSection(!ShowSection)}
       >
         Numpy
@@ -66,7 +68,7 @@ arr = np.random.rand(2, 2)
 print(arr)    `}{" "}
               </code>
             </pre>
-            <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0">
+            <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0 overflow-auto">
               <code>
                 {`
 # Indexing and slicing arrays
@@ -76,7 +78,7 @@ print(arr[1])
 print(arr[:, 2])`}
               </code>
             </pre>
-            <pre className="bg-gray-800 rounded p-4 text-sm indent-0">
+            <pre className="bg-gray-800 rounded p-4 text-sm indent-0 overflow-auto">
               <code>
                 {`
 # Array arithmetic and broadcasting
@@ -111,7 +113,7 @@ print(arr1 * arr2)
               array of integers with 32-bit precision, you would use the
               following code:
             </p>
-            <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0">
+            <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0  overflow-auto">
               <code className="language-python">
                 import numpy as np <br /> arr = np.array([1, 2, 3],
                 dtype=np.int32)
@@ -122,7 +124,7 @@ print(arr1 * arr2)
               astype() method. For example, to change the data type of an array
               of integers to 64-bit floats, you would use the following code:
             </p>
-            <pre className="bg-gray-800 rounded p-4 text-sm indent-0">
+            <pre className="bg-gray-800 rounded p-4 text-sm indent-0 overflow-auto">
               {" "}
               <code className="language-python">
                 {` import numpy as np 
@@ -146,7 +148,7 @@ print(arr1 * arr2)
                 used to change the shape of an array without changing its data.
                 For example, if you have an array with 12 elements, you can
                 reshape it into a 3x4 matrix using the reshape function.
-                <pre className="bg-gray-800 rounded p-4 my-4 text-sm indent-0">
+                <pre className="bg-gray-800 rounded p-4 my-4 text-sm indent-0 overflow-auto">
                   {" "}
                   <code>
                     {`import numpy as np
@@ -170,7 +172,7 @@ print("Reshaped array:\n", b)
                 used to reverse or permute the axes of an array. For example, if
                 you have a 2D array with shape (3, 4), you can transpose it to
                 get an array with shape (4, 3).
-                <pre className="bg-gray-800 rounded p-4 my-4 text-sm indent-0">
+                <pre className="bg-gray-800 rounded p-4 my-4 text-sm indent-0 overflow-auto">
                   {" "}
                   <code>
                     {`import numpy as np
@@ -196,7 +198,7 @@ print(transposed_arr)
                 <span className="font-bold">Sum:</span> This function is used to
                 find the sum of all elements in an array. You can also specify
                 the axis along which to compute the sum.
-                <pre className="bg-gray-800 rounded p-4 my-4 text-sm indent-0">
+                <pre className="bg-gray-800 rounded p-4 my-4 text-sm indent-0  overflow-auto">
                   {" "}
                   <code>
                     {`import numpy as np
@@ -223,28 +225,28 @@ print("Column sums:", col_sums)
                 <span className="font-bold">Mean:</span> This function is used
                 to find the mean (average) of all elements in an array. You can
                 also specify the axis along which to compute the mean.
-                <pre className="bg-gray-800 rounded p-4 my-4 text-sm indent-0">
+                <pre className="bg-gray-800 rounded p-4 my-4 text-sm indent-0 overflow-auto">
                   {" "}
                   <code>
                     {`
-              import numpy as np
+import numpy as np
 
-              # Create a 2D array with random values
-              arr = np.random.rand(3, 4)
-              
-              # Calculate the mean of the entire array
-              mean = np.mean(arr)
-              
-              # Calculate the mean along the rows (axis 1)
-              row_means = np.mean(arr, axis=1)
-              
-              # Calculate the mean along the columns (axis 0)
-              col_means = np.mean(arr, axis=0)
-              
-              print("Array:", arr)
-              print("Mean of the entire array:", mean)
-              print("Row means:", row_means)
-              print("Column means:", col_means)
+# Create a 2D array with random values
+arr = np.random.rand(3, 4)
+
+# Calculate the mean of the entire array
+mean = np.mean(arr)
+
+# Calculate the mean along the rows (axis 1)
+row_means = np.mean(arr, axis=1)
+
+# Calculate the mean along the columns (axis 0)
+col_means = np.mean(arr, axis=0)
+
+print("Array:", arr)
+print("Mean of the entire array:", mean)
+print("Row means:", row_means)
+print("Column means:", col_means)
               `}{" "}
                   </code>{" "}
                 </pre>
@@ -254,19 +256,19 @@ print("Column sums:", col_sums)
                 find the standard deviation of all elements in an array. You can
                 also specify the axis along which to compute the standard
                 deviation.
-                <pre className="bg-gray-800 rounded p-4 mt-4 text-sm indent-0">
+                <pre className="bg-gray-800 rounded p-4 mt-4 text-sm indent-0  overflow-auto">
                   {" "}
                   <code>
                     {`
-              import numpy as np
+import numpy as np
 
-              # Create a sample array
-              data = np.array([1, 2, 3, 4, 5])
-              
-              # Calculate the standard deviation
-              std = np.std(data)
-              
-              print("Standard deviation:", std)
+# Create a sample array
+data = np.array([1, 2, 3, 4, 5])
+
+# Calculate the standard deviation
+std = np.std(data)
+
+print("Standard deviation:", std)
               `}{" "}
                   </code>{" "}
                 </pre>
@@ -287,7 +289,7 @@ print("Column sums:", col_sums)
                 fundamental data structure in NumPy. They are similar to lists
                 in Python but can hold multiple dimensions, allowing for
                 efficient manipulation of large amounts of data.
-                <pre className="bg-gray-800 rounded p-4 my-4 text-sm indent-0">
+                <pre className="bg-gray-800 rounded p-4 my-4 text-sm indent-0 overflow-auto">
                   {" "}
                   <code>
                     {`import numpy as np
@@ -309,10 +311,9 @@ print(element)
                   You can also perform operations on multi-dimensional arrays,
                   such as np.sum(), np.mean(), np.std(), and many more.
                 </p>
-                <pre className="bg-gray-800 rounded p-4 my-4 text-sm indent-0">
+                <pre className="bg-gray-800 rounded p-4 my-4 text-sm indent-0 overflow-auto">
                   {" "}
                   <code>
-                    x``
                     {`import numpy as np
 
 # Create a 2x3 array
@@ -332,7 +333,7 @@ print(total_sum)
                 allows you to define arrays with named fields, similar to a
                 database table. This can be useful for representing structured
                 data such as CSV or JSON files.
-                <pre className="bg-gray-800 rounded p-4 my-4 text-sm indent-0">
+                <pre className="bg-gray-800 rounded p-4 my-4 text-sm indent-0 overflow-auto">
                   {" "}
                   <code>
                     {`import numpy as np
@@ -359,7 +360,7 @@ print(data[1])
                 subtype of structured arrays where each element is a record that
                 contains multiple fields. Record arrays can be accessed using
                 field names or indices.
-                <pre className="bg-gray-800 rounded p-4 mt-4 text-sm indent-0">
+                <pre className="bg-gray-800 rounded p-4 mt-4 text-sm indent-0 overflow-auto">
                   {" "}
                   <code>
                     {`import numpy as np

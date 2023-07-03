@@ -22,11 +22,13 @@ const BasicSyntaxAndDataTypes = () => {
     }  w-full`}
   ></div> */}{" "}
       <button
-        className={`flex flex-row items-start justify-between text-2xl  md:min-w-[33.3rem] min-w-[29rem]
-        font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300  border-b-2 border-b-slate-400`}
+        className={`${
+          ShowSection ? "sticky top-20 bg-slate-500" : ""
+        } flex flex-row items-start justify-between md:text-2xl text-xl md:min-w-[33.3rem] min-w-full
+          font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
         onClick={() => setShowSection(!ShowSection)}
       >
-        Basic Syntax and Data Types
+        Syntax and Types
         {!ShowSection ? (
           <FaCaretDown size={24} className="ml-8" />
         ) : (
@@ -38,7 +40,7 @@ const BasicSyntaxAndDataTypes = () => {
           Python has a simple and easy-to-learn syntax. Here are some of the
           basic syntax elements:
         </p>
-        <pre className="text-white bg-gray-800 rounded-md p-4 mb-4">
+        <pre className="text-white bg-gray-800 rounded-md p-4 mb-4  overflow-auto">
           {`# This is a comment
 print("Hello, World!") # This is also a comment
 x = 5

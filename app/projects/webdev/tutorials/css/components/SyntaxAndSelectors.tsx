@@ -9,8 +9,10 @@ const SyntaxAndSelectors = () => {
   return (
     <div className="mx-auto max-w-[68rem] p-8 indent-10 w-full">
       <button
-        className={`flex flex-row items-start justify-between text-2xl  md:min-w-[33.3rem] min-w-[27rem]
-  font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
+        className={`${
+          ShowSection ? "sticky top-20 bg-slate-500" : ""
+        } flex flex-row items-start justify-between md:text-2xl text-xl md:min-w-[33.3rem] min-w-full
+          font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
         onClick={() => setShowSection(!ShowSection)}
       >
         CSS Syntax and Selectors
@@ -29,7 +31,7 @@ const SyntaxAndSelectors = () => {
           CSS consists of rules that define how HTML elements should be
           displayed. A CSS rule consists of a selector and a declaration block:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`selector {
   property: value;
 }`}
@@ -39,7 +41,7 @@ const SyntaxAndSelectors = () => {
           declaration block contains one or more property-value pairs that
           define the styling. For example:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`h1 {
   color: red;
 }`}
@@ -58,7 +60,7 @@ const SyntaxAndSelectors = () => {
           <li>
             <code>element</code>: Targets all elements of a specific type, e.g.,
             <code>p</code> targets all <code>p</code> elements.
-            <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+            <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
               {`p {
   color: red;
 }`}
@@ -67,7 +69,7 @@ const SyntaxAndSelectors = () => {
           <li>
             <code>.class</code>: Targets elements with a specific class, e.g.,
             <code>.highlight</code> targets elements with the class "highlight".
-            <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+            <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
               {`.highlight {
   background-color: yellow;
 }`}
@@ -76,7 +78,7 @@ const SyntaxAndSelectors = () => {
           <li>
             <code>#id</code>: Targets an element with a specific ID, e.g.,
             <code>#logo</code> targets the element with the ID "logo".
-            <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+            <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
               {`#logo {
   width: 100px;
   height: 100px;
@@ -88,7 +90,7 @@ const SyntaxAndSelectors = () => {
             is inside <code>elementA</code>, e.g.,
             <code>ul li</code> targets <code>li</code> elements inside a{" "}
             <code>ul</code> element.
-            <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+            <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
               {`ul li {
   font-weight: bold;
 }`}
@@ -99,7 +101,7 @@ const SyntaxAndSelectors = () => {
             <code>elementA</code> or <code>elementB</code>, e.g.,
             <code>h1, h2</code> targets both <code>h1</code> and <code>h2</code>{" "}
             elements.
-            <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+            <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
               {`h1, h2 {
   text-decoration: underline;
 }`}
@@ -155,7 +157,7 @@ const SyntaxAndSelectors = () => {
           You can combine multiple classes and IDs to create more specific
           selectors. Here's an example:
         </p>
-        <pre className="bg-gray-800 rounded-md p-4 mb-4">
+        <pre className="bg-gray-800 rounded-md p-4 mb-4 overflow-auto">
           {`.container .card#featured {
   /* Styles for the featured card inside the container */
 }`}

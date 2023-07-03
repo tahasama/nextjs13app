@@ -8,8 +8,10 @@ const AsynchronousProgramming = () => {
   return (
     <div className="mx-auto max-w-[68rem] p-8 indent-10 w-full">
       <button
-        className={`flex flex-row items-start justify-between text-2xl  md:min-w-[33.3rem] min-w-[27rem]
-font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
+        className={`${
+          ShowSection ? "sticky top-20 bg-slate-500" : ""
+        } flex flex-row items-start justify-between md:text-2xl text-xl md:min-w-[33.3rem] min-w-full
+          font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
         onClick={() => setShowSection(!ShowSection)}
       >
         Asynchronous Programming{" "}
@@ -54,7 +56,7 @@ font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 
         <p className="mb-2">
           Here's an example that demonstrates the usage of these functions:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`// Execute code after a delay of 2 seconds
 setTimeout(() => {
   console.log("Delayed code executed");
@@ -81,7 +83,7 @@ setTimeout(() => {
         <p className="mb-2">
           Here's an example that demonstrates the usage of Promises:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`// Simulating an asynchronous operation
 const fetchData = () => {
   return new Promise((resolve, reject) => {
@@ -112,7 +114,7 @@ fetchData()
         <p className="mb-2">
           Here's an example that demonstrates the usage of async/await:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`// Using async/await with Promises
 const fetchData = () => {
   return new Promise((resolve, reject) => {

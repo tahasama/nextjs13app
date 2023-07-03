@@ -7,8 +7,10 @@ const AdvancedNeuralNetworks = () => {
   return (
     <>
       <button
-        className={`md:ml-7 ml-6 mb-4 flex flex-row items-start justify-between md:text-xl  md:min-w-[33.3rem] 
- font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
+        className={`${
+          ShowSection ? "sticky top-20 bg-slate-950 -translate-x-7" : ""
+        } md:ml-7 ml-6 mb-4 flex flex-row items-start justify-between md:text-xl  md:min-w-[33.3rem] 
+        font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
         onClick={() => setShowSection(!ShowSection)}
       >
         Advanced Neural Networks
@@ -57,7 +59,7 @@ const AdvancedNeuralNetworks = () => {
           Here's an example of building a neural network with dropout, batch
           normalization, and recurrent layers:
         </p>
-        <pre className="bg-gray-800 p-4 rounded-md mb-4">
+        <pre className="bg-gray-800 p-4 rounded-md mb-4v overflow-auto">
           <code className="language-python text-xs md:text-sm ">
             {`import tensorflow as tf
 from tensorflow.keras.models import Sequential

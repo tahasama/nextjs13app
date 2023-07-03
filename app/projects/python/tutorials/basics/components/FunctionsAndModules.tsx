@@ -7,15 +7,17 @@ const FunctionsAndModules = () => {
   return (
     <div className="mx-auto max-w-[68rem] p-4 w-full">
       <button
-        className={`flex flex-row items-start justify-between text-2xl  md:min-w-[33.3rem] min-w-[29rem]
-        font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
+        className={`${
+          ShowSection ? "sticky top-20 bg-slate-500" : ""
+        } flex flex-row items-start justify-between md:text-2xl text-xl md:min-w-[33.3rem] min-w-full
+          font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
         onClick={() => setShowSection(!ShowSection)}
       >
         Functions and Modules{" "}
         {!ShowSection ? (
-          <FaCaretDown size={24} className="ml-8" />
+          <FaCaretDown size={24} className="" />
         ) : (
-          <FaCaretUp size={24} className="ml-8" />
+          <FaCaretUp size={24} className="" />
         )}
       </button>
       <div
@@ -87,7 +89,7 @@ const FunctionsAndModules = () => {
           Functions can also have optional arguments with default values. Here's
           an example:
         </p>
-        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0">
+        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0  overflow-auto">
           def greet(name, greeting="Hello"): <br />
           &nbsp; print(greeting + ", " + name + "!") <br />
           <br />
@@ -131,7 +133,7 @@ const FunctionsAndModules = () => {
           Python file and use these functions. Here's an example of how we can
           use this module in a file called <code>main.py</code>:
         </p>
-        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0 leading-7 tracking-wide">
+        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0 leading-7 tracking-wide  overflow-auto">
           # main.py <br />
           import math_utils <br />
           result1 = math_utils.add_numbers(5, 10) <br />

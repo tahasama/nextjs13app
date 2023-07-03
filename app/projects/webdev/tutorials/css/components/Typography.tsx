@@ -8,8 +8,10 @@ const Typography = () => {
   return (
     <div className="mx-auto max-w-[68rem] p-8 indent-10 w-full">
       <button
-        className={`flex flex-row items-start justify-between text-2xl  md:min-w-[33.3rem] min-w-[27rem]
-      font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
+        className={`${
+          ShowSection ? "sticky top-20 bg-slate-500" : ""
+        } flex flex-row items-start justify-between md:text-2xl text-xl md:min-w-[33.3rem] min-w-full
+          font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
         onClick={() => setShowSection(!ShowSection)}
       >
         CSS Typography
@@ -39,7 +41,7 @@ const Typography = () => {
           <li>Courier New, monospace</li>
           <li>Verdana, sans-serif</li>
         </ul>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4  overflow-auto">
           {`body {
   font-family: Arial, sans-serif;
 }`}
@@ -64,13 +66,13 @@ const Typography = () => {
           </li>
           <li>
             Add the font link to your HTML head:
-            <pre className="bg-gray-800 rounded-md text-white p-2 mt-2">
+            <pre className="bg-gray-800 rounded-md text-white p-2 mt-2  overflow-auto">
               {`<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">`}
             </pre>
           </li>
           <li>
             Use the custom font in your CSS:
-            <pre className="bg-gray-800 rounded-md text-white p-2 mt-2">
+            <pre className="bg-gray-800 rounded-md text-white p-2 mt-2 overflow-auto">
               {`body {
   font-family: 'Open Sans', sans-serif;
 }`}
@@ -83,7 +85,7 @@ const Typography = () => {
           When setting font sizes, you can use different units of measurement.
           Here are some common options:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4  overflow-auto">
           {`h1 {
   font-size: 2rem; /* Sets the font size to 2 times the root font size */
 }
@@ -109,7 +111,7 @@ h2 {
           properties. You can underline, overline, or strike through the text,
           and transform it to uppercase, lowercase, or capitalize it:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`a {
   text-decoration: underline;
 }

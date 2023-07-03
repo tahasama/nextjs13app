@@ -9,8 +9,10 @@ const TransformsAndTransitions = () => {
   return (
     <div className="mx-auto max-w-[68rem] p-8 indent-10 w-full">
       <button
-        className={`flex flex-row items-start justify-between text-2xl  md:min-w-[33.3rem] min-w-[27rem]
-    font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
+        className={`${
+          ShowSection ? "sticky top-20 bg-slate-500" : ""
+        } flex flex-row items-start justify-between md:text-2xl text-xl md:min-w-[33.3rem] min-w-full
+          font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
         onClick={() => setShowSection(!ShowSection)}
       >
         Transforms and Transitions
@@ -45,7 +47,7 @@ const TransformsAndTransitions = () => {
           the element. Here's an example that scales an image to 1.5 times its
           original size:
         </p>
-        <pre className="bg-gray-800 rounded-md p-4 mb-4">
+        <pre className="bg-gray-800 rounded-md p-4 mb-4 overflow-auto">
           {`.scaled-image {
   transform: scale(1.5);
 }`}
@@ -57,7 +59,7 @@ const TransformsAndTransitions = () => {
           negative angles rotate it counterclockwise. Here's an example that
           rotates a div by 45 degrees:
         </p>
-        <pre className="bg-gray-800 rounded-md p-4 mb-4">
+        <pre className="bg-gray-800 rounded-md p-4 mb-4 overflow-auto">
           {`.rotated-div {
   transform: rotate(45deg);
 }`}
@@ -68,7 +70,7 @@ const TransformsAndTransitions = () => {
           the x and y axes. You can specify angles to create diagonal effects.
           Here's an example that skews a paragraph horizontally:
         </p>
-        <pre className="bg-gray-800 rounded-md p-4 mb-4">
+        <pre className="bg-gray-800 rounded-md p-4 mb-4 overflow-auto">
           {`.skewed-paragraph {
   transform: skewX(20deg);
 }`}
@@ -80,7 +82,7 @@ const TransformsAndTransitions = () => {
           define the amount of translation. Here's an example that moves a div
           50 pixels to the right and 20 pixels down:
         </p>
-        <pre className="bg-gray-800 rounded-md p-4 mb-4">
+        <pre className="bg-gray-800 rounded-md p-4 mb-4 overflow-auto">
           {`.translated-div {
   transform: translate(50px, 20px);
 }`}
@@ -102,7 +104,7 @@ const TransformsAndTransitions = () => {
           timing functions, and delays. Here's an example that transitions the
           background color and width of a button:
         </p>
-        <pre className="bg-gray-800 rounded-md p-4 mb-4">
+        <pre className="bg-gray-800 rounded-md p-4 mb-4 overflow-auto">
           {`.transition-button {
   background-color: #007bff;
   color: #fff;
@@ -131,7 +133,7 @@ const TransformsAndTransitions = () => {
           font size, opacity, and more. Here's an example that transitions the
           font size and color of a heading:
         </p>
-        <pre className="bg-gray-800 rounded-md p-4 mb-4">
+        <pre className="bg-gray-800 rounded-md p-4 mb-4 overflow-auto">
           {`.transition-heading {
   font-size: 24px;
   color: #000;
@@ -166,7 +168,7 @@ const TransformsAndTransitions = () => {
           indicate the start and end of the animation. Here's an example that
           animates the opacity of an element:
         </p>
-        <pre className="bg-gray-800 rounded-md p-4 mb-4">
+        <pre className="bg-gray-800 rounded-md p-4 mb-4 overflow-auto">
           {`@keyframes fade-in {
   from {
     opacity: 0;
@@ -196,7 +198,7 @@ const TransformsAndTransitions = () => {
           name, duration, timing function, delay, and other properties. Here's
           an example that animates the rotation of an image:
         </p>
-        <pre className="bg-gray-800 rounded-md p-4 mb-4">
+        <pre className="bg-gray-800 rounded-md p-4 mb-4 overflow-auto">
           {`.rotate-image {
   animation-name: rotate;
   animation-duration: 2s;

@@ -8,8 +8,10 @@ const ES6Features = () => {
   return (
     <div className="mx-auto max-w-[68rem] p-8 indent-10 w-full">
       <button
-        className={`flex flex-row items-start justify-between text-2xl  md:min-w-[33.3rem] min-w-[27rem]
-    font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
+        className={`${
+          ShowSection ? "sticky top-20 bg-slate-500" : ""
+        } flex flex-row items-start justify-between md:text-2xl text-xl md:min-w-[33.3rem] min-w-full
+          font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
         onClick={() => setShowSection(!ShowSection)}
       >
         ES6+ Features{" "}
@@ -36,7 +38,7 @@ const ES6Features = () => {
           capture the lexical scope of the surrounding code, which means they
           inherit the context in which they are defined. Here's an example:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`const greet = (name) => {
   console.log("Hello, " + name);
 };
@@ -53,7 +55,7 @@ greet("John"); // Output: Hello, John`}
           by directly using variable names as object properties. Here's an
           example of both features:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`// Array Destructuring
 const [x, y] = [1, 2];
 console.log(x, y); // Output: 1 2
@@ -73,7 +75,7 @@ console.log(person); // Output: { name: "John", age: 30 }`}
           <code>export</code> keywords to define dependencies between modules
           and share functionality across files. Here's an example:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`// File: module.js
 export const greeting = "Hello, world!";
 
@@ -89,7 +91,7 @@ console.log(greeting); // Output: Hello, world!`}
           <code>extends</code> keyword, allowing you to create subclasses that
           inherit from a base class. Here's an example:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`class Shape {
   constructor(color) {
     this.color = color;

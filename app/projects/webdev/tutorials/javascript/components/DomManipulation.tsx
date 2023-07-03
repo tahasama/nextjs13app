@@ -8,8 +8,10 @@ const DomManipulation = () => {
   return (
     <div className="mx-auto max-w-[68rem] p-8 indent-10 w-full">
       <button
-        className={`flex flex-row items-start justify-between text-2xl  md:min-w-[33.3rem] min-w-[27rem]
-font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
+        className={`${
+          ShowSection ? "sticky top-20 bg-slate-500" : ""
+        } flex flex-row items-start justify-between md:text-2xl text-xl md:min-w-[33.3rem] min-w-full
+          font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
         onClick={() => setShowSection(!ShowSection)}
       >
         DOM Manipulation
@@ -36,7 +38,7 @@ font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 
           <code>getElementById</code>, <code>querySelector</code>,{" "}
           <code>querySelectorAll</code>, and more. Here are some examples:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`// Select an element by its ID
 const elementById = document.getElementById("myElement");
 
@@ -52,7 +54,7 @@ const elements = document.querySelectorAll("p");`}
           attributes, and content using JavaScript. Here are some common
           operations:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`// Change the text content of an element
 element.textContent = "New text";
 
@@ -80,7 +82,7 @@ element.classList.toggle("active");`}
           attaching event listeners to elements. Here's an example of attaching
           a click event listener to a button:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`const button = document.getElementById("myButton");
 
 function handleClick(event) {
@@ -97,7 +99,7 @@ button.addEventListener("click", handleClick);`}
           You can also remove an event listener using the{" "}
           <code>removeEventListener</code> method:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`button.removeEventListener("click", handleClick);`}
         </pre>
         <p className="mb-2">
@@ -105,7 +107,7 @@ button.addEventListener("click", handleClick);`}
           "mouseover", "keydown", and many more. Additionally, you can use event
           delegation to handle events on multiple elements efficiently:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`const parentElement = document.getElementById("parent");
 
 parentElement.addEventListener("click", function(event) {
@@ -130,7 +132,7 @@ parentElement.addEventListener("click", function(event) {
           <code>style</code> property allows you to access and modify inline
           styles directly. Here's an example:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`const element = document.getElementById("myElement");
 
 // Modify styles directly
@@ -143,7 +145,7 @@ element.style.fontSize = "20px";`}
           recommended when working with complex style changes or multiple
           elements. Here's an example:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`const element = document.getElementById("myElement");
 
 // Add a CSS class
@@ -164,7 +166,7 @@ element.classList.toggle("active");`}
           element, and you can modify its properties and content before
           appending it to the document. Here's an example:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`const newElement = document.createElement("div");
 newElement.textContent = "New element content";
 newElement.classList.add("customClass");
@@ -177,7 +179,7 @@ container.appendChild(newElement);`}
           You can also modify existing elements by changing their attributes or
           content. Here are a few examples:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`// Change the text content of an element
 element.textContent = "Updated content";
 
@@ -198,7 +200,7 @@ element.removeAttribute("disabled");`}
           event and provides methods and properties to interact with it. Here's
           an example:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`const container = document.getElementById("container");
 const button = document.getElementById("myButton");
 

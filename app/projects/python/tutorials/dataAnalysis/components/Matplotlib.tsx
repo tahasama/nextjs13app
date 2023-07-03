@@ -26,8 +26,10 @@ const Matplotlib = () => {
         />
       </Head>
       <button
-        className={`flex flex-row items-start justify-between text-2xl  md:min-w-[33.3rem] min-w-[27rem]
-        font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
+        className={`${
+          ShowSection ? "sticky top-20 bg-slate-500" : ""
+        } flex flex-row items-start justify-between md:text-2xl text-xl md:min-w-[33.3rem] min-w-full
+          font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
         onClick={() => setShowSection(!ShowSection)}
       >
         Matplotlib
@@ -61,7 +63,7 @@ const Matplotlib = () => {
           Let's start by creating a simple line chart using Matplotlib. Here's
           the code:
         </p>
-        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0 flex flex-col md:flex-row justify-between">
+        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0 flex flex-col md:flex-row justify-between  overflow-auto">
           <code>
             {`
 import matplotlib.pyplot as plt
@@ -91,7 +93,7 @@ plt.show()
           We can customize our chart by adding a title, axis labels, and
           changing the style of the line. Here's an example:
         </p>
-        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0 flex md:flex-row flex-col justify-between">
+        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0 flex md:flex-row flex-col justify-between overflow-auto">
           <code>
             {`
 import matplotlib.pyplot as plt
@@ -131,7 +133,7 @@ plt.show()
           the <code>xlim</code> and <code>ylim</code>
           functions.
         </p>
-        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0 flex md:flex-row flex-col justify-between">
+        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0 flex md:flex-row flex-col justify-between overflow-auto">
           <code>
             {`
 import matplotlib.pyplot as plt
@@ -161,7 +163,7 @@ plt.show()
           Scatter Plots: Scatter plots are used to display the relationship
           between two variables. Here's an example:
         </p>
-        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0 flex md:flex-row flex-col justify-between">
+        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0 flex md:flex-row flex-col justify-between overflow-auto">
           <code>
             {`
 import matplotlib.pyplot as plt
@@ -195,7 +197,7 @@ plt.show()
           Bar Charts: Bar charts are used to compare values across different
           categories. Here's an example:
         </p>
-        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0 flex md:flex-row flex-col justify-between">
+        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0 flex md:flex-row flex-col justify-between overflow-auto">
           <code>
             {`
 import matplotlib.pyplot as plt
@@ -226,7 +228,7 @@ plt.show()
           Pie Charts: Pie charts are used to show the proportion of different
           categories in a dataset. Here's an example:
         </p>
-        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0 flex md:flex-row flex-col justify-between">
+        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0 flex md:flex-row flex-col justify-between overflow-auto">
           <code>
             {`
 import matplotlib.pyplot as plt
@@ -254,7 +256,7 @@ plt.show()
           Heatmaps: Heatmaps are used to show the distribution of data across a
           2D grid. Here's an example:
         </p>
-        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0 flex md:flex-row flex-col justify-between">
+        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0 flex md:flex-row flex-col justify-between overflow-auto">
           <code>
             {`
 import matplotlib.pyplot as plt
@@ -284,7 +286,7 @@ plt.show()
           dataset. You can create a histogram using the hist() function in
           Matplotlib. Here's an example:
         </p>
-        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0 flex md:flex-row flex-col justify-between">
+        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0 flex md:flex-row flex-col justify-between overflow-auto">
           <code>
             {`
 import matplotlib.pyplot as plt

@@ -8,8 +8,10 @@ const ErrorHandlingAndDebugging = () => {
   return (
     <div className="mx-auto max-w-[68rem] p-8 indent-10 w-full">
       <button
-        className={`flex flex-row items-start justify-between text-2xl  md:min-w-[33.3rem] min-w-[27rem]
-  font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
+        className={`${
+          ShowSection ? "sticky top-20 bg-slate-500" : ""
+        } flex flex-row items-start justify-between md:text-2xl text-xl md:min-w-[33.3rem] min-w-full
+          font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
         onClick={() => setShowSection(!ShowSection)}
       >
         Error Handling and Debugging{" "}
@@ -41,7 +43,7 @@ const ErrorHandlingAndDebugging = () => {
           block and specify the error handling logic in the corresponding{" "}
           <code>catch</code> block.
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`try {
   // Code that may throw an error
 } catch (error) {
@@ -62,7 +64,7 @@ const ErrorHandlingAndDebugging = () => {
           Debugging is the process of finding and fixing bugs in your code. Here
           are some common techniques and tools for debugging JavaScript code:
         </p>
-        <ul className="list-disc list-inside mb-4">
+        <ul className="list-disc list-inside mb-4 overflow-auto">
           <li>
             Console Logging: Use <code>console.log()</code> statements to output
             values and messages to the console.
@@ -84,7 +86,7 @@ const ErrorHandlingAndDebugging = () => {
           Here are some debugging techniques and tools you can use to identify
           and fix issues in your JavaScript code:
         </p>
-        <ul className="list-disc list-inside mb-4">
+        <ul className="list-disc list-inside mb-4 overflow-auto">
           <li>
             Breakpoints: Set breakpoints at specific lines to pause code
             execution and inspect variables and program flow.

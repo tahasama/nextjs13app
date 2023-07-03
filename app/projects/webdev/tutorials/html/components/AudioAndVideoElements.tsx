@@ -9,11 +9,13 @@ const AudioAndVideoElements = () => {
   return (
     <div className="mx-auto max-w-[68rem] p-8 indent-10 w-full">
       <button
-        className={`flex flex-row items-start justify-between text-2xl  md:min-w-[33.3rem] min-w-[27rem]
-    font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
+        className={`${
+          ShowSection ? "sticky top-20 bg-slate-500" : ""
+        } flex flex-row items-start justify-between md:text-2xl text-xl md:min-w-[33.3rem] min-w-full
+          font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
         onClick={() => setShowSection(!ShowSection)}
       >
-        Audio and Video Elements
+        Audio and Video
         {!ShowSection ? (
           <FaCaretDown size={24} className="ml-8" />
         ) : (
@@ -39,7 +41,7 @@ const AudioAndVideoElements = () => {
         <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-x-auto">
           {`<audio src="/path/to/audio.mp3" controls></audio>`}
         </pre>
-        <audio src="/path/to/audio.mp3" controls></audio>
+        <audio src="/path/to/audio.mp3" className="w-full" controls></audio>
         <h3 className="text-xl font-bold my-2">Video Element</h3>
         <p className="mb-2">
           The <strong>&lt;video&gt;</strong> element is used to embed video

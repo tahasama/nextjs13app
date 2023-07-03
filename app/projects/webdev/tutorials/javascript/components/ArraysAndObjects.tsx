@@ -8,8 +8,10 @@ const ArraysAndObjects = () => {
   return (
     <div className="mx-auto max-w-[68rem] p-8 indent-10 w-full">
       <button
-        className={`flex flex-row items-start justify-between text-2xl  md:min-w-[33.3rem] min-w-[27rem]
-font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
+        className={`${
+          ShowSection ? "sticky top-20 bg-slate-500" : ""
+        } flex flex-row items-start justify-between md:text-2xl text-xl md:min-w-[33.3rem] min-w-full
+          font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
         onClick={() => setShowSection(!ShowSection)}
       >
         Arrays and Objects
@@ -32,13 +34,13 @@ font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 
         </p>
 
         <h4 className="text-base font-semibold mb-2">Creating an Array</h4>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`const numbers = [1, 2, 3, 4, 5];
   const fruits = ['apple', 'banana', 'orange'];`}
         </pre>
 
         <h4 className="text-base font-semibold mb-2">Accessing Elements</h4>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`const numbers = [1, 2, 3, 4, 5];
   console.log(numbers[0]); // Output: 1
   
@@ -50,7 +52,7 @@ font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 
         <p className="mb-2">
           JavaScript provides several built-in methods to work with arrays:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`const numbers = [1, 2, 3, 4, 5];
   
   // Adding elements
@@ -80,7 +82,7 @@ font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 
         </p>
 
         <h4 className="text-base font-semibold mb-2">Creating an Object</h4>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`const person = {
     name: 'John Doe',
     age: 30,
@@ -91,7 +93,7 @@ font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 
         <h4 className="text-base font-semibold mb-2">
           Accessing Object Properties
         </h4>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`const person = {
     name: 'John Doe',
     age: 30,
@@ -111,7 +113,7 @@ font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 
 `}{" "}
         </pre>
         <h4 className="text-base font-semibold mb-2">Manipulating Objects</h4>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`const person = {
   name: 'John Doe',
   age: 30,
@@ -128,7 +130,7 @@ delete person.address; // Removes the address property`}
           Objects can also have methods, which are functions defined as object
           properties:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`const person = {
   name: 'John Doe',
   age: 30,

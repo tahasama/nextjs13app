@@ -10,11 +10,13 @@ const ConditionalStatementsAndLoops = () => {
   return (
     <div className="mx-auto max-w-[68rem] p-4 w-full">
       <button
-        className={`flex flex-row items-start justify-between text-2xl  md:min-w-[33.3rem] min-w-[29rem]
-      font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
+        className={`${
+          ShowSection ? "sticky top-20 bg-slate-500" : ""
+        } flex flex-row items-start justify-between md:text-2xl text-xl md:min-w-[33.3rem] min-w-full
+          font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
         onClick={() => setShowSection(!ShowSection)}
       >
-        Conditinal Statements and Loops
+        Conditions and Loops
         {!ShowSection ? (
           <FaCaretDown size={24} className="ml-8" />
         ) : (
@@ -47,7 +49,7 @@ const ConditionalStatementsAndLoops = () => {
           </code>{" "}
           statement
         </p>
-        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0 leading-6">
+        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0 leading-6  overflow-auto">
           if condition1: <br />
           &nbsp; # execute code if condition1 is true <br />
           elif condition2: <br />
@@ -59,7 +61,7 @@ const ConditionalStatementsAndLoops = () => {
           Here's an example that uses conditional statements to determine
           whether a number is positive, negative, or zero:
         </p>
-        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0 leading-6">
+        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0 leading-6  overflow-auto">
           num = -5 if num {`>`} 0: <br />
           &nbsp; print("Positive number") <br />
           elif num == 0:
@@ -78,7 +80,7 @@ const ConditionalStatementsAndLoops = () => {
           Here's an example that uses a <code>for</code> loop to iterate over a
           list and print each item:
         </p>
-        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm overflow-auto indent-0 leading-6">
+        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm overflow-auto indent-0 leading-6 ">
           fruits = ["apple", "banana", "cherry"] for fruit in fruits:
           print(fruit)
           <br />
@@ -113,7 +115,7 @@ const ConditionalStatementsAndLoops = () => {
           Here's an example that uses a <code>while</code> loop to print the
           numbers from 1 to 5:
         </p>
-        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0 leading-6">
+        <pre className="bg-gray-800 rounded p-4 mb-4 text-sm indent-0 leading-6  overflow-auto">
           num = 1 <br />
           while num {`<`}= 5:
           <br /> &nbsp; print(num) num += 1

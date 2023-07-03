@@ -8,7 +8,9 @@ const JavaScriptLibrariesAndFrameworks = () => {
   return (
     <div className="mx-auto max-w-[68rem] p-8 indent-10 w-full">
       <button
-        className={`flex flex-row items-start justify-between text-2xl  md:min-w-[33.3rem] min-w-[27rem]
+        className={`${
+          ShowSection ? "sticky top-20 bg-slate-500" : ""
+        } flex flex-row items-start justify-between md:text-2xl text-xl md:min-w-[33.3rem] min-w-full
           font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
         onClick={() => setShowSection(!ShowSection)}
       >
@@ -106,27 +108,29 @@ const JavaScriptLibrariesAndFrameworks = () => {
           Express.js has gained widespread popularity in the Node.js ecosystem.
         </p>
         <h4 className="text-lg font-semibold mb-2">Pros and Cons</h4>
-        <table className="border border-gray-300 mt-4">
+        <table className="border border-gray-300 mt-4 md:text-lg text-sm">
           <thead>
             <tr>
-              <th className="border border-gray-300 px-4 py-2">
-                Library/Framework
+              <th className="border border-gray-300 md:px-4 px-1 py-2">
+                Framework
               </th>
-              <th className="border border-gray-300 px-4 py-2">Pros</th>
-              <th className="border border-gray-300 px-4 py-2">Cons</th>
+              <th className="border border-gray-300 md:px-4 px-1 py-2">Pros</th>
+              <th className="border border-gray-300 md:px-4 px-1 py-2">Cons</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td className="border border-gray-300 px-4 py-2">React</td>
-              <td className="border border-gray-300 px-4 py-2">
+              <td className="border border-gray-300 md:px-4 px-1 py-2">
+                React
+              </td>
+              <td className="border border-gray-300 md:px-4 px-1 py-2">
                 <ul className="list-disc list-inside">
                   <li>Component-based architecture</li>
                   <li>Efficient virtual DOM for optimal performance</li>
                   <li>Large and active community</li>
                 </ul>
               </td>
-              <td className="border border-gray-300 px-4 py-2">
+              <td className="border border-gray-300 md:px-4 px-1 py-2">
                 <ul className="list-disc list-inside">
                   <li>Steep learning curve for beginners</li>
                   <li>
@@ -137,15 +141,17 @@ const JavaScriptLibrariesAndFrameworks = () => {
               </td>
             </tr>
             <tr>
-              <td className="border border-gray-300 px-4 py-2">Vue.js</td>
-              <td className="border border-gray-300 px-4 py-2">
+              <td className="border border-gray-300 md:px-4 px-1 py-2">
+                Vue.js
+              </td>
+              <td className="border border-gray-300 md:px-4 px-1 py-2">
                 <ul className="list-disc list-inside">
                   <li>Easy integration into existing projects</li>
                   <li>Simple syntax and intuitive API</li>
                   <li>Smooth learning curve</li>
                 </ul>
               </td>
-              <td className="border border-gray-300 px-4 py-2">
+              <td className="border border-gray-300 md:px-4 px-1 py-2">
                 <ul className="list-disc list-inside">
                   <li>Smaller ecosystem compared to React and Angular</li>
                   <li>Less community support for complex scenarios</li>
@@ -153,15 +159,17 @@ const JavaScriptLibrariesAndFrameworks = () => {
               </td>
             </tr>
             <tr>
-              <td className="border border-gray-300 px-4 py-2">Angular</td>
-              <td className="border border-gray-300 px-4 py-2">
+              <td className="border border-gray-300 md:px-4 px-1 py-2">
+                Angular
+              </td>
+              <td className="border border-gray-300 md:px-4 px-1 py-2">
                 <ul className="list-disc list-inside">
                   <li>Comprehensive solution for large-scale applications</li>
                   <li>Strong typing and powerful tooling</li>
                   <li>Modular architecture and dependency injection</li>
                 </ul>
               </td>
-              <td className="border border-gray-300 px-4 py-2">
+              <td className="border border-gray-300 md:px-4 px-1 py-2">
                 <ul className="list-disc list-inside">
                   <li>Steep learning curve</li>
                   <li>Complexity for smaller projects</li>
@@ -170,15 +178,17 @@ const JavaScriptLibrariesAndFrameworks = () => {
               </td>
             </tr>
             <tr>
-              <td className="border border-gray-300 px-4 py-2">React Native</td>
-              <td className="border border-gray-300 px-4 py-2">
+              <td className="border border-gray-300 md:px-4 px-1 py-2">
+                React Native
+              </td>
+              <td className="border border-gray-300 md:px-4 px-1 py-2">
                 <ul className="list-disc list-inside">
                   <li>Code once, deploy on multiple platforms</li>
                   <li>Native-like performance and user experience</li>
                   <li>Reuse of existing React knowledge and components</li>
                 </ul>
               </td>
-              <td className="border border-gray-300 px-4 py-2">
+              <td className="border border-gray-300 md:px-4 px-1 py-2">
                 <ul className="list-disc list-inside">
                   <li>Platform-specific code required for advanced features</li>
                   <li>Limited access to certain device capabilities</li>
@@ -189,15 +199,17 @@ const JavaScriptLibrariesAndFrameworks = () => {
               </td>
             </tr>
             <tr>
-              <td className="border border-gray-300 px-4 py-2">Node.js</td>
-              <td className="border border-gray-300 px-4 py-2">
+              <td className="border border-gray-300 md:px-4 px-1 py-2">
+                Node.js
+              </td>
+              <td className="border border-gray-300 md:px-4 px-1 py-2">
                 <ul className="list-disc list-inside">
                   <li>JavaScript-based full-stack development</li>
                   <li>Efficient and scalable server-side applications</li>
                   <li>Large ecosystem of modules and frameworks</li>
                 </ul>
               </td>
-              <td className="border border-gray-300 px-4 py-2">
+              <td className="border border-gray-300 md:px-4 px-1 py-2">
                 <ul className="list-disc list-inside">
                   <li>Callback-heavy programming style</li>
                   <li>Concurrency limitations</li>
@@ -206,15 +218,17 @@ const JavaScriptLibrariesAndFrameworks = () => {
               </td>
             </tr>
             <tr>
-              <td className="border border-gray-300 px-4 py-2">Next.js</td>
-              <td className="border border-gray-300 px-4 py-2">
+              <td className="border border-gray-300 md:px-4 px-1 py-2">
+                Next.js
+              </td>
+              <td className="border border-gray-300 md:px-4 px-1 py-2">
                 <ul className="list-disc list-inside">
                   <li>Server-rendering and static site generation</li>
                   <li>Automatic code splitting for optimized performance</li>
                   <li>Excellent SEO benefits</li>
                 </ul>
               </td>
-              <td className="border border-gray-300 px-4 py-2">
+              <td className="border border-gray-300 md:px-4 px-1 py-2">
                 <ul className="list-disc list-inside">
                   <li>Complexity for simple, single-page applications</li>
                   <li>Learning curve for beginners</li>
@@ -225,15 +239,15 @@ const JavaScriptLibrariesAndFrameworks = () => {
               </td>
             </tr>
             <tr>
-              <td className="border border-gray-300 px-4 py-2">Expo</td>
-              <td className="border border-gray-300 px-4 py-2">
+              <td className="border border-gray-300 md:px-4 px-1 py-2">Expo</td>
+              <td className="border border-gray-300 md:px-4 px-1 py-2">
                 <ul className="list-disc list-inside">
                   <li>Simplified workflow for React Native development</li>
                   <li>Access to pre-built native components and APIs</li>
                   <li>Easy deployment and sharing of apps</li>
                 </ul>
               </td>
-              <td className="border border-gray-300 px-4 py-2">
+              <td className="border border-gray-300 md:px-4 px-1 py-2">
                 <ul className="list-disc list-inside">
                   <li>Dependency on the Expo platform</li>
                   <li>Limitations in accessing certain native functionality</li>
@@ -244,8 +258,10 @@ const JavaScriptLibrariesAndFrameworks = () => {
               </td>
             </tr>
             <tr>
-              <td className="border border-gray-300 px-4 py-2">Express.js</td>
-              <td className="border border-gray-300 px-4 py-2">
+              <td className="border border-gray-300 md:px-4 px-1 py-2">
+                Express.js
+              </td>
+              <td className="border border-gray-300 md:px-4 px-1 py-2">
                 <ul className="list-disc list-inside">
                   <li>
                     Minimalistic and Lightweight that provides essential tools
@@ -256,7 +272,7 @@ const JavaScriptLibrariesAndFrameworks = () => {
                   <li>Active and Supportive Community</li>
                 </ul>
               </td>
-              <td className="border border-gray-300 px-4 py-2">
+              <td className="border border-gray-300 md:px-4 px-1 py-2">
                 <ul className="list-disc list-inside">
                   <li> Learning Curve</li>
                   <li>

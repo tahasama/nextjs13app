@@ -306,7 +306,7 @@ const Header = () => {
           <div className="flex md:order-2 gap-2 w-full">
             <form
               onSubmit={handleProjectSearch}
-              className=" inset-y-0 left-0 flex items-center pl-3 pointer-events-auto gap-2 w-full mr-10"
+              className=" mx-4 flex items-center justify-center pointer-events-auto gap-2 w-full  mt-5 "
             >
               <input
                 type="text"
@@ -322,9 +322,9 @@ const Header = () => {
                 data-collapse-toggle="navbar-search"
                 aria-controls="navbar-search"
                 aria-expanded="false"
-                className=" text-gray-500 dark:text-gray-400 hover:bg-gray-700 focus:outline-none  rounded-full text-sm p-2.5 mr-1 transition-all duration-100 ease-in-out"
+                className=" text-gray-500 dark:text-gray-400 hover:bg-gray-700 focus:outline-none  rounded-full text-sm  mr-1 transition-all duration-100 ease-in-out"
               >
-                <AiOutlineSearch />
+                <AiOutlineSearch size={22} />
               </button>
             </form>
           </div>

@@ -33,7 +33,10 @@ const Introduction = () => {
           </p>
           <div className="mt-10">
             <button
-              className={`flex flex-row items-start justify-between text-2xl md:min-w-[33.3rem] min-w-[27rem] font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
+              className={`${
+                showSection ? "sticky top-20 bg-slate-500" : ""
+              } flex flex-row items-start justify-between md:text-2xl text-xl md:min-w-[33.3rem] min-w-full
+          font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
               onClick={() => setShowSection(!showSection)}
             >
               Basic Concepts
@@ -59,7 +62,7 @@ const Introduction = () => {
                 at the end of the
                 <code className="bg-gray-800 px-1">{"<body>"}</code> element.
               </p>
-              <pre className="bg-gray-800 rounded-md p-4 mt-2">
+              <pre className="bg-gray-800 rounded-md p-4 mt-2 overflow-auto">
                 {`<!DOCTYPE html>
 <html>
   <head>

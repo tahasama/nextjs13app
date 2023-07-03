@@ -8,12 +8,14 @@ const FunctionsAandHigherOrderFunctions = () => {
   return (
     <div className="mx-auto max-w-[68rem] p-8 indent-10 w-full">
       <button
-        className={`flex flex-row items-start justify-between text-2xl  md:min-w-[33.3rem] min-w-[27rem]
-  font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
+        className={`${
+          ShowSection ? "sticky top-20 bg-slate-500" : ""
+        } flex flex-row items-start justify-between md:text-2xl text-xl md:min-w-[33.3rem] min-w-full
+          font-bold text-center p-3 hover:bg-slate-800 rounded-md transition duration-300 border-b-2 border-b-slate-400`}
         onClick={() => setShowSection(!ShowSection)}
       >
-        Functions and Higher-Order Functions{" "}
-          {!ShowSection ? (
+        Functions/ Higher-Order Functions{" "}
+        {!ShowSection ? (
           <FaCaretDown size={24} className="ml-8" />
         ) : (
           <FaCaretUp size={24} className="ml-8" />
@@ -41,7 +43,7 @@ const FunctionsAandHigherOrderFunctions = () => {
           parameters (optional), and the function body enclosed in curly braces.
           Here's an example:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`function sayHello() {
   console.log("Hello!");
 }
@@ -63,7 +65,7 @@ sayHello();`}
           function when it's invoked. Parameters allow you to provide dynamic
           input to a function. Here's an example:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`function greet(name) {
   console.log("Hello, " + name + "!");
 }
@@ -83,7 +85,7 @@ greet("John");`}
           keyword. The returned value can be used by the code that invoked the
           function. Here's an example:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`function add(a, b) {
   return a + b;
 }
@@ -113,7 +115,7 @@ console.log(sum); // Output: 5`}
           functions are commonly used for asynchronous operations, event
           handling, and more. Here's an example:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`function greet(name, callback) {
   console.log("Hello, " + name + "!");
   callback();
@@ -140,7 +142,7 @@ greet("John", sayGoodbye);`}
           functions in JavaScript are <code>map</code>, <code>filter</code>, and{" "}
           <code>reduce</code>. Here's an example using <code>map</code>:
         </p>
-        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4">
+        <pre className="bg-gray-800 rounded-md text-white p-2 mb-4 overflow-auto">
           {`const numbers = [1, 2, 3, 4, 5];
 
 function double(number) {
