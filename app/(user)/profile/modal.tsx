@@ -23,9 +23,10 @@ import React, {
 } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { MdAddCircleOutline } from "react-icons/md";
-import { AiOutlineCloseCircle } from "react-icons/ai";
+import { AiOutlineCloseCircle, AiOutlineLink } from "react-icons/ai";
 import { FaGithub, FaTwitter, FaInstagram } from "react-icons/fa";
 import { barState } from "@/app/redux/features/sideBarSlice";
+import UploadImage from "./uploadImage";
 
 export default function ModalUser() {
   const router = useRouter();
@@ -35,14 +36,24 @@ export default function ModalUser() {
   const twitterRef = useRef<any>(null);
   const instaRef = useRef<any>(null);
   const githubRef = useRef<any>(null);
+  const webSiteRef = useRef<any>(null);
   const bioRef = useRef<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   // const [errorProjectType, setErrorProjectType] = useState("");
   // const [errorTitle, setErrorTitle] = useState("");
 
-  const { displayName, email, uid, bio, github, twitter, insta } =
-    useAppSelector(getAuthData);
+  const {
+    displayName,
+    email,
+    uid,
+    bio,
+    github,
+    twitter,
+    insta,
+    webSite,
+    image,
+  } = useAppSelector(getAuthData);
   console.log("🚀 ~ file: modal.tsx:45 ~ ModalUser ~ social:", github);
 
   const pathname = usePathname();
@@ -75,6 +86,8 @@ export default function ModalUser() {
       twitter: twitter !== undefined ? twitter : "",
       insta: insta !== undefined ? insta : "",
       github: github !== undefined ? github : "",
+      webSite: webSite !== undefined ? webSite : "",
+      image: image,
     };
 
     dispatch(updateUser(serializableProject)).then(() => {
@@ -196,6 +209,24 @@ export default function ModalUser() {
                         dispatch(
                           updateUserInfos({
                             insta: instaRef.current?.value,
+                          })
+                        )
+                      }
+                    />
+                  </div>{" "}
+                </div>
+                <div className="flex w-full gap-2">
+                  <AiOutlineLink size={28} />
+                  <div className="border   rounded w-full h-9 text-gray-900 leading-tight focus:outline-none focus:shadow-outline">
+                    <input
+                      className="createInput border text-black bg-slate-200 w-full h-full p-2 "
+                      type="text"
+                      ref={webSiteRef}
+                      value={webSite}
+                      onChange={() =>
+                        dispatch(
+                          updateUserInfos({
+                            webSite: webSiteRef.current?.value,
                           })
                         )
                       }

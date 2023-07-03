@@ -11,12 +11,13 @@ import {
 import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
 import { useParams, useRouter } from "next/navigation";
 import React, { Suspense, useEffect, useState } from "react";
-import { AiOutlineStar, AiTwotoneStar } from "react-icons/ai";
+import { AiOutlineLink, AiOutlineStar, AiTwotoneStar } from "react-icons/ai";
 import { FaGithub, FaTwitter, FaInstagram } from "react-icons/fa";
 import { BiDownArrow, BiUpArrow } from "react-icons/bi";
 import Loading from "../Loading";
-import ModalUser from "./modal";
 import Modal from "@/app/modal";
+import ModalUser from "../modal";
+import UploadImage from "../uploadImage";
 
 const page = () => {
   const { all } = useAppSelector(getProjectData);
@@ -39,6 +40,7 @@ const page = () => {
     github,
     twitter,
     insta,
+    webSite,
   } = useAppSelector(getAuthData);
   const xxx = useAppSelector(getAuthData);
   console.log("🚀 ~ file: page.tsx:41 ~ page ~ social:0000000000", xxx);
@@ -61,30 +63,45 @@ const page = () => {
 
     setFilteredAll(filteredResults); // Update the filteredAll state with the filtered results
   };
+  const getCreatedDate = (createdAt: any) => {
+    console.log(
+      "🚀 ~ file: page.tsx:67 ~ getCreatedDate ~ createdAt:",
+      createdAt
+    );
+    return new Date(
+      // @ts-ignore
+      createdAt.seconds * 1000 + createdAt.nanoseconds / 1000000
+    );
+  };
 
+  // const getUpdatedDate = new Date(
+  //   // @ts-ignore
+  //   updatedAt.seconds * 1000 + updatedAt.nanoseconds / 1000000
+  // );
   return (
     <section className="bg-gray-900 flex flex-col md:flex-row w-full min-h-screen  text-white p-10  relative rounded-lg shadow-lg">
       <div
-        className={`w-full md:w-1/3  flex items-center h-full flex-col relative mt-16`}
+        className={`w-full md:w-1/3  flex items-center h-full flex-col relative mt-8`}
       >
         <div className="flex items-center justify-start mt-16 ">
           <div className="w-full px-4 flex flex-col  text-center  items-center">
             <div className="relative mb-4 w-fit">
-              <div className="rounded-full overflow-hidden flex items-center justify-center">
+              <div className="rounded-full overflow-hidden w-48 flex items-center justify-center">
                 {image !== "" || oimage !== "" ? (
                   <img
-                    className=""
+                    className="w-full object-contain"
                     src={uid !== params.uid ? oimage : image}
                     alt="User's profile picture"
                   />
                 ) : (
-                  <h1 className="text-5xl w-24 h-24 flex items-center justify-center pb-5 bg-emerald-700 rounded-full">
+                  <h1 className="text-8xl w-48 h-48 flex items-center justify-center pb-5 bg-emerald-700 rounded-full">
                     {uid !== params.uid
                       ? odisplayName?.charAt(0)
                       : displayName.charAt(0)}
                   </h1>
                 )}
               </div>
+              <UploadImage />
             </div>
 
             <div className="">
@@ -123,7 +140,6 @@ const page = () => {
               <FaGithub className="w-10 h-10 md:w-8 md:h-8" />
             </a>
           )}
-
           {twitter !== "" && twitter !== undefined && (
             <a
               href={twitter}
@@ -134,7 +150,6 @@ const page = () => {
               <FaTwitter className="w-10 h-10 md:w-8 md:h-8" />
             </a>
           )}
-
           {insta !== "" && insta !== undefined && (
             <a
               href={insta}
@@ -143,6 +158,16 @@ const page = () => {
               className="text-gray-400 hover:text-gray-300"
             >
               <FaInstagram className="w-10 h-10 md:w-8 md:h-8" />
+            </a>
+          )}{" "}
+          {webSite !== "" && webSite !== undefined && (
+            <a
+              href={webSite}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-gray-300"
+            >
+              <AiOutlineLink className="w-10 h-10 md:w-8 md:h-8" />
             </a>
           )}
         </div>
@@ -332,7 +357,13 @@ const page = () => {
                           project.user.displayName}
                       </p>
                       <p className="text-xs text-gray-400">
-                        {project.createdAt.toDate().toDateString()}
+                        {new Date(
+                          // @ts-ignore
+                          project.createdAt.seconds * 1000 +
+                            project.createdAt.nanoseconds / 1000000
+                        )
+                          .toString()
+                          .slice(0, 16)}
                       </p>
                     </div>
                   </div>

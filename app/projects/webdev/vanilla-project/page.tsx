@@ -15,7 +15,7 @@ import {
   cleanState,
 } from "@/app/redux/features/projectSlice";
 import { getAuthData } from "@/app/redux/features/authSlice";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
 
 import { Orbitron } from "next/font/google";
@@ -27,7 +27,6 @@ const orbitron = Orbitron({
 
 export default function vanillaEdit() {
   const [saveMessage, setSaveMessage] = useState("");
-  const dispatch = useAppDispatch();
   const { uid, email } = useAppSelector(getAuthData);
   const { projectId } = useParams();
   const {
@@ -41,14 +40,24 @@ export default function vanillaEdit() {
     cells,
     createdAt,
   } = useAppSelector(getProjectData);
+  console.log("🚀 ~ file: page.tsx:44 ~ vanillaEdit ~ title:", title);
 
-  const updatedAt1 = new Date(
-    // @ts-ignore
-    updatedAt.seconds * 1000 + updatedAt.nanoseconds / 1000000
+  const updatedAt1 = useMemo(
+    () =>
+      new Date(
+        // @ts-ignore
+        updatedAt.seconds * 1000 + updatedAt.nanoseconds / 1000000
+      ),
+    [updatedAt]
   );
-  const createdAt1 = new Date(
-    // @ts-ignore
-    createdAt.seconds * 1000 + createdAt.nanoseconds / 1000000
+
+  const createdAt1 = useMemo(
+    () =>
+      new Date(
+        // @ts-ignore
+        createdAt.seconds * 1000 + createdAt.nanoseconds / 1000000
+      ),
+    [createdAt]
   );
 
   return (
@@ -86,13 +95,13 @@ export default function vanillaEdit() {
                 Updated:{" "}
                 <span className={`text-emerald-500 ${orbitron.className}`}>
                   {" "}
-                  {createdAt1.toLocaleDateString("en-US", {
+                  {updatedAt1.toLocaleDateString("en-US", {
                     day: "2-digit",
                     month: "short",
                     year: "2-digit",
                   })}
                   &nbsp;
-                  {createdAt1.toLocaleTimeString("en-US")}
+                  {updatedAt1.toLocaleTimeString("en-US")}
                 </span>
               </p>
             </div>

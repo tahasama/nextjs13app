@@ -164,7 +164,7 @@ export default function PythonEdit() {
         </div>
       }
 
-      <div className=" bg-gradient-to-b from-gray-800 to-black rounded-md mt-3 py-3 px-0 ">
+      <div className=" bg-gradient-to-b from-gray-800 to-black rounded-md mt-8 py-3 px-0 ">
         <Resizable direction="vertical-react" handleWidth={handleWidth}>
           <div
             style={{

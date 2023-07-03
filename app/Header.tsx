@@ -27,7 +27,7 @@ import {
   cleanState,
   updateSaved,
 } from "./redux/features/projectSlice";
-import Logo from "./images/Logo.png";
+import Logo from "./images/Untitled1.png";
 
 const kiwi = Kiwi_Maru({
   subsets: ["latin"],
@@ -104,7 +104,7 @@ const Header = () => {
     );
     if (!saved && uid === user.uid) {
       const result = window.confirm(
-        "This work hasn't beenoooooooooo saved!\n\n a - Hit 'Cancel' then 'Save' button if you want to save yout work \n b - Hit 'Ok' of you want to leave without saving"
+        "This work hasn't been saved!\n\n a - Hit 'Cancel' then 'Save' button if you want to save yout work \n b - Hit 'Ok' of you want to leave without saving"
       );
       setResult(result);
       if (result) {
@@ -138,15 +138,15 @@ const Header = () => {
 
   return (
     <div
-      className={` flex overflow-visible justify-between items-center w-screen   h-20 z-50 text-white fixed top-0 bg-black `}
+      className={` flex overflow-visible justify-evenly md:justify-between items-center w-screen   h-20 z-50 text-white fixed top-0 bg-black `}
     >
-      <ul className=" overflow-hidden hidden ml-0 md:flex justify-around items-center flex-grow lg:flex-grow-0 lg:gap-12 lg:w-auto mx-16  text-xl text text-gray-300 font-semibold">
+      <ul className=" overflow-hidden hidden ml-0 md:flex justify-around items-center flex-grow lg:flex-grow-0 lg:gap-12 lg:w-auto mx-2  text-xl text text-gray-300 font-semibold">
         <div onClick={() => (projectId ? alerted("/") : router.push("/"))}>
           <Image
             src={Logo}
             alt="Logo"
             width={220}
-            className="p-0 m-0 relative left-0 xl:-top-1 w-fit cursor-pointer flex-shrink-0"
+            className="p-0 m-0 relative left-0 md:-top-1 w-20 md:w-48 lg:w-fit cursor-pointer flex-shrink-0"
           />
         </div>
 
@@ -225,10 +225,10 @@ const Header = () => {
               </span>
             </div>
           )}
-          <ul className="" aria-labelledby="user-menu-button ">
+          <ul className="cursor-pointer" aria-labelledby="user-menu-button ">
             <li>
               <div
-                className="block px-4 py-3 text-md tracking-wider duration-300 transition-all rounded-t-md h-full text-cyan-500 hover:bg-gray-600 hover:text-white"
+                className="block px-4 py-3 text-md  tracking-wider duration-300 transition-all rounded-t-md h-full text-cyan-500 hover:bg-gray-600 hover:text-white"
                 onClick={() => {
                   dispatch(showHideDropdown(!dropDown));
                   projectId
@@ -267,8 +267,8 @@ const Header = () => {
         <Image
           src={Logo}
           alt="Logo"
-          width={0}
-          className="p-0 m-0 relative md:hidden left-0 -top-[3px] w-fit cursor-pointer scale-110 z-0"
+          width={200}
+          className="p-0 m-0 relative md:hidden left-0 -top-[3px] w-fit cursor-pointer z-0"
         />
       </Link>
       {/* full screen */}
@@ -298,10 +298,10 @@ const Header = () => {
 
       {nav && (
         <ul className="md:hidden flex flex-col justify-around items-center absolute top-0 left-0 w-full h-screen bg-gray-900 text-gray-500">
-          <div className="flex md:order-2 gap-2 w-full ">
+          <div className="flex md:order-2 gap-2 w-full">
             <form
               onSubmit={handleProjectSearch}
-              className=" inset-y-0 left-0 flex items-center pl-3 pointer-events-auto gap-2 w-full mx-3"
+              className=" inset-y-0 left-0 flex items-center pl-3 pointer-events-auto gap-2 w-full mr-10"
             >
               <input
                 type="text"

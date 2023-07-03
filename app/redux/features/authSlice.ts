@@ -9,10 +9,11 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 
-import { auth, db } from "../../firebase";
+import { auth, db, storage } from "../../firebase";
 import { doc, setDoc } from "@firebase/firestore";
 import { collection, getDoc, updateDoc } from "firebase/firestore";
 import { stat } from "fs";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 const USER_URL: any = process.env.REACT_APP_USER_URL;
 
@@ -132,6 +133,8 @@ export const updateUser = createAsyncThunk(
       twitter: value.twitter,
       insta: value.insta,
       github: value.github,
+      webSite: value.webSite,
+      image: value.image,
     };
     console.log("🚀 ~ file: authSlice.ts:132 ~ object:", object);
 
@@ -195,6 +198,26 @@ export const resetPassword = createAsyncThunk(
   }
 );
 
+///////new
+export const uploadImage = createAsyncThunk(
+  "uploadImage",
+  async ({ image, uid }: any) => {
+    console.log("🚀 ~ file: authSlice.ts:204 ~ image, uid :", image, uid);
+    const storageRef = ref(storage, uid + ".jpg");
+    try {
+      await uploadBytesResumable(storageRef, image);
+      try {
+        const res = await getDownloadURL(storageRef);
+        console.log("🚀 ~ file: authSlice.ts:209 ~ res:", res);
+
+        await updateDoc(doc(db, "users", uid), { image: res });
+      } catch (error) {}
+    } catch (error: any) {
+      return error;
+    }
+  }
+);
+
 export interface userProps {
   authUser: {
     uid: string;
@@ -218,6 +241,8 @@ export interface userProps {
     twitter?: string;
     insta?: string;
     github?: string;
+    webSite?: string;
+    cancelImage?: boolean;
   };
 }
 
@@ -244,6 +269,8 @@ export const userInitialState = {
   twitter: "",
   insta: "  ",
   github: "",
+  webSite: "",
+  cancelImage: false,
 };
 
 export const authSlice = createSlice({
@@ -269,6 +296,14 @@ export const authSlice = createSlice({
     updateUserInfos: (state, action) => {
       Object.assign(state, action.payload);
     },
+    /////new
+    newImage: (state, action) => {
+      // state.image = action.payload.image;
+      Object.assign(state, action.payload);
+    },
+    cancelState: (state, action) => {
+      state.cancelImage = action.payload.cancelImage;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getUserByUid.fulfilled, (state, action: any) => {
@@ -280,6 +315,10 @@ export const authSlice = createSlice({
       state.image = action.payload.image;
       state.bio = action.payload.bio;
       state.error = action.payload;
+      state.github = action.payload.github;
+      state.twitter = action.payload.twitter;
+      state.insta = action.payload.insta;
+      state.webSite = action.payload.webSite;
     });
     builder.addCase(getOtherUserByUid.fulfilled, (state, action: any) => {
       state.ouid = action.payload.uid;
@@ -293,6 +332,7 @@ export const authSlice = createSlice({
       state.github = action.payload.github;
       state.twitter = action.payload.twitter;
       state.insta = action.payload.insta;
+      state.webSite = action.payload.webSite;
     });
     builder.addCase(registerUser.fulfilled, (state, action: any) => {
       state.uid = action.payload.uid;
@@ -318,6 +358,12 @@ export const authSlice = createSlice({
 });
 
 export const getAuthData = (state: userProps) => state.authUser;
-export const { updateError, saveUser, resetUser, updateUserInfos } =
-  authSlice.actions;
+export const {
+  updateError,
+  saveUser,
+  resetUser,
+  updateUserInfos,
+  newImage,
+  cancelState,
+} = authSlice.actions;
 export default authSlice.reducer;
