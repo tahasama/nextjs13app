@@ -4,29 +4,33 @@ import { useAppSelector } from "@/app/redux/hooks";
 import React, { Suspense } from "react";
 import Loading from "./Loading";
 import { AiTwotoneStar } from "react-icons/ai";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const page = () => {
   const { searchAll } = useAppSelector(getProjectData);
   const router = useRouter();
+  const search = useSearchParams().get("search");
 
-  console.log(
-    "🚀 ~ file: page.tsx:7 ~ page ~ searchAll:",
-    searchAll.map((project: any) => project)
-  );
+  console.log("🚀 ~ file: page.tsx:7 ~ page ~ searchAllhhhh:", search);
 
   return (
     <div className="flex flex-row h-[calc(100vh-4rem)] w-full justify-around items-center text-slate-100">
       <Suspense fallback={<Loading />}>
+        <p className="top-20 left-20 absolute text-white text-xl font-serif">
+          Result for: {search} and {searchAll.length}
+        </p>
+
         <div className="flex flex-wrap justify-center gap-3 md:overflow-auto h-80 scrollbar   w-full scrollbar-thumb-purple-700 scrollbar-track-violet-900">
           {searchAll.length !== 0 ? (
             searchAll
 
               // .sort((a: any, b: any) => b.stars - a.stars)
               .map((project: any) => (
-                <div className="card-container flex flex-col w-2/5 h-40 bg-gray-800 rounded-lg shadow-lg">
+                <div
+                  key={project._id}
+                  className="card-container flex flex-col w-2/5 h-40 bg-gray-800 rounded-lg shadow-lg"
+                >
                   <a
-                    key={project._id}
                     href={`/projects/${
                       project.projectType === "rj"
                         ? "webdev/react-project"

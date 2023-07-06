@@ -137,8 +137,10 @@ const Header = () => {
     );
 
     projectId
-      ? alerted("/projects/searchResult")
-      : router.push("/projects/searchResult");
+      ? alerted(`/projects/searchResult?search=${searchRef.current?.value}`)
+      : router.push(
+          `/projects/searchResult?search=${searchRef.current?.value}`
+        );
   };
 
   return (
