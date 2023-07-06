@@ -270,6 +270,7 @@ export const deleteProject = createAsyncThunk(
 export const searchProjectsData = createAsyncThunk(
   "searchProjectsData",
   async (seria: any) => {
+    console.log("🚀 ~ file: projectSlice.ts:273 ~ seria:", seria);
     const q1 = query(
       collection(db, "projects"),
       where("user.username", "==", seria)
@@ -314,6 +315,7 @@ export const searchProjectsData = createAsyncThunk(
       ...documents3,
       // ...documents4,
     ];
+    console.log("🚀 ~ file: projectSlice.ts:318 ~ documents:", documents);
     // const documentsSet = new Set(documents);
     // const documentsArr = new Array(documentsSet);
     return documents; // Return the documents array
