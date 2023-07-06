@@ -27,6 +27,7 @@ import {
   cleanState,
   updateSaved,
   cleanUpSearch,
+  searchTerms,
 } from "./redux/features/projectSlice";
 import Logo from "./images/Untitled1.png";
 
@@ -67,6 +68,7 @@ const Header = () => {
     projectType,
     pythonCode,
     user,
+    search,
   } = useAppSelector(getProjectData);
 
   const { uid, displayName, email, image } = useAppSelector(getAuthData);
@@ -74,7 +76,6 @@ const Header = () => {
   const [openUserMenu, setOpenUserMenu] = useState(false);
   const searchRef = useRef<any>(null);
   const [errorTitle, setErrorTitle] = useState("");
-  const [term, setTerm] = useState("");
   const [logout, setLogout] = useState(false);
 
   const [nav, setNav] = useState<boolean>(false);
@@ -132,9 +133,6 @@ const Header = () => {
   const handleProjectSearch: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     dispatch(cleanUpSearch([]));
-    dispatch(searchProjectsData(searchRef.current?.value)).then(() =>
-      setTerm("")
-    );
 
     projectId
       ? alerted(`/projects/searchResult?search=${searchRef.current?.value}`)
@@ -191,8 +189,8 @@ const Header = () => {
             className="block p-2 w-full  text-sm text-gray-100 border border-gray-300 rounded-md bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Search..."
             ref={searchRef}
-            value={term}
-            onChange={() => setTerm(searchRef.current?.value)}
+            value={search}
+            onChange={() => dispatch(searchTerms(searchRef.current?.value))}
           />
           <button
             type="submit"
@@ -324,8 +322,8 @@ const Header = () => {
                 className="block w-full p-2 pl-10 text-sm text-gray-100 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Search..."
                 ref={searchRef}
-                value={term}
-                onChange={() => setTerm(searchRef.current?.value)}
+                value={search}
+                onChange={() => dispatch(searchTerms(searchRef.current?.value))}
               />
               <button
                 type="button"

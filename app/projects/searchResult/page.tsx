@@ -1,7 +1,11 @@
 "use client";
-import { getProjectData } from "@/app/redux/features/projectSlice";
-import { useAppSelector } from "@/app/redux/hooks";
-import React, { Suspense } from "react";
+import {
+  getProjectData,
+  searchProjectsData,
+  searchTerms,
+} from "@/app/redux/features/projectSlice";
+import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
+import React, { Suspense, useEffect } from "react";
 import Loading from "./Loading";
 import { AiTwotoneStar } from "react-icons/ai";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -10,14 +14,19 @@ const page = () => {
   const { searchAll } = useAppSelector(getProjectData);
   const router = useRouter();
   const search = useSearchParams().get("search");
+  const dispatch = useAppDispatch();
 
   console.log("🚀 ~ file: page.tsx:7 ~ page ~ searchAllhhhh:", search);
+
+  useEffect(() => {
+    dispatch(searchProjectsData(search)).then(() => dispatch(searchTerms("")));
+  }, []);
 
   return (
     <div className="flex flex-row h-[calc(100vh-4rem)] w-full justify-around items-center text-slate-100">
       <Suspense fallback={<Loading />}>
-        <p className="top-20 left-20 absolute text-white text-xl font-serif">
-          Result for: {search} and {searchAll.length}
+        <p className="top-20 py-4 left-20 absolute text-white text-xl font-serif">
+          {searchAll.length} results for: {search}
         </p>
 
         <div className="flex flex-wrap justify-center gap-3 md:overflow-auto h-80 scrollbar   w-full scrollbar-thumb-purple-700 scrollbar-track-violet-900">

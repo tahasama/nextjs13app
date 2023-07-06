@@ -323,7 +323,6 @@ export const searchProjectsData = createAsyncThunk(
 );
 
 export interface projectProps {
-  _id: string;
   projs: {
     all?: any[];
     user: {
@@ -445,6 +444,9 @@ export const projectSlice = createSlice({
     filteredProjects: (state, action) => {
       state.all = action.payload;
     },
+    searchTerms: (state, action) => {
+      state.search = action.payload;
+    },
 
     cleanUpProjects: (state, action) => {
       state.all = action.payload;
@@ -472,6 +474,7 @@ export const projectSlice = createSlice({
 export const getProjectData = (state: RootState) => state.proj;
 
 export const {
+  searchTerms,
   updateCode,
   updateProjectInfos,
   cleanState,
