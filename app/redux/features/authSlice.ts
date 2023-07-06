@@ -322,6 +322,10 @@ export const authSlice = createSlice({
     });
     builder.addCase(getOtherUserByUid.fulfilled, (state, action: any) => {
       state.ouid = action.payload.uid;
+      console.log(
+        "🚀 ~ file: authSlice.ts:325 ~ builder.addCase ~ action.payload.:",
+        action.payload.uid
+      );
       state.odisplayName = action.payload.displayName;
       state.oemail = action.payload.email;
       state.ocreationTime = action.payload.creationTime;

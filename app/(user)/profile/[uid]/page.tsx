@@ -25,6 +25,7 @@ const page = () => {
   const [filteredAll, setFilteredAll] = useState([]); // State for filtered results
   const [selectedFilter, setSelectedFilter] = useState("");
   const params = useParams();
+  console.log("🚀 ~ file: page.tsx:28 ~ page ~ params:", params);
   const router = useRouter();
   const {
     lastSignInTime,
@@ -37,13 +38,22 @@ const page = () => {
     ocreationTime,
     olastSignInTime,
     oimage,
+    obio,
     github,
     twitter,
     insta,
     webSite,
+    email,
+    oemail,
   } = useAppSelector(getAuthData);
+  console.log("🚀 ~ file: page.tsx:49 ~ page ~  oimage,:", oimage);
+  console.log("🚀 ~ file: page.tsx:49 ~ page ~ image,:", image);
+  console.log("🚀 ~ file: page.tsx:46 ~ page ~ uid:", uid !== params.uid);
   const xxx = useAppSelector(getAuthData);
-  console.log("🚀 ~ file: page.tsx:41 ~ page ~ social:0000000000", xxx);
+  console.log(
+    "🚀 ~ file: page.tsx:41 ~ page ~ social:0000000000",
+    image !== "" || oimage !== ""
+  );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -81,50 +91,53 @@ const page = () => {
   return (
     <section className="bg-gray-900 flex flex-col md:flex-row w-full min-h-screen  text-white p-10  relative rounded-lg shadow-lg">
       <div
-        className={`w-full md:w-1/3  flex items-center h-full flex-col relative mt-8`}
+        className={`w-full md:w-1/3  flex items-center h-full flex-col relative mt-4`}
       >
         <div className="flex items-center justify-start mt-16 ">
           <div className="w-full px-4 flex flex-col  text-center  items-center">
             <div className="relative mb-4 w-fit">
-              <div className="rounded-full overflow-hidden w-48 flex items-center justify-center">
+              <div className="rounded-full overflow-hidden w-52 flex items-center justify-center">
                 {image !== "" || oimage !== "" ? (
                   <img
-                    className="w-full object-contain"
+                    className="w-full"
                     src={uid !== params.uid ? oimage : image}
                     alt="User's profile picture"
                   />
                 ) : (
-                  <h1 className="text-8xl w-48 h-48 flex items-center justify-center pb-5 bg-emerald-700 rounded-full">
+                  <h1 className="text-8xl w-52 h-52 flex items-center justify-center pb-5 bg-emerald-700 rounded-full">
                     {uid !== params.uid
                       ? odisplayName?.charAt(0)
                       : displayName.charAt(0)}
                   </h1>
                 )}
               </div>
-              <UploadImage />
+              {uid === params.uid && <UploadImage />}
             </div>
 
             <div className="">
               <h1 className="text-2xl md:text-2xl lg:text-3xl font-bold">
                 {uid !== params.uid ? odisplayName : displayName}
               </h1>
+              <span className="block text-md font-serif  text-gray-500 truncate dark:text-gray-400">
+                {uid !== params.uid ? oemail : email}
+              </span>
               {/* <h1 className="text-base md:text-lg font-bold">{email}</h1> */}
               <p className="text-xs md:text-sm text-gray-400 mt-4">
-                Joined:
+                Joined:{" "}
                 {creationTime !== undefined &&
                 creationTime !== "" &&
-                uid !== params.uid
-                  ? ocreationTime
-                  : creationTime.slice(0, 16)}
+                uid === params.uid
+                  ? creationTime.slice(0, 16)
+                  : ocreationTime.slice(0, 16)}
               </p>
 
               <p className="text-xs md:text-sm text-gray-400 mt-1">
                 Last visited:{" "}
                 {lastSignInTime !== undefined &&
                 lastSignInTime !== "" &&
-                uid !== params.uid
-                  ? olastSignInTime
-                  : lastSignInTime.slice(0, 16)}
+                uid === params.uid
+                  ? lastSignInTime.slice(0, 16)
+                  : olastSignInTime.slice(0, 16)}
               </p>
             </div>
           </div>
@@ -135,7 +148,7 @@ const page = () => {
               href={github}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-gray-300"
+              className="text-gray-400 hover:text-gray-300 "
             >
               <FaGithub className="w-10 h-10 md:w-8 md:h-8" />
             </a>
@@ -213,7 +226,8 @@ const page = () => {
                   </div>
                   <div className="text-base md:text-2xl lg:text-3xl font-semibold">
                     {all.reduce(
-                      (accumulator, obj: any) => accumulator + obj.star?.length,
+                      (accumulator: any, obj: any) =>
+                        accumulator + obj.star?.length,
                       0
                     )}
                   </div>
@@ -317,9 +331,11 @@ const page = () => {
 
                 // .sort((a: any, b: any) => b.stars - a.stars)
                 .map((project: any) => (
-                  <div className="card-container flex flex-col w-2/5 h-40 bg-gray-800 rounded-lg shadow-lg">
+                  <div
+                    key={project._id}
+                    className="card-container flex flex-col w-2/5 h-40 bg-gray-800 rounded-lg shadow-lg"
+                  >
                     <a
-                      key={project._id}
                       href={`/projects/${
                         project.projectType === "rj"
                           ? "webdev/react-project"

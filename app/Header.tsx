@@ -44,7 +44,7 @@ interface linksProps {
 const links: linksProps[] = [
   { id: 1, name: "Home", link: "/" },
   { id: 2, name: "Python", link: "projects/python" },
-  { id: 3, name: "webdev", link: "projects/webdev" },
+  { id: 3, name: "Webdev", link: "projects/webdev" },
 ];
 
 const Header = () => {
@@ -150,8 +150,8 @@ const Header = () => {
           <Image
             src={Logo}
             alt="Logo"
-            width={220}
-            className="p-0 m-0 relative left-0 md:-top-1 w-20 md:w-48 lg:w-fit cursor-pointer flex-shrink-0"
+            width={140}
+            className="p-0 m-0 relative left-0 md:-top-1 w-20 md:w-48 lg:w-48 cursor-pointer flex-shrink-0"
           />
         </div>
 
@@ -161,10 +161,10 @@ const Header = () => {
               onClick={() =>
                 projectId ? alerted(l.link) : router.push(l.link)
               }
-              className="group transition duration-300"
+              className="group transition duration-300 flex"
             >
               <span className="relative pb-1">{l.name}</span>
-              <span className="absolute left-0 -bottom-0  w-full h-0.5 bg-sky-600 transform scale-x-0 origin-left transition-transform duration-1000 group-hover:scale-x-100"></span>
+              <span className="absolute left-0 bottom-0   w-full h-0.5 bg-sky-600 transform scale-x-0 origin-left transition-transform duration-1000 group-hover:scale-x-100"></span>
             </div>
           </li>
         ))}

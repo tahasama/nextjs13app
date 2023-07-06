@@ -41,9 +41,7 @@ export default function UploadImage() {
   // const [errorProjectType, setErrorProjectType] = useState("");
   // const [errorTitle, setErrorTitle] = useState("");
 
-  const { displayName, email, uid, bio, github, twitter, insta, image } =
-    useAppSelector(getAuthData);
-  console.log("🚀 ~ file: modal.tsx:45 ~ ModalUser ~ social:", github);
+  const userData = useAppSelector(getAuthData);
 
   const pathname = usePathname();
 
@@ -68,7 +66,9 @@ export default function UploadImage() {
     e.preventDefault();
     setLoading(true);
     if (imageRef.current.files[0] !== undefined) {
-      dispatch(uploadImage({ uid: uid, image: imageRef.current.files[0] }));
+      dispatch(
+        uploadImage({ uid: userData.uid, image: imageRef.current.files[0] })
+      );
       const imgUrl = URL.createObjectURL(imageRef.current.files[0]);
 
       // dispatch(
@@ -82,7 +82,7 @@ export default function UploadImage() {
         })
       );
 
-      dispatch(updateUser(image)).then(() => {
+      dispatch(updateUser(userData)).then(() => {
         setTimeout(() => {
           setLoading(false), setShowModal(false);
         }, 500);

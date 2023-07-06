@@ -40,6 +40,8 @@ export const javaScriptExample = `function myFunction() {
                         }
                         `;
 export const pythonExample = `
+### CREATING MORE THAN ONE IMAGE AT A TIME MAY PRODUCE WRONG IMAGES!!! 
+
 # Load libraries
 from pandas import read_csv
 from pandas.plotting import scatter_matrix
