@@ -13,7 +13,7 @@ const AuthProvider = ({ children }: any) => {
       if (user !== null) {
         dispatch(getUserByUid({ uid: user.uid }));
       } else {
-        dispatch(saveUser(null));
+        // dispatch(saveUser(null));
       }
     });
 

@@ -50,10 +50,7 @@ const page = () => {
   console.log("🚀 ~ file: page.tsx:49 ~ page ~ image,:", image);
   console.log("🚀 ~ file: page.tsx:46 ~ page ~ uid:", uid !== params.uid);
   const xxx = useAppSelector(getAuthData);
-  console.log(
-    "🚀 ~ file: page.tsx:41 ~ page ~ social:0000000000",
-    image !== "" || oimage !== ""
-  );
+  console.log("🚀 ~ file: page.tsx:41 ~ page ~ social:0000000000", uid);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

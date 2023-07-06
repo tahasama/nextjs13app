@@ -38,13 +38,12 @@ export const fetchProjectByUser = createAsyncThunk(
       const querySnapshot = await getDocs(getUserProjects);
 
       const promises = querySnapshot.docs.map(async (docs: any) => {
+        console.log("fffffffffffff", docs.data());
         return { ...docs.data(), _id: docs.id };
       });
-      console.log(
-        "🚀 ~ file: projectSlice.ts:43 ~ promises ~ promises:",
-        promises
-      );
+
       const result: any[] = await Promise.all(promises);
+      console.log("🚀 ~ file: projectSlice.ts:45 ~ result:", result);
       return result;
     } catch (error) {
       return error;
@@ -65,17 +64,17 @@ export const fetchProjectById = createAsyncThunk<any, string>(
   }
 );
 
-export const searchProject = createAsyncThunk(
-  "searchProject",
-  async (projectTitle: string | undefined) => {
-    try {
-      const res = await axios.get(POJECT_URL + "search/q=" + projectTitle);
-      return res.data;
-    } catch (error) {
-      return error;
-    }
-  }
-);
+// export const searchProject = createAsyncThunk(
+//   "searchProject",
+//   async (projectTitle: string | undefined) => {
+//     try {
+//       const res = await axios.get(POJECT_URL + "search/q=" + projectTitle);
+//       return res.data;
+//     } catch (error) {
+//       return error;
+//     }
+//   }
+// );
 
 export interface valueProps {
   createdAt?: any;
@@ -290,17 +289,17 @@ export const searchProjectsData = createAsyncThunk(
 
     const querySnapshot1 = await getDocs(q1);
     querySnapshot1.forEach((doc) => {
-      const data = doc.data();
+      const data = { ...doc.data(), _id: doc.id };
       documents1.push(data);
     });
     const querySnapshot2 = await getDocs(q2);
     querySnapshot2.forEach((doc) => {
-      const data = doc.data();
+      const data = { ...doc.data(), _id: doc.id };
       documents2.push(data);
     });
     const querySnapshot3 = await getDocs(q3);
     querySnapshot3.forEach((doc) => {
-      const data = doc.data();
+      const data = { ...doc.data(), _id: doc.id };
       documents3.push(data);
     });
     // const querySnapshot4 = await getDocs(q4);

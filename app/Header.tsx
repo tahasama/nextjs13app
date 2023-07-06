@@ -43,8 +43,8 @@ interface linksProps {
 
 const links: linksProps[] = [
   { id: 1, name: "Home", link: "/" },
-  { id: 2, name: "Python", link: "projects/python" },
-  { id: 3, name: "Webdev", link: "projects/webdev" },
+  { id: 2, name: "Python", link: "/projects/python" },
+  { id: 3, name: "Webdev", link: "/projects/webdev" },
 ];
 
 const Header = () => {
@@ -66,10 +66,10 @@ const Header = () => {
     star,
     projectType,
     pythonCode,
+    user,
   } = useAppSelector(getProjectData);
 
   const { uid, displayName, email, image } = useAppSelector(getAuthData);
-  const user = useAppSelector(getAuthData);
 
   const [openUserMenu, setOpenUserMenu] = useState(false);
   const searchRef = useRef<any>(null);
@@ -146,26 +146,34 @@ const Header = () => {
       className={` flex overflow-visible justify-evenly md:justify-between items-center w-screen   h-20 z-50 text-white fixed top-0 bg-black `}
     >
       <ul className=" overflow-hidden hidden ml-0 md:flex justify-around items-center flex-grow lg:flex-grow-0 lg:gap-12 lg:w-auto mx-2  text-xl text text-gray-300 font-semibold">
-        <div onClick={() => (projectId ? alerted("/") : router.push("/"))}>
+        <a
+          target="_self"
+          href="/"
+          onClick={() =>
+            projectId !== undefined ? alerted("/") : router.push("/")
+          }
+        >
           <Image
             src={Logo}
             alt="Logo"
             width={140}
             className="p-0 m-0 relative left-0 md:-top-1 w-20 md:w-48 lg:w-48 cursor-pointer flex-shrink-0"
           />
-        </div>
+        </a>
 
         {links.map((l: linksProps) => (
           <li key={l.id} className="relative h-full cursor-pointer">
-            <div
+            <a
+              href={l.link}
               onClick={() =>
                 projectId ? alerted(l.link) : router.push(l.link)
               }
+              target="_self" // Add this line to open link in a new tab
               className="group transition duration-300 flex"
             >
               <span className="relative pb-1">{l.name}</span>
-              <span className="absolute left-0 bottom-0   w-full h-0.5 bg-sky-600 transform scale-x-0 origin-left transition-transform duration-1000 group-hover:scale-x-100"></span>
-            </div>
+              <span className="absolute left-0 bottom-0 w-full h-0.5 bg-sky-600 transform scale-x-0 origin-left transition-transform duration-1000 group-hover:scale-x-100"></span>
+            </a>
           </li>
         ))}
       </ul>

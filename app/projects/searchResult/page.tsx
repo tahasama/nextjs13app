@@ -12,7 +12,7 @@ const page = () => {
 
   console.log(
     "🚀 ~ file: page.tsx:7 ~ page ~ searchAll:",
-    searchAll.map((project: any) => project.star)
+    searchAll.map((project: any) => project)
   );
 
   return (
