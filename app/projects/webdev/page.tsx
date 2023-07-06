@@ -11,9 +11,12 @@ import { DiCss3 } from "react-icons/di";
 import { SiTypescript } from "react-icons/si";
 import { IoLogoJavascript } from "react-icons/io";
 import { RiArrowRightSLine, RiCodeBoxLine } from "react-icons/ri";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const gettingStartedRef = useRef<any>(null);
+  const router = useRouter();
+
   const browsingTutorialsRef = useRef<any>(null);
 
   const scrollToGettingStarted = () => {
@@ -97,7 +100,7 @@ const page = () => {
             </p>
             <div className="mt-8 flex justify-center">
               <button
-                onClick={scrollToSignUp}
+                onClick={() => router.push("/register")}
                 className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-stone-50 bg-cyan-500 hover:bg-cyan-500"
               >
                 <FaUserPlus className="w-5 h-5 mr-2" />

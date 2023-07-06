@@ -17,8 +17,10 @@ import {
   RiArrowDownLine,
 } from "react-icons/ri";
 import python from "../../images/python-logo.png";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const router = useRouter();
   const gettingStartedRef = useRef<any>(null);
   const browsingTutorialsRef = useRef<any>(null);
 
@@ -123,7 +125,7 @@ const page = () => {
               </p>
               <div className="mt-8 flex justify-center">
                 <button
-                  // onClick={scrollToSignUp}
+                  onClick={() => router.push("/register")}
                   className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
                 >
                   <FaUserPlus className="w-5 h-5 mr-2" />
@@ -183,83 +185,83 @@ const page = () => {
       </section>
 
       {/* Tutorials section */}
-        <section
-          id="tutorials"
-          ref={browsingTutorialsRef}
-          className="bg-gray-900"
-        >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-            <div className="text-center">
-              <h2 className="text-3xl font-extrabold text-white sm:text-4xl md:text-5xl">
-                <span className="block">Learn with our</span>
-                <span className="block text-indigo-600">Tutorials</span>
-              </h2>
-              <p className="mt-4 text-lg text-gray-300">
-                Our tutorials cover everything from the basics of Python to
-                advanced topics like machine learning and data visualization.
-              </p>
-            </div>
-            <div className="mt-16 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-              <div className="flex flex-col items-center">
-                <div className="w-20 h-20 rounded-full bg-indigo-600 flex items-center justify-center">
-                  <FaBook className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="mt-8 text-xl font-medium text-white">
-                  Python Basics
-                </h3>
-                <p className="mt-6 text-base text-gray-300 text-center">
-                  Learn the fundamentals of Python programming, including
-                  variables, data types, and control structures.
-                </p>
-                <a
-                  href="/projects/python/tutorials/basics"
-                  className="mt-8 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md bg-indigo-600 hover:bg-indigo-700"
-                >
-                  <RiArrowRightSLine className="w-5 h-5 mr-2" />
-                  Start tutorial
-                </a>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="w-20 h-20 rounded-full bg-indigo-600 flex items-center justify-center">
-                  <FaChartLine className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="mt-8 text-xl font-medium text-white">
-                  Data Analysis
-                </h3>
-                <p className="mt-6 text-base text-gray-300 text-center">
-                  Learn how to use Python to analyze and visualize data, including
-                  libraries like Pandas and Matplotlib.
-                </p>
-                <a
-                  href="/projects/python/tutorials/dataAnalysis"
-                  className="mt-8 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md bg-indigo-600 hover:bg-indigo-700"
-                >
-                  <RiArrowRightSLine className="w-5 h-5 mr-2" />
-                  Start tutorial
-                </a>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="w-20 h-20 rounded-full bg-indigo-600 flex items-center justify-center">
-                  <FaRobot className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="mt-8 text-xl font-medium text-white">
-                  Machine Learning
-                </h3>
-                <p className="mt-6 text-base text-gray-300 text-center">
-                  Learn how to use Python to build machine learning models, with
-                  libraries like Scikit-Learn and TensorFlow.
-                </p>
-                <a
-                  href="/projects/python/tutorials/machineLearning"
-                  className="mt-8 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md bg-indigo-600 hover:bg-indigo-700"
-                >
-                  <RiArrowRightSLine className="w-5 h-5 mr-2" />
-                  Start tutorial
-                </a>
-              </div>
-            </div>{" "}
+      <section
+        id="tutorials"
+        ref={browsingTutorialsRef}
+        className="bg-gray-900"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+          <div className="text-center">
+            <h2 className="text-3xl font-extrabold text-white sm:text-4xl md:text-5xl">
+              <span className="block">Learn with our</span>
+              <span className="block text-indigo-600">Tutorials</span>
+            </h2>
+            <p className="mt-4 text-lg text-gray-300">
+              Our tutorials cover everything from the basics of Python to
+              advanced topics like machine learning and data visualization.
+            </p>
           </div>
-        </section>
+          <div className="mt-16 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="flex flex-col items-center">
+              <div className="w-20 h-20 rounded-full bg-indigo-600 flex items-center justify-center">
+                <FaBook className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="mt-8 text-xl font-medium text-white">
+                Python Basics
+              </h3>
+              <p className="mt-6 text-base text-gray-300 text-center">
+                Learn the fundamentals of Python programming, including
+                variables, data types, and control structures.
+              </p>
+              <a
+                href="/projects/python/tutorials/basics"
+                className="mt-8 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md bg-indigo-600 hover:bg-indigo-700"
+              >
+                <RiArrowRightSLine className="w-5 h-5 mr-2" />
+                Start tutorial
+              </a>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="w-20 h-20 rounded-full bg-indigo-600 flex items-center justify-center">
+                <FaChartLine className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="mt-8 text-xl font-medium text-white">
+                Data Analysis
+              </h3>
+              <p className="mt-6 text-base text-gray-300 text-center">
+                Learn how to use Python to analyze and visualize data, including
+                libraries like Pandas and Matplotlib.
+              </p>
+              <a
+                href="/projects/python/tutorials/dataAnalysis"
+                className="mt-8 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md bg-indigo-600 hover:bg-indigo-700"
+              >
+                <RiArrowRightSLine className="w-5 h-5 mr-2" />
+                Start tutorial
+              </a>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="w-20 h-20 rounded-full bg-indigo-600 flex items-center justify-center">
+                <FaRobot className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="mt-8 text-xl font-medium text-white">
+                Machine Learning
+              </h3>
+              <p className="mt-6 text-base text-gray-300 text-center">
+                Learn how to use Python to build machine learning models, with
+                libraries like Scikit-Learn and TensorFlow.
+              </p>
+              <a
+                href="/projects/python/tutorials/machineLearning"
+                className="mt-8 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md bg-indigo-600 hover:bg-indigo-700"
+              >
+                <RiArrowRightSLine className="w-5 h-5 mr-2" />
+                Start tutorial
+              </a>
+            </div>
+          </div>{" "}
+        </div>
+      </section>
       {/* Examples section */}
       <section
         id="examples"
