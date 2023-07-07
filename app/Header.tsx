@@ -65,7 +65,7 @@ const Header = () => {
       method: "POST",
       body: JSON.stringify(dataToSend),
     }).then(() => console.log("its been called!!!!!!!"));
-  }, []);
+  });
 
   const {
     title,
