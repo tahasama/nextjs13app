@@ -12,6 +12,10 @@ const FrameEeditor = () => {
     x = window;
   }
   const [handleWidth, setHandleWidth] = useState(0);
+  console.log(
+    "🚀 ~ file: FrameEditor.tsx:15 ~ FrameEeditor ~ handleWidth:",
+    handleWidth
+  );
 
   useEffect(() => {
     setHandleWidth(x.innerWidth * 0.8);
@@ -34,11 +38,12 @@ const FrameEeditor = () => {
   }, [x]);
 
   return (
-    <div className=" bg-gradient-to-b from-gray-800 to-black rounded-md py-3">
+    <div className="w-full bg-gradient-to-b from-gray-800 to-black rounded-md py-3">
       <Resizable direction="vertical-react" handleWidth={handleWidth}>
         <div
           style={{
             height: "100%",
+            width: "100%",
             display: "flex",
             backgroundColor: "white",
           }}

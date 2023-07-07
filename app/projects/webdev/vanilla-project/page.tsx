@@ -62,7 +62,7 @@ export default function vanillaEdit() {
 
   return (
     <div
-      className={`flex flex-col items-center md:ml-16 w-full md:w-[calc(100vw-5.1rem)] bg-gray-950 min-h-screen  ${
+      className={`flex flex-col items-center md:ml-16  md:w-[calc(100vw-5.1re] bg-gray-950 min-h-screen  ${
         title !== "" ? "mt-10" : "mt-10"
       }`}
     >
@@ -116,18 +116,9 @@ export default function vanillaEdit() {
         )}
       </div>
 
-      <div className="my-16 flex flex-col ">
-        <div
-          style={{
-            height: "100%",
-
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <EditorChoice />
-          <FrameEeditor />
-        </div>
+      <div className="flex flex-col mt-8 h-full p-0 m-0">
+        <EditorChoice />
+        <FrameEeditor />
       </div>
     </div>
   );

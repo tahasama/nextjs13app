@@ -56,14 +56,14 @@ const page = () => {
               <div className="mt-8">
                 <button
                   onClick={scrollToGettingStarted}
-                  className=" inline-flex items-center px-6 py-3 border text-slate-800 border-transparent text-base font-medium rounded-md bg-cyan-500 hover:bg-cyan-600"
+                  className=" inline-flex items-center md:px-6 px-1 py-3 border text-slate-800 border-transparent text-base font-medium rounded-md bg-cyan-500 hover:bg-cyan-600"
                 >
                   <RiCodeBoxLine className="w-5 h-5 mr-2 " />
                   Get started
                 </button>
                 <button
                   onClick={scrollToBrowsingTutorials}
-                  className="ml-3 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-cyan-400 bg-slate-700 hover:bg-gray-600"
+                  className="md:ml-3 inline-flex items-center md:px-6 px-1 py-3 border border-transparent text-base font-medium rounded-md text-cyan-400 bg-slate-700 hover:bg-gray-600"
                 >
                   <FaInfoCircle className="w-5 h-5 mr-2" />
                   Browse Tutorials
@@ -101,7 +101,7 @@ const page = () => {
             <div className="mt-8 flex justify-center">
               <button
                 onClick={() => router.push("/register")}
-                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-stone-50 bg-cyan-500 hover:bg-cyan-500"
+                className="inline-flex items-center  py-3 border border-transparent text-base font-medium rounded-md text-stone-50 bg-cyan-500 hover:bg-cyan-500"
               >
                 <FaUserPlus className="w-5 h-5 mr-2" />
                 Sign Up Now

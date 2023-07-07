@@ -204,7 +204,7 @@ const page = () => {
         </div>
       </div>
       {/* <div className={`w-full  ${bio ? "md:w-5/7" : "md:w-2/3"} mt-20`}> */}
-      <div className={`w-full md:w-2/3 mt-20`}>
+      <div className={`w-full md:w-2/3 mt-10 md:mt-20`}>
         <div className="flex items-center justify-around md:-ml-3">
           <div className="flex flex-col md:flex-row items-center mb-6 md:mb-12 mt-5 w-full">
             <div className="flex flex-col justify-end gap-3 mt-10 md:mt-5 flex-1">
@@ -213,7 +213,7 @@ const page = () => {
                   onClick={() =>
                     all.sort((a: any, b: any) => b.star.length - a.star.length)
                   }
-                  className="relative text-center cursor-pointer bg-indigo-950 w-24 md:40 lg:w-40 py-2 rounded-2xl"
+                  className="relative text-center cursor-pointer bg-indigo-950 w-32 md:40 lg:w-40 py-2 rounded-2xl"
                 >
                   <div className="w-full relative">
                     <div className="absolute top-0 right-0 mt-1 mr-2 gap-0">
@@ -233,7 +233,7 @@ const page = () => {
 
                 <div
                   onClick={() => handleFilter("")}
-                  className="text-center cursor-pointer bg-indigo-950 w-24 md:36 lg:w-40 py-2 rounded-2xl"
+                  className="text-center cursor-pointer bg-indigo-950 w-32 md:36 lg:w-40 py-2 rounded-2xl"
                 >
                   <div className="w-full relative">
                     <div className="absolute top-0 right-0 mt-1 mr-2 gap-0">
@@ -250,10 +250,10 @@ const page = () => {
                 </div>
               </div>
 
-              <div className="bg-opacity-60 flex flex-wrap justify-center items-center gap-2 mt-3 md:mt-0">
+              <div className="bg-opacity-60 flex flex-wrap  justify-center items-center gap-2 mt-3 md:mt-0">
                 <div
                   onClick={() => handleFilter("rj")}
-                  className="text-center cursor-pointer bg-violet-950 w-20 md:w-32 py-2 rounded-2xl"
+                  className="text-center cursor-pointer bg-violet-950 w-28 md:w-32 py-2 rounded-2xl"
                 >
                   <div className="w-full relative">
                     <div className="absolute top-0 right-0 mt-1 mr-2 gap-0">
@@ -270,7 +270,7 @@ const page = () => {
                 </div>
                 <div
                   onClick={() => handleFilter("vwd")}
-                  className="text-center  cursor-pointer bg-violet-950 w-20 md:w-32 py-2 rounded-2xl"
+                  className="text-center  cursor-pointer bg-violet-950 w-28 md:w-32 py-2 rounded-2xl"
                 >
                   <div className="w-full relative">
                     <div className="absolute top-0 right-0 mt-1 mr-2 gap-0">
@@ -287,7 +287,7 @@ const page = () => {
                 </div>
                 <div
                   onClick={() => handleFilter("py")}
-                  className="text-center cursor-pointer bg-violet-950 w-20 md:w-32 py-2 rounded-2xl"
+                  className="text-center cursor-pointer bg-violet-950 w-28 md:w-32 py-2 rounded-2xl"
                 >
                   <div className="w-full relative">
                     <div className="absolute top-0 right-0 mt-1 mr-2 gap-0">
@@ -302,7 +302,7 @@ const page = () => {
                 </div>
                 <div
                   onClick={() => handleFilter("ds")}
-                  className="text-center cursor-pointer bg-violet-950 w-20 md:w-32 py-2 rounded-2xl"
+                  className="text-center cursor-pointer bg-violet-950 w-28 md:w-32 py-2 rounded-2xl"
                 >
                   <div className="w-full relative">
                     <div className="absolute top-0 right-0 mt-1 mr-2 gap-0">
@@ -322,7 +322,7 @@ const page = () => {
           </div>
         </div>
         <Suspense fallback={<Loading />}>
-          <div className="flex flex-wrap justify-center gap-3 md:overflow-auto h-80 scrollbar scrollbar-thumb-purple-700 scrollbar-track-violet-900">
+          <div className="flex flex-wrap justify-center gap-3 mt-3 md:mt-0 md:overflow-auto h-80 scrollbar scrollbar-thumb-purple-700 scrollbar-track-violet-900">
             {all !== undefined &&
               (selectedFilter !== "" ? filteredAll : all)
 
@@ -331,7 +331,7 @@ const page = () => {
                   <div
                     key={project._id}
                     // className="card-container flex flex-col w-2/5 h-40 bg-gray-800 rounded-lg shadow-lg"
-                    className="card-container flex flex-col w-2/5 h-40 bg-gray-800 rounded-lg shadow-lg hover:ring-2 mt-1 hover:ring-purple-950 hover:bg-purple-950 hover:text-white transition-all duration-500 ease-in"
+                    className="card-container flex flex-col w-5/5 md:w-2/5 h-40 bg-gray-800 rounded-lg shadow-lg hover:ring-2 mt-1 hover:ring-purple-950 hover:bg-purple-950 hover:text-white transition-all duration-500 ease-in"
                   >
                     <a
                       href={`/projects/${
@@ -349,7 +349,7 @@ const page = () => {
                           {project.title}
                         </div>
                         <div className="flex items-center">
-                          <AiTwotoneStar className="w-4 h-4 text-yellow-200" />
+                          <AiTwotoneStar className="w-4 h-4 text-yellow-280" />
                           <p className="text-sm text-gray-400 ml-1">
                             {project.star.length}
                           </p>

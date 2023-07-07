@@ -100,13 +100,13 @@ const VanillaEditor = () => {
         onClick={onFormat}
         className="group
             bg-teal-950 transition-colors duration-700 ease-in-out px-3
-        hover:bg-teal-900 py-1 text-lg w-20 text-teal-200 hover:text-gray-100
+        hover:bg-teal-900 py-1 tracking-widest md:tracking-normal text-md md:text-lg w-16 md:w-20 text-teal-200 hover:text-gray-100
              "
 
         // top-[-84px]
       >
         {/* <p className="group-hover:-rotate-90 transition-all duration-300"> */}{" "}
-        format
+        <p className="transform -rotate-90">format</p>
         {/* </p> */}
       </button>
       <div className={`relative right-0 h-full w-[calc(100%-80px)] `}>

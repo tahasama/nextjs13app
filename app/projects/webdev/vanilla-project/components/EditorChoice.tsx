@@ -30,7 +30,7 @@ const EditorChoice = () => {
           onClick={() => handleDivClick(v)}
           className={`${
             bilbo.className
-          } text-xl  w-[138px] h-16 relative  top-3 first-letter: rounded capitalize border-r-gray-800 border-r-4
+          } text-xl w-full md:w-[138px] h-16 relative  top-3 first-letter: rounded capitalize border-r-gray-800 border-r-4
            ${
              selectedDiv === v
                ? "border-b-4 border-sky-700 text-3xl text-sky-600 bg-gradient-to-b from-indigo-900 via-gray-800 to-gray-800"

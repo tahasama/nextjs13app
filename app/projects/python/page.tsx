@@ -31,33 +31,6 @@ const page = () => {
     browsingTutorialsRef.current.scrollIntoView({ behavior: "smooth" });
   };
   return (
-    // <div className="text-white h-full flex flex-col justify-center items-center gap-3">
-    //   <p className="mt-40">Welcome href python page</p>
-    //   <Modal />
-    //   <div className="flex flex-row gap-2 ">
-    //     <buthrefn className="bg-sky-600 rounded-md p-2">
-    //       <Link
-    //         href={{
-    //           pathname: "projects/python/python-project/",
-    //           query: { type: "basic" },
-    //         }}
-    //       >
-    //         Basic python
-    //       </Link>
-    //     </buthrefn>
-    //     <buthrefn className="bg-sky-600 rounded-md p-2">
-    //       <Link
-    //         href={{
-    //           pathname: "projects/python/python-project/",
-    //           query: { type: "data" },
-    //         }}
-    //       >
-    //         Data Science
-    //       </Link>
-    //     </buthrefn>
-    //   </div>
-    // </div>
-
     <div className="bg-gray-100">
       {/* Hero section */}
       <section id="hero" className="bg-gray-900">
@@ -75,17 +48,17 @@ const page = () => {
                 everything you need to get started with Python, including
                 tutorials, examples, and a specialized web editor.
               </p>
-              <div className="mt-8">
+              <div className="mt-8 w-full">
                 <button
                   onClick={scrollToGettingStarted}
-                  className="text-slate-200 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md bg-indigo-600 hover:bg-indigo-700"
+                  className="text-slate-200 inline-flex items-center md:px-6 px-1 py-3 border border-transparent text-base font-medium rounded-md bg-indigo-600 hover:bg-indigo-700"
                 >
                   <RiCodeBoxLine className="w-5 h-5 mr-2 " />
                   Get started
                 </button>
                 <button
                   onClick={scrollToBrowsingTutorials}
-                  className="ml-3 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50"
+                  className="md:ml-3 inline-flex items-center md:px-6 px-1 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50"
                 >
                   <FaInfoCircle className="w-5 h-5 mr-2" />
                   Browse Tutorials
