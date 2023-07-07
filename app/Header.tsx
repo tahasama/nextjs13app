@@ -14,7 +14,7 @@ import {
 } from "./redux/features/authSlice";
 import { AiOutlineSearch } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { FormEventHandler, useRef, useState } from "react";
+import { FormEventHandler, useRef, useState, useEffect } from "react";
 import { FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
 import { useParams, usePathname, useRouter } from "next/navigation";
 
@@ -49,11 +49,23 @@ const links: linksProps[] = [
 ];
 
 const Header = () => {
+  const pythonUrl: string = process.env.NEXT_PUBLIC_PYTHON as string;
+
   const dispatch = useAppDispatch();
   const { dropDown } = useAppSelector(getBarData);
   const [result, setResult] = useState(false);
   const router = useRouter();
   const { projectId } = useParams();
+
+  useEffect(() => {
+    const dataToSend = { code: "print('Hello You!')" };
+
+    fetch(pythonUrl!, {
+      // fetch("http://localhost:8000/execute-python/", {
+      method: "POST",
+      body: JSON.stringify(dataToSend),
+    }).then(() => console.log("its been called!!!!!!!"));
+  }, []);
 
   const {
     title,

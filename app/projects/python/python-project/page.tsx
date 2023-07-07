@@ -319,14 +319,12 @@ export default function PythonEdit() {
                           //   return null; // Return null to skip this element
                           // }
                           return (
-                            <>
-                              <img
-                                key={index}
-                                src={plt}
-                                alt="Histogram"
-                                className=""
-                              />
-                            </>
+                            <img
+                              key={index}
+                              src={plt}
+                              alt="Histogram"
+                              className=""
+                            />
                           );
                         })}
                   </div>

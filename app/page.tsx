@@ -7,6 +7,7 @@ import css from "./images/css.png";
 import javascript from "./images/javascript.png";
 import python from "./images/python.png";
 import Side from "./projects/Side";
+import { useEffect } from "react";
 
 const novaOval = Nova_Oval({
   subsets: ["latin"],
@@ -18,6 +19,7 @@ export default function Home() {
   const codeArr = code.split(/(?!^)/u); //regular expression to keep the empty space
   const code2 = "Code Faster";
   const codeArr2 = code2.split(/(?!^)/u); //regular expression to keep the empty space
+
   return (
     <main className="">
       <Side />
