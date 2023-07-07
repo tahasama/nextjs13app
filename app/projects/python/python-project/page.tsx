@@ -47,7 +47,12 @@ export default function PythonEdit() {
   const { pythonCode, title, updatedAt, createdAt, description, user } =
     useAppSelector(getProjectData);
   const { uid } = useAppSelector(getAuthData);
-  console.log("🚀 ~ file: page.tsx:49 ~ uidbbbbbbbbbbbbbbbbbbb:", user);
+  console.log(
+    "🚀 ~ file: page.tsx:49 ~ uidbbbbbbbbbbbbbbbbbbb:",
+    user.uid,
+    "and",
+    uid
+  );
   const { projectId } = useParams();
   console.log("🚀 ~ file: page.tsx:51 ~ projectId:", projectId);
 
@@ -191,7 +196,7 @@ export default function PythonEdit() {
           </div>
         )}
 
-        {uid !== user.uid && (
+        {!uid && (
           <p className="text-red-500  text-md italic mb-4 text-center">
             This work can't be saved. Please log in to create, save, or clone
             projects.
