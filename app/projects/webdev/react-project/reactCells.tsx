@@ -102,7 +102,7 @@ const ReactCells = () => {
         )}
 
         {!uid && (
-          <p className="text-red-500  text-md italic mb-4">
+          <p className="text-red-500  mx-2 text-center text-md italic mb-4">
             This work can't be saved. Please log in to create, save, or clone
             projects.
           </p>

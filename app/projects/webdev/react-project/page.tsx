@@ -9,7 +9,7 @@ const abel = Abel({
 export default function ReactEdit() {
   return (
     <main className="bg-gray-950 min-h-screen">
-      <div className="grid place-items-center  ml-16  w-[calc(100vw-5.1rem)]">
+      <div className="grid place-items-center md:ml-16 w-full md:w-[calc(100vw-5.1rem)]">
         <ReactCells />
       </div>
     </main>

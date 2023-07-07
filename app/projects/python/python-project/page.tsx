@@ -197,7 +197,7 @@ export default function PythonEdit() {
         )}
 
         {!uid && (
-          <p className="text-red-500  text-md italic mb-4 text-center">
+          <p className="text-red-500 mx-2 text-md italic mb-4 text-center">
             This work can't be saved. Please log in to create, save, or clone
             projects.
           </p>
