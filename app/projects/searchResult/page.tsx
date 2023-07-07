@@ -20,7 +20,7 @@ const page = () => {
 
   useEffect(() => {
     dispatch(searchProjectsData(search)).then(() => dispatch(searchTerms("")));
-  }, []);
+  }, [search]);
 
   return (
     <div className="flex flex-row h-[calc(100vh-4rem)] w-full justify-around items-center text-slate-100">

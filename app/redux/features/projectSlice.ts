@@ -270,55 +270,23 @@ export const deleteProject = createAsyncThunk(
 export const searchProjectsData = createAsyncThunk(
   "searchProjectsData",
   async (seria: any) => {
-    console.log("🚀 ~ file: projectSlice.ts:273 ~ seria:", seria);
-    const q1 = query(
-      collection(db, "projects"),
-      where("user.username", "==", seria)
-    );
+    const querySnapshot = await getDocs(collection(db, "projects"));
 
-    const q2 = query(
-      collection(db, "projects"),
-      where("description", ">=", seria)
-    );
-    const q3 = query(collection(db, "projects"), where("title", "==", seria));
+    const documents = querySnapshot.docs
+      .filter((doc) => {
+        const { user, description, title, projectType } = doc.data();
+        // Implement your search logic here
+        return (
+          user.username.includes(seria) ||
+          description.includes(seria) ||
+          title.includes(seria) ||
+          projectType.includes(seria)
+        );
+      })
+      .map((doc) => ({ _id: doc.id, ...doc.data() }));
 
-    // Search term
-    const documents1: any[] = [];
-    const documents2: any[] = [];
-    const documents3: any[] = [];
-    const documents4: any[] = [];
-
-    const querySnapshot1 = await getDocs(q1);
-    querySnapshot1.forEach((doc) => {
-      const data = { ...doc.data(), _id: doc.id };
-      documents1.push(data);
-    });
-    const querySnapshot2 = await getDocs(q2);
-    querySnapshot2.forEach((doc) => {
-      const data = { ...doc.data(), _id: doc.id };
-      documents2.push(data);
-    });
-    const querySnapshot3 = await getDocs(q3);
-    querySnapshot3.forEach((doc) => {
-      const data = { ...doc.data(), _id: doc.id };
-      documents3.push(data);
-    });
-    // const querySnapshot4 = await getDocs(q4);
-    // querySnapshot4.forEach((doc) => {
-    //   const data = doc.data();
-    //   documents4.push(data);
-    // });
-
-    const documents: any[] = [
-      ...documents1,
-      ...documents2,
-      ...documents3,
-      // ...documents4,
-    ];
-    console.log("🚀 ~ file: projectSlice.ts:318 ~ documents:", documents);
-    // const documentsSet = new Set(documents);
-    // const documentsArr = new Array(documentsSet);
-    return documents; // Return the documents array
+    console.log("🚀 ~ file: projectSlice.ts:290 ~ documents:", documents);
+    return documents;
   }
 );
 
