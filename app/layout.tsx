@@ -2,10 +2,11 @@ import Header from "./Header";
 import "./globals.css";
 import { Providers } from "./redux/provider";
 import AuthProvider from "./authProvider";
+import icon from "./favicon.ico";
 
 export const metadata = {
-  title: "Next.js 13 app",
-  description: "Nextjs 13 with the app directory / tailwind.css / typescript",
+  title: "ThaCoder",
+  description: "Your editor everywhere. learm anywhere",
 };
 
 export default function RootLayout({

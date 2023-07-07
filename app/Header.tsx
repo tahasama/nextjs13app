@@ -44,8 +44,8 @@ interface linksProps {
 
 const links: linksProps[] = [
   { id: 1, name: "Home", link: "/" },
-  { id: 2, name: "Python", link: "/projects/python" },
-  { id: 3, name: "Webdev", link: "/projects/webdev" },
+  { id: 2, name: "PyLab", link: "/projects/python" },
+  { id: 3, name: "WebDev", link: "/projects/webdev" },
 ];
 
 const Header = () => {

@@ -256,8 +256,8 @@ const Side = () => {
             <div>
               <HiOutlineCode className="w-7 h-7 " />
             </div>{" "}
-            <div className="md:group-hover:block hidden ">
-              Code & run &nbsp;
+            <div className="md:group-hover:block hidden tracking-tighter ">
+              JS Playground
             </div>
           </button>
           <button
@@ -285,7 +285,9 @@ const Side = () => {
             <div>
               <FaChartLine className="w-6 h-6 " />
             </div>{" "}
-            <div className="md:group-hover:block hidden ">Data Science</div>
+            <div className="md:group-hover:block hidden tracking-tight ">
+              Data Science
+            </div>
           </button>
         </>
       )}
