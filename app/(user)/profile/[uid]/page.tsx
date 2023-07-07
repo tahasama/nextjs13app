@@ -330,7 +330,8 @@ const page = () => {
                 .map((project: any) => (
                   <div
                     key={project._id}
-                    className="card-container flex flex-col w-2/5 h-40 bg-gray-800 rounded-lg shadow-lg"
+                    // className="card-container flex flex-col w-2/5 h-40 bg-gray-800 rounded-lg shadow-lg"
+                    className="card-container flex flex-col w-2/5 h-40 bg-gray-800 rounded-lg shadow-lg hover:ring-2 mt-1 hover:ring-purple-950 hover:bg-purple-950 hover:text-white transition-all duration-500 ease-in"
                   >
                     <a
                       href={`/projects/${
