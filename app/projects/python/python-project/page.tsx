@@ -195,13 +195,12 @@ export default function PythonEdit() {
           </div>
         )}
 
-        {!uid ||
-          (uid !== user.uid && (
-            <p className="text-red-500 mx-2 text-md italic mb-4 text-center">
-              This work can't be saved. Please log in to create, save, or clone
-              projects.
-            </p>
-          ))}
+        {(!uid || uid !== user.uid || !projectId) && (
+          <p className="text-red-500 mx-2 text-md italic mb-4 text-center">
+            This work can't be saved. Please log in to create, save, or clone
+            projects.
+          </p>
+        )}
       </div>
 
       <div className=" bg-gradient-to-b from-gray-800 to-black rounded-md mt-8 py-3 px-0 ">

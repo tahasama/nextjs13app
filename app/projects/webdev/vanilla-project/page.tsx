@@ -104,13 +104,12 @@ export default function vanillaEdit() {
           </div>
         )}
 
-        {!uid ||
-          (uid !== user.uid && (
-            <p className="text-red-500 mx-2 text-center text-md italic mb-4">
-              This work can't be saved. Please log in to create, save, or clone
-              projects.
-            </p>
-          ))}
+        {(!uid || uid !== user.uid || !projectId) && (
+          <p className="text-red-500 mx-2 text-center text-md italic mb-4">
+            This work can't be saved. Please clone it or log in to create, save,
+            or clone projects.
+          </p>
+        )}
       </div>
 
       <div className="flex items-center justify-center mt-16 w-full h-full p-0 ml-0">
