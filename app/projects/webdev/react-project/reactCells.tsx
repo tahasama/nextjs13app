@@ -22,6 +22,10 @@ const barlow = Barlow({
   weight: "600",
 });
 
+let x: any = 0;
+if (typeof window !== "undefined") {
+  x = window;
+}
 const ReactCells = () => {
   const { description, title, updatedAt, createdAt, user } =
     useAppSelector(getProjectData);
@@ -54,29 +58,29 @@ const ReactCells = () => {
   };
 
   const [landscape, setLandscape] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [xWidth, setxWidth] = useState(x.innerWidth);
   const handlelandscape = () => {
     setLandscape(true);
     setTimeout(() => {
       setLandscape(false);
       console.log("its on trueeeeeeee");
-    }, 2500);
+    }, 3000);
   };
   useEffect(() => {
-    // Function to update window width state
-    window.innerWidth < 678 ? handlelandscape() : setLandscape(false);
+    // Function to update x width state
+    x.innerWidth < 678 ? handlelandscape() : setLandscape(false);
     const handleResize = () => {
-      setWindowWidth(window.innerWidth);
+      setxWidth(x.innerWidth);
     };
 
-    // Event listener for window resize
-    window.addEventListener("resize", handleResize);
+    // Event listener for x resize
+    x.addEventListener("resize", handleResize);
 
     // Clean up the event listener on component unmount
     return () => {
-      window.removeEventListener("resize", handleResize);
+      x.removeEventListener("resize", handleResize);
     };
-  }, [window.innerWidth]);
+  }, [x.innerWidth]);
 
   return (
     <div

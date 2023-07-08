@@ -143,7 +143,7 @@ export default function PythonEdit() {
     setTimeout(() => {
       setLandscape(false);
       console.log("its on trueeeeeeee");
-    }, 2500);
+    }, 3000);
   };
   useEffect(() => {
     // Function to update window width state
