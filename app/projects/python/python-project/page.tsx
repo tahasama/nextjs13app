@@ -62,9 +62,12 @@ export default function PythonEdit() {
 
   const [showAlert, setShowAlert] = useState(true);
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowAlert(false);
-    }, 5000);
+    const timer = setTimeout(
+      () => {
+        setShowAlert(false);
+      },
+      landscape ? 8000 : 5000
+    );
 
     return () => clearTimeout(timer);
   }, []);
@@ -143,7 +146,7 @@ export default function PythonEdit() {
     setTimeout(() => {
       setLandscape(false);
       console.log("its on trueeeeeeee");
-    }, 3000);
+    }, 4000);
   };
   useEffect(() => {
     // Function to update window width state
