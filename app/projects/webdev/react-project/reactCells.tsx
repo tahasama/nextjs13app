@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import ReactProject from "./components/reactProject";
 import { AddCells, getProjectData } from "../../../redux/features/projectSlice";
@@ -15,6 +15,7 @@ const exampleCells = [
 ];
 
 import { Orbitron, Barlow } from "next/font/google";
+import LandscapeAnimation from "../../LandscapeAnimation";
 
 const barlow = Barlow({
   subsets: ["latin"],
@@ -52,18 +53,45 @@ const ReactCells = () => {
     dispatch(AddCells({ cellId: uuidv4(), cellCode: "" }));
   };
 
+  const [landscape, setLandscape] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const handlelandscape = () => {
+    setLandscape(true);
+    setTimeout(() => {
+      setLandscape(false);
+      console.log("its on trueeeeeeee");
+    }, 2500);
+  };
+  useEffect(() => {
+    // Function to update window width state
+    window.innerWidth < 678 ? handlelandscape() : setLandscape(false);
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    // Event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [window.innerWidth]);
+
   return (
     <div
       className={`${
         title !== "" ? "mt-20" : "mt-20"
       } flex flex-col items-center  justify-center w-full`}
     >
+      {landscape && <LandscapeAnimation />}
+
       <div className="p-4 flex flex-col min-h-[150px] justify-around items-center w-full bg-gradient-to-r from-purple-900 to-indigo-950 shadow-lg text-white">
         {/* {saveMessage && <p className="saveMessage">{saveMessage}</p>} */}
 
         {projectId !== undefined && (
           <div className="flex flex-col md:flex-row w-full justify-around items-center">
-            <div className="text-center">
+            <div className="text-center md:mx-14">
               <h2 className="text-2xl  lg:text-4xl font-bold mb-2">{title}</h2>
               <h3 className="text-md md:text-lg  text-gray-300 mb-4">
                 {description}

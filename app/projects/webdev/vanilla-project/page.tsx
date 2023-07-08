@@ -15,10 +15,11 @@ import {
   cleanState,
 } from "@/app/redux/features/projectSlice";
 import { getAuthData } from "@/app/redux/features/authSlice";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
 
 import { Barlow } from "next/font/google";
+import LandscapeAnimation from "../../LandscapeAnimation";
 
 const barlow = Barlow({
   subsets: ["latin"],
@@ -26,7 +27,6 @@ const barlow = Barlow({
 });
 
 export default function vanillaEdit() {
-  const [saveMessage, setSaveMessage] = useState("");
   const { uid, email } = useAppSelector(getAuthData);
   const { projectId } = useParams();
   const {
@@ -41,7 +41,34 @@ export default function vanillaEdit() {
     createdAt,
     user,
   } = useAppSelector(getProjectData);
-  console.log("🚀 ~ file: page.tsx:44 ~ vanillaEdit ~ title:", title);
+  console.log(
+    "🚀 ~ file: page.tsx:44 ~ vanillaEdit ~ title:iiiiiiiiiiiii",
+    innerWidth
+  );
+  const [landscape, setLandscape] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const handlelandscape = () => {
+    setLandscape(true);
+    setTimeout(() => {
+      setLandscape(false);
+      console.log("its on trueeeeeeee");
+    }, 2500);
+  };
+  useEffect(() => {
+    // Function to update window width state
+    window.innerWidth < 678 ? handlelandscape() : setLandscape(false);
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    // Event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [window.innerWidth]);
 
   const updatedAt1 = useMemo(
     () =>
@@ -63,12 +90,13 @@ export default function vanillaEdit() {
 
   return (
     <div className="mt-20 flex flex-col items-center  justify-center w-full">
+      {landscape && <LandscapeAnimation />}
       <div className="p-4 flex flex-col min-h-[150px] justify-around items-center w-full bg-gradient-to-r from-purple-900 to-indigo-950 shadow-lg text-white">
         {/* {saveMessage && <p className="saveMessage">{saveMessage}</p>} */}
 
         {projectId !== undefined && (
           <div className="flex flex-col md:flex-row w-full justify-around items-center">
-            <div className="text-center">
+            <div className="text-center md:mx-14">
               <h2 className="text-2xl  lg:text-4xl font-bold mb-2">{title}</h2>
               <h3 className="text-md md:text-lg  text-gray-300 mb-4">
                 {description}
@@ -112,7 +140,7 @@ export default function vanillaEdit() {
       </div>
 
       <div className="flex items-center justify-center mt-16 w-full h-full p-0 ml-0">
-        <div className="flex flex-col md:ml-9">
+        <div className="flex flex-col md:ml-9 mb-20">
           <EditorChoice />
           <FrameEeditor />
         </div>

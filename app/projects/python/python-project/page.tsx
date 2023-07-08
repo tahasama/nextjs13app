@@ -21,6 +21,7 @@ import {
   BsEmojiAngry,
 } from "react-icons/bs";
 import { CiFaceSmile } from "react-icons/ci";
+import LandscapeAnimation from "../../LandscapeAnimation";
 
 const barlow = Barlow({
   subsets: ["latin"],
@@ -135,11 +136,38 @@ export default function PythonEdit() {
     editorRef.current = editor;
   };
 
+  const [landscape, setLandscape] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const handlelandscape = () => {
+    setLandscape(true);
+    setTimeout(() => {
+      setLandscape(false);
+      console.log("its on trueeeeeeee");
+    }, 2500);
+  };
+  useEffect(() => {
+    // Function to update window width state
+    window.innerWidth < 678 ? handlelandscape() : setLandscape(false);
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    // Event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [window.innerWidth]);
+
   return (
     <div className={`mt-20 flex flex-col items-center  justify-center w-full`}>
+      {landscape && <LandscapeAnimation />}
+
       <div
         className={`fixed md:bottom-4 top-24 md:top-auto right-4 left-4 md:left-auto p-6 md:p-5 md:w-[calc(100%-7rem)] rounded-md flex justify-center ${
-          showAlert
+          !landscape && showAlert
             ? "bg-emerald-700 text-gray-300 shadow-md opacity-100 blur-none"
             : "hidden"
         } transition-all duration-5000 ease-in-out text-sm md:text-lg  text-center flex flex-wrap items-center`}
@@ -159,7 +187,7 @@ export default function PythonEdit() {
 
         {!showAlert && projectId !== undefined && (
           <div className="flex flex-col md:flex-row w-full justify-around items-center">
-            <div className="text-center">
+            <div className="text-center md:mx-14">
               <h2 className="text-2xl  lg:text-4xl font-bold mb-2">{title}</h2>
               <h3 className="text-md md:text-lg  text-gray-300 mb-4">
                 {description}

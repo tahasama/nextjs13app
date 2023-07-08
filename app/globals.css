@@ -130,8 +130,18 @@
 
 
 
-
-
+  @keyframes spin-slow {
+    0% {
+      transform: rotate(180);
+    }
+    100% {
+      transform: rotate(-90deg);
+    }
+  }
+  
+  .animate-spin-slow {
+    animation: spin-slow 1.5s linear infinite;
+  }
 
 
   
