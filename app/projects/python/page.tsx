@@ -58,7 +58,7 @@ const page = () => {
                 </button>
                 <button
                   onClick={scrollToBrowsingTutorials}
-                  className="md:ml-3 inline-flex items-center md:px-6 px-1 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50"
+                  className="ml-3 inline-flex items-center md:px-6 px-1 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50"
                 >
                   <FaInfoCircle className="w-5 h-5 mr-2" />
                   Browse Tutorials
