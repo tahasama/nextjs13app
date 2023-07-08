@@ -66,7 +66,7 @@ export default function PythonEdit() {
       () => {
         setShowAlert(false);
       },
-      handleWidth < 768 ? 8000 : 5000
+      handleWidth < 768 ? 7000 : 5000
     );
 
     return () => clearTimeout(timer);
@@ -146,7 +146,7 @@ export default function PythonEdit() {
     setTimeout(() => {
       setLandscape(false);
       console.log("its on trueeeeeeee");
-    }, 3400);
+    }, 3200);
   };
   useEffect(() => {
     // Function to update window width state

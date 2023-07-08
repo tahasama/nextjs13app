@@ -53,7 +53,7 @@ export default function vanillaEdit() {
     setTimeout(() => {
       setLandscape(false);
       console.log("its on trueeeeeeee");
-    }, 4000);
+    }, 3200);
   };
   useEffect(() => {
     // Function to update x width state
