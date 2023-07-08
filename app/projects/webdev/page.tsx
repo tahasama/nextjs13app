@@ -53,7 +53,7 @@ const page = () => {
                   specialized web editor.
                 </p>
               </div>
-              <div className="mt-8">
+              <div className="mt-8 w-full">
                 <button
                   onClick={scrollToGettingStarted}
                   className=" inline-flex items-center md:px-6 px-1 py-3 border text-slate-800 border-transparent text-base font-medium rounded-md bg-cyan-500 hover:bg-cyan-600"
@@ -69,6 +69,7 @@ const page = () => {
                   Browse Tutorials
                 </button>
               </div>
+              {/* <div className="mt-8"></div> */}
             </div>
             <div className="hidden md:flex ml-40 w-full justify-start bg-gray-900">
               <Image
@@ -101,7 +102,7 @@ const page = () => {
             <div className="mt-8 flex justify-center">
               <button
                 onClick={() => router.push("/register")}
-                className="inline-flex items-center  py-3 border border-transparent text-base font-medium rounded-md text-stone-50 bg-cyan-500 hover:bg-cyan-500"
+                className="inline-flex items-center px-2  py-3 border border-transparent text-base font-medium rounded-md text-stone-50 bg-cyan-500 hover:bg-cyan-500"
               >
                 <FaUserPlus className="w-5 h-5 mr-2" />
                 Sign Up Now

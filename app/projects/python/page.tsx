@@ -37,10 +37,11 @@ const page = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-24 md:py-32 md:mt-16">
             <div className="max-w-lg">
-              <h1 className="text-4xl font-extrabold text-white sm:text-5xl md:text-6xl">
+              <h1 className="text-4xl  font-extrabold text-gray-100 sm:text-5xl md:text-6xl">
                 <span className="block">Get started with</span>
                 <span className="block text-indigo-600">Python</span>
               </h1>
+
               <p className="mt-6 text-xl text-gray-300">
                 Python is a powerful, easy-to-learn programming language that's
                 widely used in web development, data analysis, artificial
