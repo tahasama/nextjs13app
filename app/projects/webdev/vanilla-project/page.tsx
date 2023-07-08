@@ -106,8 +106,7 @@ export default function vanillaEdit() {
 
         {(!uid || uid !== user.uid || !projectId) && (
           <p className="text-red-500 mx-2 text-center text-md italic mb-4">
-            This work can't be saved. Please clone it or log in to create, save,
-            or clone projects.
+            This work can't be saved. log in to create, save, or clone projects.
           </p>
         )}
       </div>
