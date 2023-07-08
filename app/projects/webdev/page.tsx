@@ -56,16 +56,16 @@ const page = () => {
               <div className="mt-8 w-full">
                 <button
                   onClick={scrollToGettingStarted}
-                  className=" inline-flex items-center md:px-6 px-1 py-3 border text-slate-800 border-transparent text-base font-medium rounded-md bg-cyan-500 hover:bg-cyan-600"
+                  className=" inline-flex items-center md:px-6 px-1.5 py-3 border text-slate-800 border-transparent text-base font-medium rounded-md bg-cyan-500 hover:bg-cyan-600"
                 >
-                  <RiCodeBoxLine className="w-5 h-5 mr-2 " />
+                  <RiCodeBoxLine className="w-5 h-5 md:mr-2 mr-1" />
                   Get started
                 </button>
                 <button
                   onClick={scrollToBrowsingTutorials}
-                  className="ml-3 inline-flex items-center md:px-6 px-1 py-3 border border-transparent text-base font-medium rounded-md text-cyan-400 bg-slate-700 hover:bg-gray-600"
+                  className="ml-3 inline-flex items-center md:px-6 px-1.5 py-3 border border-transparent text-base font-medium rounded-md text-cyan-400 bg-slate-700 hover:bg-gray-600"
                 >
-                  <FaInfoCircle className="w-5 h-5 mr-2" />
+                  <FaInfoCircle className="w-5 h-5 md:mr-2 mr-1" />
                   Browse Tutorials
                 </button>
               </div>

@@ -18,6 +18,7 @@ import Loading from "../Loading";
 import Modal from "@/app/modal";
 import ModalUser from "../modal";
 import UploadImage from "../uploadImage";
+import ModalLogin from "../../modalLogin";
 
 const page = () => {
   const { all } = useAppSelector(getProjectData);

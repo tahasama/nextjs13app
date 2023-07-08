@@ -13,7 +13,7 @@ import { getAuthData } from "@/app/redux/features/authSlice";
 import Resizable from "../../resizable";
 import { pythonExample, pythonExample2 } from "../../constatnts/example";
 
-import { Orbitron } from "next/font/google";
+import { Orbitron, Barlow } from "next/font/google";
 import {
   BsFillLightningFill,
   BsHeartFill,
@@ -22,7 +22,7 @@ import {
 } from "react-icons/bs";
 import { CiFaceSmile } from "react-icons/ci";
 
-const orbitron = Orbitron({
+const barlow = Barlow({
   subsets: ["latin"],
   weight: "700",
 });
@@ -136,11 +136,11 @@ export default function PythonEdit() {
   };
 
   return (
-    <div className=" flex flex-col items-center ml-0 justify-center w-full mt-10 md:w-[calc(100vw-1.35rem)] ">
+    <div className={`mt-20 flex flex-col items-center  justify-center w-full`}>
       <div
         className={`fixed md:bottom-4 top-24 md:top-auto right-4 left-4 md:left-auto p-6 md:p-5 md:w-[calc(100%-7rem)] rounded-md flex justify-center ${
           showAlert
-            ? "bg-emerald-700 text-gray-300 shadow-md opacity-100"
+            ? "bg-emerald-700 text-gray-300 shadow-md opacity-100 blur-none"
             : "hidden"
         } transition-all duration-5000 ease-in-out text-sm md:text-lg  text-center flex flex-wrap items-center`}
       >
@@ -154,22 +154,22 @@ export default function PythonEdit() {
         </span>
       </div>
 
-      <div className="mt-10 py-4 flex flex-col min-h-[150px] justify-around items-center w-full bg-gradient-to-r from-purple-900 to-indigo-950  shadow-lg text-white">
+      <div className="p-4 flex flex-col min-h-[150px] justify-around items-center w-full bg-gradient-to-r from-purple-900 to-indigo-950 shadow-lg text-white">
         {/* {saveMessage && <p className="saveMessage">{saveMessage}</p>} */}
 
-        {projectId !== undefined && (
-          <div className="flex flex-col md:flex-row justify-around items-center w-full">
+        {!showAlert && projectId !== undefined && (
+          <div className="flex flex-col md:flex-row w-full justify-around items-center">
             <div className="text-center">
-              <h2 className="text-2xl md:text-4xl font-bold mb-2">{title}</h2>
-              <h3 className="text-md md:text-lg text-gray-300 mb-4">
+              <h2 className="text-2xl  lg:text-4xl font-bold mb-2">{title}</h2>
+              <h3 className="text-md md:text-lg  text-gray-300 mb-4">
                 {description}
               </h3>
             </div>
-            <div className="flex flex-col items-center">
+
+            <div className="flex flex-col items-end md:absolute top-20 right-0 mt-4 mr-4">
               <p className="text-sm text-gray-400">
                 Created:{" "}
-                <span className={`text-emerald-500 ${orbitron.className}`}>
-                  {" "}
+                <span className={`text-emerald-500 ${barlow.className}`}>
                   {createdAt1.toLocaleDateString("en-US", {
                     day: "2-digit",
                     month: "short",
@@ -181,8 +181,7 @@ export default function PythonEdit() {
               </p>
               <p className="text-sm text-gray-400">
                 Updated:{" "}
-                <span className={`text-emerald-500 ${orbitron.className}`}>
-                  {" "}
+                <span className={`text-emerald-500 ${barlow.className}`}>
                   {createdAt1.toLocaleDateString("en-US", {
                     day: "2-digit",
                     month: "short",
@@ -196,12 +195,13 @@ export default function PythonEdit() {
           </div>
         )}
 
-        {!uid && (
-          <p className="text-red-500 mx-2 text-md italic mb-4 text-center">
-            This work can't be saved. Please log in to create, save, or clone
-            projects.
-          </p>
-        )}
+        {!uid ||
+          (uid !== user.uid && (
+            <p className="text-red-500 mx-2 text-md italic mb-4 text-center">
+              This work can't be saved. Please log in to create, save, or clone
+              projects.
+            </p>
+          ))}
       </div>
 
       <div className=" bg-gradient-to-b from-gray-800 to-black rounded-md mt-8 py-3 px-0 ">

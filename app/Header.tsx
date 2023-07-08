@@ -30,6 +30,10 @@ import {
   searchTerms,
 } from "./redux/features/projectSlice";
 import Logo from "./images/Untitled1.png";
+import ModalUser from "./(user)/profile/modal";
+import ModalEdit from "./projects/modal";
+import ModalLogin from "./(user)/modalLogin";
+import ModalRegister from "./(user)/modaRegister";
 
 const kiwi = Kiwi_Maru({
   subsets: ["latin"],
@@ -254,14 +258,13 @@ const Header = () => {
             <li>
               <div
                 className="block px-4 py-3 text-md  tracking-wider duration-300 transition-all rounded-t-md h-full text-cyan-500 hover:bg-gray-600 hover:text-white"
-                onClick={() => {
-                  dispatch(showHideDropdown(!dropDown));
-                  projectId
-                    ? alerted(!uid ? "/login" : "/profile/" + uid)
-                    : router.push(!uid ? "/login" : "/profile/" + uid);
-                }}
+                // onClick={() => {
+                //   setTimeout(() => {}, 3000);
+                //   // projectId
+                //   //   ? alerted(!uid ? "/login" : "/profile/" + uid)
+                // }}
               >
-                {!uid ? "Login" : " Dashboard"}
+                {!uid ? <ModalLogin /> : " Dashboard"}
               </div>
             </li>
 
@@ -269,20 +272,20 @@ const Header = () => {
               <div
                 className="block px-4 py-3 text-md tracking-wider duration-300 transition-all rounded-b-md h-full text-cyan-500 hover:bg-gray-600 hover:text-white"
                 onClick={() => {
-                  dispatch(showHideDropdown(!dropDown));
-                  projectId
-                    ? alertedLogOut(uid ? "/" : "/register")
-                    : (uid &&
-                        signOut(auth).then(
-                          () => (
-                            dispatch(resetUser(userInitialState)),
-                            dispatch(cleanState(projectInitialState))
-                          )
-                        ),
-                      router.push(uid ? "/" : "/register"));
+                  // dispatch(showHideDropdown(!dropDown));
+                  // projectId
+                  //   ? alertedLogOut(uid ? "/" : "/register")
+                  uid &&
+                    signOut(auth).then(
+                      () => (
+                        dispatch(resetUser(userInitialState)),
+                        dispatch(cleanState(projectInitialState))
+                      )
+                    );
+                  //     router.push(uid ? "/" : "/register"));
                 }}
               >
-                {uid ? " Sign out" : "Register"}
+                {uid ? " Sign out" : <ModalRegister />}
               </div>
             </li>
           </ul>

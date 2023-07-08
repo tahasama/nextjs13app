@@ -14,11 +14,7 @@ const page = ({ params: { projectId } }: any) => {
   useEffect(() => {
     dispatch(fetchProjectById(projectId));
   }, []);
-  return (
-    <div className="text-white grid h-full place-items-center">
-      <VanillaEdit />
-    </div>
-  );
+  return <VanillaEdit />;
 };
 
 export default page;

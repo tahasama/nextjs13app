@@ -35,9 +35,9 @@ const page = () => {
       {/* Hero section */}
       <section id="hero" className="bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between py-24 md:py-32 md:mt-16">
+          <div className="flex items-center justify-between pt-24 md:py-32 md:mt-16">
             <div className="max-w-lg">
-              <h1 className="text-4xl  font-extrabold text-gray-100 sm:text-5xl md:text-6xl">
+              <h1 className="text-4xl mt-6 md:mt-0 font-extrabold text-gray-100 sm:text-5xl md:text-6xl">
                 <span className="block">Get started with</span>
                 <span className="block text-indigo-600">Python</span>
               </h1>
@@ -52,16 +52,16 @@ const page = () => {
               <div className="mt-8 w-full">
                 <button
                   onClick={scrollToGettingStarted}
-                  className="text-slate-200 inline-flex items-center md:px-6 px-1 py-3 border border-transparent text-base font-medium rounded-md bg-indigo-600 hover:bg-indigo-700"
+                  className="text-slate-200 inline-flex items-center md:px-6 px-1.5 py-3 border border-transparent text-base font-medium rounded-md bg-indigo-600 hover:bg-indigo-700"
                 >
-                  <RiCodeBoxLine className="w-5 h-5 mr-2 " />
+                  <RiCodeBoxLine className="w-5 h-5 md:mr-2 mr-1 " />
                   Get started
                 </button>
                 <button
                   onClick={scrollToBrowsingTutorials}
-                  className="ml-3 inline-flex items-center md:px-6 px-1 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50"
+                  className="ml-3 inline-flex items-center md:px-6 px-1.5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50"
                 >
-                  <FaInfoCircle className="w-5 h-5 mr-2" />
+                  <FaInfoCircle className="w-5 h-5 md:mr-2 mr-1" />
                   Browse Tutorials
                 </button>
               </div>
@@ -128,7 +128,7 @@ const page = () => {
                     pathname: "projects/python/python-project/",
                     query: { type: "basic" },
                   }}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 md:px-4 px-auto rounded focus:outline-none focus:shadow-outline"
                 >
                   Try now
                 </Link>
@@ -285,7 +285,8 @@ const page = () => {
                 General Programming
               </h3>
               <p className="text-gray-400 leading-relaxed mb-4">
-                Find examples for using Python in general programming tasks.
+                Find examples for using Python in general programming tasks, to
+                enhance your problem-solving skills.
               </p>
               <a
                 href="#"
@@ -341,7 +342,7 @@ const page = () => {
               </a>
             </div>
             <div className="bg-gray-800 px-6 py-8 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold text-white mb-4">
+              <h3 className="text-xl font-semibold text-white mb-10 xl:mb-4">
                 Real Python
               </h3>
               <p className="text-gray-400 mb-4">

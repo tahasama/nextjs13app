@@ -276,11 +276,13 @@ export const searchProjectsData = createAsyncThunk(
       .filter((doc) => {
         const { user, description, title, projectType } = doc.data();
         // Implement your search logic here
+        const searchQuery = new RegExp(seria, "i"); // Create case-insensitive regular expression
+
         return (
-          user.username.includes(seria) ||
-          description.includes(seria) ||
-          title.includes(seria) ||
-          projectType.includes(seria)
+          searchQuery.test(user.username) ||
+          searchQuery.test(description) ||
+          searchQuery.test(title) ||
+          searchQuery.test(projectType)
         );
       })
       .map((doc) => ({ _id: doc.id, ...doc.data() }));

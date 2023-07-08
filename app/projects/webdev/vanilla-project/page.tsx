@@ -18,9 +18,9 @@ import { getAuthData } from "@/app/redux/features/authSlice";
 import { useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
 
-import { Orbitron } from "next/font/google";
+import { Barlow } from "next/font/google";
 
-const orbitron = Orbitron({
+const barlow = Barlow({
   subsets: ["latin"],
   weight: "700",
 });
@@ -39,6 +39,7 @@ export default function vanillaEdit() {
     reactCode,
     cells,
     createdAt,
+    user,
   } = useAppSelector(getProjectData);
   console.log("🚀 ~ file: page.tsx:44 ~ vanillaEdit ~ title:", title);
 
@@ -61,27 +62,23 @@ export default function vanillaEdit() {
   );
 
   return (
-    <div
-      className={`flex flex-col items-center md:ml-16  md:w-[calc(100vw-5.1re] bg-gray-950 min-h-screen  ${
-        title !== "" ? "mt-10" : "mt-10"
-      }`}
-    >
-      <div className="mt-10 py-4 flex flex-col  min-h-[150px] justify-around items-center w-full bg-gradient-to-r from-purple-900 to-indigo-950  shadow-lg text-white">
+    <div className="mt-20 flex flex-col items-center  justify-center w-full">
+      <div className="p-4 flex flex-col min-h-[150px] justify-around items-center w-full bg-gradient-to-r from-purple-900 to-indigo-950 shadow-lg text-white">
         {/* {saveMessage && <p className="saveMessage">{saveMessage}</p>} */}
+
         {projectId !== undefined && (
-          <div className="flex flex-col md:flex-row justify-around items-center w-full">
-            <div className=" w-full md:w-2/3 mt-4">
-              <h2 className="text-2xl md:text-4xl font-bold mb-2">{title}</h2>
-              <h3 className="text-md md:text-lg text-gray-300 mb-4 line-clamp-3">
+          <div className="flex flex-col md:flex-row w-full justify-around items-center">
+            <div className="text-center">
+              <h2 className="text-2xl  lg:text-4xl font-bold mb-2">{title}</h2>
+              <h3 className="text-md md:text-lg  text-gray-300 mb-4">
                 {description}
               </h3>
             </div>
 
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-end md:absolute top-20 right-0 mt-4 mr-4">
               <p className="text-sm text-gray-400">
                 Created:{" "}
-                <span className={`text-emerald-500 ${orbitron.className} pb-2`}>
-                  {" "}
+                <span className={`text-emerald-500 ${barlow.className}`}>
                   {createdAt1.toLocaleDateString("en-US", {
                     day: "2-digit",
                     month: "short",
@@ -93,32 +90,34 @@ export default function vanillaEdit() {
               </p>
               <p className="text-sm text-gray-400">
                 Updated:{" "}
-                <span className={`text-emerald-500 ${orbitron.className}`}>
-                  {" "}
-                  {updatedAt1.toLocaleDateString("en-US", {
+                <span className={`text-emerald-500 ${barlow.className}`}>
+                  {createdAt1.toLocaleDateString("en-US", {
                     day: "2-digit",
                     month: "short",
                     year: "2-digit",
                   })}
                   &nbsp;
-                  {updatedAt1.toLocaleTimeString("en-US")}
+                  {createdAt1.toLocaleTimeString("en-US")}
                 </span>
               </p>
             </div>
           </div>
         )}
 
-        {!uid && (
-          <p className="text-red-500 mx-2 text-center text-md italic mb-4">
-            This work can't be saved. Please log in to create, save, or clone
-            projects.
-          </p>
-        )}
+        {!uid ||
+          (uid !== user.uid && (
+            <p className="text-red-500 mx-2 text-center text-md italic mb-4">
+              This work can't be saved. Please log in to create, save, or clone
+              projects.
+            </p>
+          ))}
       </div>
 
-      <div className="flex flex-col mt-8 h-full p-0 m-0">
-        <EditorChoice />
-        <FrameEeditor />
+      <div className="flex items-center justify-center mt-16 w-full h-full p-0 ml-0">
+        <div className="flex flex-col md:ml-9">
+          <EditorChoice />
+          <FrameEeditor />
+        </div>
       </div>
     </div>
   );

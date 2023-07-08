@@ -8,6 +8,7 @@ import javascript from "./images/javascript.png";
 import python from "./images/python.png";
 import Side from "./projects/Side";
 import { useEffect } from "react";
+import ModalLogin from "./(user)/modalLogin";
 
 const novaOval = Nova_Oval({
   subsets: ["latin"],

@@ -14,15 +14,15 @@ const exampleCells = [
   { cellId: uuidv4(), cellCode: example1 },
 ];
 
-import { Orbitron } from "next/font/google";
+import { Orbitron, Barlow } from "next/font/google";
 
-const orbitron = Orbitron({
+const barlow = Barlow({
   subsets: ["latin"],
-  weight: "700",
+  weight: "600",
 });
 
 const ReactCells = () => {
-  const { description, title, updatedAt, createdAt } =
+  const { description, title, updatedAt, createdAt, user } =
     useAppSelector(getProjectData);
 
   const hhh = useAppSelector(getProjectData);
@@ -58,23 +58,22 @@ const ReactCells = () => {
         title !== "" ? "mt-20" : "mt-20"
       } flex flex-col items-center  justify-center w-full`}
     >
-      <div className=" py-4 flex flex-col min-h-[150px] justify-around items-center w-full bg-gradient-to-r from-purple-900 to-indigo-950  shadow-lg text-white">
+      <div className="p-4 flex flex-col min-h-[150px] justify-around items-center w-full bg-gradient-to-r from-purple-900 to-indigo-950 shadow-lg text-white">
         {/* {saveMessage && <p className="saveMessage">{saveMessage}</p>} */}
 
         {projectId !== undefined && (
           <div className="flex flex-col md:flex-row w-full justify-around items-center">
             <div className="text-center">
-              <h2 className="text-2xl md:text-4xl font-bold mb-2">{title}</h2>
-              <h3 className="text-md md:text-lg text-gray-300 mb-4">
+              <h2 className="text-2xl  lg:text-4xl font-bold mb-2">{title}</h2>
+              <h3 className="text-md md:text-lg  text-gray-300 mb-4">
                 {description}
               </h3>
             </div>
 
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-end md:absolute top-20 right-0 mt-4 mr-4">
               <p className="text-sm text-gray-400">
                 Created:{" "}
-                <span className={`text-emerald-500 ${orbitron.className}`}>
-                  {" "}
+                <span className={`text-emerald-500 ${barlow.className}`}>
                   {createdAt1.toLocaleDateString("en-US", {
                     day: "2-digit",
                     month: "short",
@@ -86,8 +85,7 @@ const ReactCells = () => {
               </p>
               <p className="text-sm text-gray-400">
                 Updated:{" "}
-                <span className={`text-emerald-500 ${orbitron.className}`}>
-                  {" "}
+                <span className={`text-emerald-500 ${barlow.className}`}>
                   {createdAt1.toLocaleDateString("en-US", {
                     day: "2-digit",
                     month: "short",
@@ -101,12 +99,13 @@ const ReactCells = () => {
           </div>
         )}
 
-        {!uid && (
-          <p className="text-red-500  mx-2 text-center text-md italic mb-4">
-            This work can't be saved. Please log in to create, save, or clone
-            projects.
-          </p>
-        )}
+        {!uid ||
+          (uid !== user.uid && (
+            <p className="text-red-500 mx-2 text-center text-md italic mb-4">
+              This work can't be saved. Please log in to create, save, or clone
+              projects.
+            </p>
+          ))}
       </div>
 
       <button
