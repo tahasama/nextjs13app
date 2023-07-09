@@ -34,6 +34,7 @@ import ModalUser from "./(user)/profile/modal";
 import ModalEdit from "./projects/modal";
 import ModalLogin from "./(user)/modalLogin";
 import ModalRegister from "./(user)/modaRegister";
+import Modal from "./(user)/modalLR";
 
 const kiwi = Kiwi_Maru({
   subsets: ["latin"],
@@ -267,7 +268,7 @@ const Header = () => {
                   uid && dispatch(showHideDropdown(!dropDown));
                 }}
               >
-                {!uid ? <ModalLogin /> : " Dashboard"}
+                {!uid ? <Modal initialMode="login" /> : " Dashboard"}
               </div>
             </li>
 
@@ -290,7 +291,7 @@ const Header = () => {
                   //     router.push(uid ? "/" : "/register"));
                 }}
               >
-                {uid ? " Sign out" : <ModalRegister />}
+                {uid ? " Sign out" : <Modal initialMode="register" />}
               </div>
             </li>
           </ul>

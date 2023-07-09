@@ -38,27 +38,11 @@ import { getBarData, showHideDropdown } from "../redux/features/barSlice";
 
 export default function ModalLogin() {
   const { dropDown } = useAppSelector(getBarData);
-
-  const router = useRouter();
-  const projectTypeRef = useRef<any>(null);
   const [showModal, setShowModal] = React.useState(false);
-
-  const nameRef = useRef<any>(null);
-  const descriptionRef = useRef<any>(null);
-  const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  // const [errorProjectType, setErrorProjectType] = useState("");
-  // const [errorTitle, setErrorTitle] = useState("");
-  const { title, description, code, projectType } =
-    useAppSelector(getProjectData);
   const { displayName, email, error, uid, message } =
     useAppSelector(getAuthData);
-  const Proj = useAppSelector(getProjectData);
-  const { _id, titleErr, projectTypeErr } = useAppSelector(getProjectData);
   const { newP, isedit } = useAppSelector(getSideBarData);
-  console.log("🚀 ~ file: modal.tsx:43 ~ Modal ~ newP:", newP);
-
-  const pathname = usePathname();
 
   const emailRef = useRef<any>(null);
   const passwordRef = useRef<any>(null);
@@ -74,10 +58,6 @@ export default function ModalLogin() {
       )
     );
   }
-
-  // useEffect(() => {
-  //   uid && router.back();
-  // }, [uid]);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -156,9 +136,6 @@ export default function ModalLogin() {
               >
                 <AiOutlineCloseCircle size={28} />
               </button>
-              {/* <div className="flex flex-col items-center justify-center h-screen bg-gray-950"> */}
-              {/* <div className="bg-slate-800 shadow-md rounded-xl px-8 pt-6 pb-8 mb-4 flex flex-col w-full md:w-3/4 lg:w-1/3"> */}
-              {/* <h1 className="text-3xl font-bold mb-6 text-white">Login</h1> */}
               <form
                 onSubmit={handleSubmit}
                 className="flex flex-col space-y-4 pt-8"
@@ -264,8 +241,6 @@ export default function ModalLogin() {
             </div>
           </div>
         </div>
-        // </div>
-        // </div>
       )}
     </>
   );

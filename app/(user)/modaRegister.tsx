@@ -29,11 +29,7 @@ import React, {
 import { useRouter, usePathname } from "next/navigation";
 import { MdAddCircleOutline } from "react-icons/md";
 import { AiOutlineCloseCircle } from "react-icons/ai";
-import {
-  barState,
-  getSideBarData,
-  iseditState,
-} from "../redux/features/sideBarSlice";
+
 import { githubProvider, googleProvider } from "../firebase";
 import { getBarData, showHideDropdown } from "../redux/features/barSlice";
 
@@ -74,10 +70,6 @@ export default function ModalRegister() {
       email: emailRef.current.value,
       password: passwordRef.current.value,
       displayName: displayNameRef.current.value,
-      // creationTime: new Date(),
-      // lastSignInTime: new Date(),
-
-      // other serializable properties
     };
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       dispatch(updateError("Passwords do not match, please try again"));
@@ -135,9 +127,6 @@ export default function ModalRegister() {
               >
                 <AiOutlineCloseCircle size={28} />
               </button>
-              {/* <div className="flex flex-col items-center justify-center h-screen bg-gray-950"> */}
-              {/* <div className="bg-slate-800 shadow-md rounded-xl px-8 pt-6 pb-8 mb-4 flex flex-col w-full md:w-3/4 lg:w-1/3"> */}
-              {/* <h1 className="text-3xl font-semibold mb-6 text-white">Login</h1> */}
               <form
                 onSubmit={handleSubmit}
                 className="flex flex-col gap-3 pt-8"
@@ -257,8 +246,6 @@ export default function ModalRegister() {
             </div>
           </div>
         </div>
-        // </div>
-        // </div>
       )}
     </>
   );
