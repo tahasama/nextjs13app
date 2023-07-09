@@ -151,7 +151,7 @@ export default function ModalLogin() {
                 className="absolute top-0 right-0 p-2 text-gray-400 hover:text-gray-500 focus:outline-none"
                 onClick={() => {
                   setShowModal(false);
-                  dispatch(showHideDropdown(!dropDown));
+                  dispatch(showHideDropdown(false));
                 }}
               >
                 <AiOutlineCloseCircle size={28} />

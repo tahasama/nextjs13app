@@ -12,10 +12,14 @@ import { SiTypescript } from "react-icons/si";
 import { IoLogoJavascript } from "react-icons/io";
 import { RiArrowRightSLine, RiCodeBoxLine } from "react-icons/ri";
 import { useRouter } from "next/navigation";
+import { useAppSelector } from "@/app/redux/hooks";
+import { getAuthData } from "@/app/redux/features/authSlice";
+import ModalRegister from "@/app/(user)/modaRegister";
 
 const page = () => {
   const gettingStartedRef = useRef<any>(null);
   const router = useRouter();
+  const { uid } = useAppSelector(getAuthData);
 
   const browsingTutorialsRef = useRef<any>(null);
 
@@ -87,28 +91,30 @@ const page = () => {
         ref={gettingStartedRef}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
-              Get started with web development today
-            </h2>
-            <p className="mt-4 text-lg text-gray-400">
-              Whether you're a beginner or an experienced developer, our
-              platform has everything you need to start building amazing
-              websites and web applications. Our tutorials and examples will
-              guide you through the fundamentals of web development and teach
-              you the skills you need to create responsive and interactive user
-              interfaces.
-            </p>
-            <div className="mt-8 flex justify-center">
-              <button
-                onClick={() => router.push("/register")}
-                className="inline-flex items-center px-2  py-3 border border-transparent text-base font-medium rounded-md text-stone-50 bg-cyan-500 hover:bg-cyan-500"
-              >
-                <FaUserPlus className="w-5 h-5 mr-2" />
-                Sign Up Now
-              </button>
+          {!uid && (
+            <div className="text-center">
+              <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
+                Get started with web development today
+              </h2>
+              <p className="mt-4 text-lg text-gray-400">
+                Whether you're a beginner or an experienced developer, our
+                platform has everything you need to start building amazing
+                websites and web applications. Our tutorials and examples will
+                guide you through the fundamentals of web development and teach
+                you the skills you need to create responsive and interactive
+                user interfaces.
+              </p>
+              <div className="mt-8 flex justify-center">
+                <button
+                  onClick={() => router.push("/register")}
+                  className="inline-flex items-center px-2  py-3 border border-transparent text-base font-medium rounded-md text-stone-50 bg-cyan-500 hover:bg-cyan-500"
+                >
+                  <FaUserPlus className="w-5 h-5 mr-2" />
+                  <ModalRegister />
+                </button>
+              </div>
             </div>
-          </div>
+          )}
           <div className="flex flex-wrap items-center justify-center mt-16">
             <div className="w-full md:w-1/2 px-4 py-6">
               <div className="bg-gray-800 rounded-lg shadow-lg p-6">
@@ -245,7 +251,8 @@ const page = () => {
                 developement tasks.
               </p>
               <a
-                href="#"
+                target="_blank"
+                href="http://localhost:3000/projects/webdev/vanilla-project/36U1uELG5U57LpJPJCj5"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
                 View example
@@ -260,7 +267,8 @@ const page = () => {
                 usage of components.
               </p>
               <a
-                href="#"
+                target="_blank"
+                href="http://localhost:3000/projects/webdev/react-project/ROuNbASieO84bcGus3Uv"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
                 View example

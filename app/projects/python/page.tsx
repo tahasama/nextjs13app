@@ -18,11 +18,16 @@ import {
 } from "react-icons/ri";
 import python from "../../images/python-logo.png";
 import { useRouter } from "next/navigation";
+import ModalLogin from "@/app/(user)/modalLogin";
+import ModalRegister from "@/app/(user)/modaRegister";
+import { useAppSelector } from "@/app/redux/hooks";
+import { getAuthData } from "@/app/redux/features/authSlice";
 
 const page = () => {
   const router = useRouter();
   const gettingStartedRef = useRef<any>(null);
   const browsingTutorialsRef = useRef<any>(null);
+  const { uid } = useAppSelector(getAuthData);
 
   const scrollToGettingStarted = () => {
     gettingStartedRef.current.scrollIntoView({ behavior: "smooth" });
@@ -84,35 +89,37 @@ const page = () => {
         className="bg-gray-900 text-white"
       >
         <div className="container mx-auto px-4 py-16">
-          <div className="text-center my-10 ">
-            <div className="text-center">
-              <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
-                Get started with web Python today
-              </h2>
-              <p className="mt-4 text-lg text-gray-400 md:mx-28">
-                Whether you're a beginner or an experienced programmer, our
-                platform has everything you need to start building amazing
-                websites and web applications. Our tutorials and examples will
-                guide you through the fundamentals of web development and teach
-                you the skills you need to create responsive and interactive
-                user interfaces.
-              </p>
-              <div className="mt-8 flex justify-center">
-                <button
-                  onClick={() => router.push("/register")}
-                  className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
-                >
-                  <FaUserPlus className="w-5 h-5 mr-2" />
-                  Sign Up Now
-                </button>
+          {!uid && (
+            <div className="text-center my-10 ">
+              <div className="text-center">
+                <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
+                  Get started with web Python today
+                </h2>
+                <p className="mt-4 text-lg text-gray-400 md:mx-28">
+                  Whether you're a beginner or an experienced programmer, our
+                  platform has everything you need to build amazing websites and
+                  web applications. With tutorials and examples, we'll guide you
+                  through web development fundamentals, teaching the skills to
+                  create responsive and interactive interfaces using Python.
+                  Join us today and start your Python programming journey.
+                </p>
+                <div className="mt-8 flex justify-center">
+                  <button
+                    // onClick={() => router.push("/register")}
+                    className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+                  >
+                    <FaUserPlus className="w-5 h-5 mr-2" />
+                    <ModalRegister />
+                  </button>
+                </div>
               </div>
+              {/* <h2 className="text-3xl font-semibold">Getting Started</h2> */}
+              <p className="mt-8">
+                Start using our platform to explore Python or create simple data
+                science projects.
+              </p>
             </div>
-            {/* <h2 className="text-3xl font-semibold">Getting Started</h2> */}
-            <p className="mt-8">
-              Start using our platform to explore Python or create simple data
-              science projects.
-            </p>
-          </div>
+          )}
           <div className="flex flex-wrap items-center justify-center">
             <div className="w-full md:w-1/2 lg:w-1/3 px-4 py-6">
               <div className="bg-gray-800 rounded-lg shadow-lg p-6">
@@ -125,7 +132,7 @@ const page = () => {
                 </p>
                 <Link
                   href={{
-                    pathname: "projects/python/python-project/",
+                    pathname: "projects/python/python-project/?type=basic",
                     query: { type: "basic" },
                   }}
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -145,7 +152,7 @@ const page = () => {
                 </p>
                 <Link
                   href={{
-                    pathname: "projects/python/python-project/",
+                    pathname: "projects/python/python-project/?type=data",
                     query: { type: "data" },
                   }}
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -259,7 +266,8 @@ const page = () => {
                 analyze and manipulate data for data science.
               </p>
               <a
-                href="#"
+                target="_blank"
+                href="http://localhost:3000/projects/python/python-project/XqOaVvbWYxHUrngjJedC"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
                 View example
@@ -274,7 +282,8 @@ const page = () => {
                 tasks like classification and regression.
               </p>
               <a
-                href="#"
+                target="_blank"
+                href="http://localhost:3000/projects/python/python-project/CTeIbXzRD0BCg4SwpqDk"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
                 View example
@@ -289,7 +298,8 @@ const page = () => {
                 enhance your problem-solving skills.
               </p>
               <a
-                href="#"
+                target="_blank"
+                href="http://localhost:3000/projects/python/python-project/6hm3ohGXCd40AHHzIh7u"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
                 View example

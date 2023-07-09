@@ -60,6 +60,7 @@ const Header = () => {
   const [result, setResult] = useState(false);
   const router = useRouter();
   const { projectId } = useParams();
+  const currentUrl = usePathname();
 
   useEffect(() => {
     const dataToSend = { code: "print('Hello You!')" };
@@ -88,6 +89,7 @@ const Header = () => {
   } = useAppSelector(getProjectData);
 
   const { uid, displayName, email, image } = useAppSelector(getAuthData);
+  console.log("🚀 ~ file: Header.tsx:64 ~ currentUrl:", image);
 
   const [openUserMenu, setOpenUserMenu] = useState(false);
   const searchRef = useRef<any>(null);
@@ -258,11 +260,12 @@ const Header = () => {
             <li>
               <div
                 className="block px-4 py-3 text-md  tracking-wider duration-300 transition-all rounded-t-md h-full text-cyan-500 hover:bg-gray-600 hover:text-white"
-                // onClick={() => {
-                //   setTimeout(() => {}, 3000);
-                //   // projectId
-                //   //   ? alerted(!uid ? "/login" : "/profile/" + uid)
-                // }}
+                onClick={() => {
+                  projectId && alerted(uid ? "/profile/" + uid : currentUrl);
+                  !projectId &&
+                    router.push(uid ? "/profile/" + uid : currentUrl);
+                  uid && dispatch(showHideDropdown(!dropDown));
+                }}
               >
                 {!uid ? <ModalLogin /> : " Dashboard"}
               </div>
@@ -279,7 +282,9 @@ const Header = () => {
                     signOut(auth).then(
                       () => (
                         dispatch(resetUser(userInitialState)),
-                        dispatch(cleanState(projectInitialState))
+                        dispatch(cleanState(projectInitialState)),
+                        router.push("/"),
+                        dispatch(showHideDropdown(!dropDown))
                       )
                     );
                   //     router.push(uid ? "/" : "/register"));
@@ -311,7 +316,7 @@ const Header = () => {
           onClick={() => dispatch(showHideDropdown(!dropDown))}
         >
           {uid && image ? (
-            image !== "" ? (
+            image !== "" && image !== undefined ? (
               <img className="rounded-full z-10" src={image} alt="user photo" />
             ) : (
               <h1 className="text-5xl w-24 h-24 flex items-center justify-center pb-5 bg-emerald-700 rounded-full">
