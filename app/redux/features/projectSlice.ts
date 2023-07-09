@@ -268,6 +268,30 @@ export const deleteProject = createAsyncThunk(
   }
 );
 
+const vwdSearchTerms = [
+  "javascript",
+  "web",
+  "dev",
+  "development",
+  "js",
+  "vanilla",
+  "webdev",
+  "web dev",
+];
+const dsSearchTerms = [
+  "data",
+  "analysis",
+  "science",
+  "machine",
+  "learning",
+  "machine learning",
+  "data analysis",
+  "data science",
+];
+
+const pySearchTerms = ["python", "py"];
+const rjSearchTerms = ["react", "rj"];
+
 export const searchProjectsData = createAsyncThunk(
   "searchProjectsData",
   async (seria: any) => {
@@ -278,57 +302,22 @@ export const searchProjectsData = createAsyncThunk(
         const { user, description, title, projectType } = doc.data();
         const searchQuery = new RegExp(seria, "i");
 
-        // Modify the search logic for project type "vwd"
-        if (projectType === "vwd") {
-          const vwdSearchTerms = [
-            "javascript",
-            "web",
-            "dev",
-            "development",
-            "js",
-            "vanilla",
-            "webdev",
-            "web dev",
-          ];
+        const isMatchedByProjectType =
+          (projectType === "vwd" &&
+            vwdSearchTerms.some((term) => searchQuery.test(term))) ||
+          (projectType === "ds" &&
+            dsSearchTerms.some((term) => searchQuery.test(term))) ||
+          (projectType === "py" &&
+            pySearchTerms.some((term) => searchQuery.test(term))) ||
+          (projectType === "rj" &&
+            rjSearchTerms.some((term) => searchQuery.test(term)));
 
-          return vwdSearchTerms.some((term) => searchQuery.test(term));
-        }
-
-        // Modify the search logic for project type "ds"
-        if (projectType === "ds") {
-          const dsSearchTerms = [
-            "data",
-            "analysis",
-            "science",
-            "machine",
-            "learning",
-            "machine learning",
-            "data analysis",
-            "data science",
-          ];
-
-          return dsSearchTerms.some((term) => searchQuery.test(term));
-        }
-
-        // Modify the search logic for project type "py"
-        if (projectType === "py") {
-          const pySearchTerms = ["python", "py"];
-
-          return pySearchTerms.some((term) => searchQuery.test(term));
-        }
-
-        // Modify the search logic for project type "rj"
-        if (projectType === "rj") {
-          const rjSearchTerms = ["react", "rj"];
-
-          return rjSearchTerms.some((term) => searchQuery.test(term));
-        }
-
-        return (
+        const isMatchedBySearchQuery =
           searchQuery.test(user.username) ||
           searchQuery.test(description) ||
-          searchQuery.test(title)
-        );
+          searchQuery.test(title);
+
+        return isMatchedByProjectType || isMatchedBySearchQuery;
       })
       .map((doc) => ({ _id: doc.id, ...doc.data() }));
 
