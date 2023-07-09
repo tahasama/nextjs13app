@@ -227,7 +227,9 @@ const Side = () => {
   const handleDeleteProject = async () => {
     const result = window.confirm("are you sure you want to delete ");
     if (result) {
-      dispatch(deleteProject(projectId));
+      dispatch(deleteProject(projectId)).then(() =>
+        router.push("/profile/" + uid)
+      );
       dispatch(cleanState(projectInitialState));
       //   navigate("/projects");
       // } else {

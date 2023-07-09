@@ -29,7 +29,7 @@ const page = () => {
           {searchAll.length} results for: {search}
         </p>
 
-        <div className="flex flex-wrap justify-center gap-3 md:overflow-auto h-80 scrollbar w-full scrollbar-thumb-purple-700 scrollbar-track-violet-900">
+        <div className="flex flex-wrap justify-center gap-3 md:overflow-auto top-20 relative h-2/3 scrollbar w-full scrollbar-thumb-purple-700 scrollbar-track-violet-900">
           {searchAll.length !== 0 ? (
             searchAll
 
@@ -37,7 +37,7 @@ const page = () => {
               .map((project: any) => (
                 <div
                   key={project._id}
-                  className="card-container flex flex-col w-4/5 md:w-2/5 h-40 bg-gray-800 rounded-lg shadow-lg hover:ring-2 mt-8 md:mt-0 hover:ring-purple-950 hover:bg-purple-950 hover:text-white transition-all duration-500 ease-in"
+                  className="card-container flex flex-col w-4/5 md:w-4/12 h-44  bg-gray-800 rounded-lg shadow-lg hover:ring-2 mt-8 md:mt-0 hover:ring-purple-950 hover:bg-purple-950 hover:text-white transition-all duration-500 ease-in"
                 >
                   <a
                     href={`/projects/${

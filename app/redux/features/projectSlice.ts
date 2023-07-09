@@ -257,8 +257,9 @@ export const deleteProject = createAsyncThunk(
   "deleteProject",
 
   async (id: string) => {
+    console.log("🚀 ~ file: projectSlice.ts:260 ~ id:", id);
     try {
-      const res = await deleteDoc(doc(db, "stories", id));
+      const res = await deleteDoc(doc(db, "projects", id));
 
       return res;
     } catch (e) {
@@ -275,14 +276,58 @@ export const searchProjectsData = createAsyncThunk(
     const documents = querySnapshot.docs
       .filter((doc) => {
         const { user, description, title, projectType } = doc.data();
-        // Implement your search logic here
-        const searchQuery = new RegExp(seria, "i"); // Create case-insensitive regular expression
+        const searchQuery = new RegExp(seria, "i");
+
+        // Modify the search logic for project type "vwd"
+        if (projectType === "vwd") {
+          const vwdSearchTerms = [
+            "javascript",
+            "web",
+            "dev",
+            "development",
+            "js",
+            "vanilla",
+            "webdev",
+            "web dev",
+          ];
+
+          return vwdSearchTerms.some((term) => searchQuery.test(term));
+        }
+
+        // Modify the search logic for project type "ds"
+        if (projectType === "ds") {
+          const dsSearchTerms = [
+            "data",
+            "analysis",
+            "science",
+            "machine",
+            "learning",
+            "machine learning",
+            "data analysis",
+            "data science",
+          ];
+
+          return dsSearchTerms.some((term) => searchQuery.test(term));
+        }
+
+        // Modify the search logic for project type "py"
+        if (projectType === "py") {
+          const pySearchTerms = ["python", "py"];
+
+          return pySearchTerms.some((term) => searchQuery.test(term));
+        }
+
+        // Modify the search logic for project type "rj"
+        if (projectType === "rj") {
+          const rjSearchTerms = ["react", "rj"];
+
+          return rjSearchTerms.some((term) => searchQuery.test(term));
+        }
 
         return (
           searchQuery.test(user.username) ||
           searchQuery.test(description) ||
-          searchQuery.test(title) ||
-          searchQuery.test(projectType)
+          searchQuery.test(title)
         );
       })
       .map((doc) => ({ _id: doc.id, ...doc.data() }));
