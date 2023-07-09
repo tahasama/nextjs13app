@@ -2,10 +2,7 @@
 
 import React, { useEffect } from "react";
 import { Kiwi_Maru, Nova_Oval } from "next/font/google";
-import Link from "next/link";
 import {
-  AiFillEdit,
-  AiFillHome,
   AiFillSave,
   AiFillDelete,
   AiOutlineFolderOpen,
@@ -17,7 +14,6 @@ import { DiReact } from "react-icons/di";
 import { HiOutlineCode } from "react-icons/hi";
 import { ImProfile } from "react-icons/im";
 import { FaChartLine, FaRegClone } from "react-icons/fa";
-import { MdAddCircleOutline } from "react-icons/md";
 import { DiPython } from "react-icons/di";
 
 import { useState } from "react";
@@ -39,11 +35,7 @@ import {
   updateCode,
 } from "../redux/features/projectSlice";
 import { getAuthData } from "../redux/features/authSlice";
-import {
-  barState,
-  getSideBarData,
-  sideBArInitialState,
-} from "../redux/features/sideBarSlice";
+import { getSideBarData } from "../redux/features/sideBarSlice";
 import Modal from "../modal";
 import ModalEdit from "./modal";
 
@@ -52,44 +44,30 @@ const kiwi = Kiwi_Maru({
   weight: "400",
 });
 
-const novaOval = Nova_Oval({
-  subsets: ["latin"],
-  weight: "400",
-});
-
 const Side = () => {
   const { projectId } = useParams();
   const dispatch = useAppDispatch();
-  const params = useParams();
-  const bar = useAppSelector((state) => state.sideBar);
   const [result, setResult] = useState(false);
   const router = useRouter();
-  const [saveMessage, setSaveMessage] = useState("");
   const { uid, email } = useAppSelector(getAuthData);
   const [loading, setLoading] = useState(false);
   const url = usePathname();
   const {
     title,
     description,
-    selectedDiv,
     code,
-    updatedAt,
     saved,
-    reactCode,
     cells,
     user,
     star,
     projectType,
     pythonCode,
   } = useAppSelector(getProjectData);
-  console.log("🚀 ~ file: Side.tsx:85 ~ Side ~ title:666666666666666", title);
   const { newP } = useAppSelector(getSideBarData);
 
   useEffect(() => {
     dispatch(updateSaved(false));
   }, []);
-
-  const [modalWidth, setModalWidth] = useState(false);
 
   const alerted = (destination: string) => {
     if (!saved && uid === user.uid) {
@@ -218,10 +196,6 @@ const Side = () => {
         updatedAt: new Date(),
       })
     );
-    // setSaveMessage("Cloned ! ");
-    // setTimeout(() => {
-    //   setSaveMessage("");
-    // }, 1000);
   };
 
   const handleDeleteProject = async () => {
@@ -231,10 +205,6 @@ const Side = () => {
         router.push("/profile/" + uid)
       );
       dispatch(cleanState(projectInitialState));
-      //   navigate("/projects");
-      // } else {
-      //   navigate("");
-      // }
     }
   };
 
@@ -333,10 +303,6 @@ const Side = () => {
                 </div>
                 <div className="md:group-hover:block hidden ">Save</div>
               </button>
-              {/*    <div>
-                    <AiFillEdit className="w-7 h-7" />{" "}
-                  </div>
-                  <div className="md:group-hover:block hidden ">Edit</div> */}
               <ModalEdit />
             </>
           )}

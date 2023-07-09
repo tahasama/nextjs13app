@@ -1,13 +1,6 @@
-import * as Yup from "yup";
 import { getAuthData } from "@/app/redux/features/authSlice";
 import {
-  cleanForm,
-  cleanState,
-  createProject,
-  fetchProjectById,
-  fetchProjectByUser,
   getProjectData,
-  projectInitialState,
   updateProject,
   updateProjectInfos,
 } from "@/app/redux/features/projectSlice";
@@ -20,7 +13,6 @@ import React, {
   useState,
 } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { MdAddCircleOutline } from "react-icons/md";
 import { AiFillEdit, AiOutlineCloseCircle } from "react-icons/ai";
 import {
   barState,
@@ -29,36 +21,17 @@ import {
 } from "../redux/features/sideBarSlice";
 
 export default function ModalEdit({}) {
-  const router = useRouter();
   const projectTypeRef = useRef<any>(null);
   const [showModal, setShowModal] = React.useState(false);
   const nameRef = useRef<any>(null);
   const descriptionRef = useRef<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  // const [errorProjectType, setErrorProjectType] = useState("");
-  // const [errorTitle, setErrorTitle] = useState("");
-  const { title, description, code, projectType } =
-    useAppSelector(getProjectData);
-  const { displayName, email, uid } = useAppSelector(getAuthData);
-  const Proj = useAppSelector(getProjectData);
+
+  const { title, description, projectType } = useAppSelector(getProjectData);
+  const { displayName, uid } = useAppSelector(getAuthData);
   const { _id, titleErr, projectTypeErr } = useAppSelector(getProjectData);
-  const { newP, isedit } = useAppSelector(getSideBarData);
-  console.log("🚀 ~ file: modal.tsx:43 ~ Modal ~ newP:", newP);
-
-  const pathname = usePathname();
-
-  const projectDestination = useMemo(
-    () =>
-      projectType === "py"
-        ? "python/python-project"
-        : projectType === "ds"
-        ? "python/python-project"
-        : projectType === "rj"
-        ? "webdev/react-project"
-        : projectType === "vwd" && "webdev/vanilla-project",
-    [projectType]
-  );
+  const { newP } = useAppSelector(getSideBarData);
 
   useEffect(() => {
     const handleOutsideClick = (event: any) => {
@@ -77,11 +50,6 @@ export default function ModalEdit({}) {
       window.removeEventListener("click", handleOutsideClick);
     };
   }, []);
-
-  // const schema = Yup.object().shape({
-  //   title: Yup.string().required("Please add a project name!!!!!"),
-  //   projectType: Yup.string().required("Please choose a project projectType!"),
-  // });
 
   const handleNewProjectUpdate: FormEventHandler<HTMLFormElement> = async (
     e

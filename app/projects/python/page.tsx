@@ -2,29 +2,21 @@
 import Link from "next/link";
 import Image from "next/image";
 import React, { useRef } from "react";
-import Modal from "../../modal";
 import {
   FaBook,
   FaChartLine,
-  FaDownload,
   FaInfoCircle,
   FaRobot,
   FaUserPlus,
 } from "react-icons/fa";
-import {
-  RiArrowRightSLine,
-  RiCodeBoxLine,
-  RiArrowDownLine,
-} from "react-icons/ri";
+import { RiArrowRightSLine, RiCodeBoxLine } from "react-icons/ri";
 import python from "../../images/python-logo.png";
 import { useRouter } from "next/navigation";
-import ModalLogin from "@/app/(user)/modalLogin";
-import ModalRegister from "@/app/(user)/modaRegister";
 import { useAppSelector } from "@/app/redux/hooks";
 import { getAuthData } from "@/app/redux/features/authSlice";
+import ModalLR from "@/app/(user)/modalLR";
 
 const page = () => {
-  const router = useRouter();
   const gettingStartedRef = useRef<any>(null);
   const browsingTutorialsRef = useRef<any>(null);
   const { uid } = useAppSelector(getAuthData);
@@ -109,11 +101,10 @@ const page = () => {
                     className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
                   >
                     <FaUserPlus className="w-5 h-5 mr-2" />
-                    <ModalRegister />
+                    <ModalLR initialMode={"register"} />
                   </button>
                 </div>
               </div>
-              {/* <h2 className="text-3xl font-semibold">Getting Started</h2> */}
               <p className="mt-8">
                 Start using our platform to explore Python or create simple data
                 science projects.

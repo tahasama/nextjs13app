@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import Editor from "@monaco-editor/react";
 import prettier from "prettier";
 
@@ -6,7 +6,6 @@ import { useDispatch } from "react-redux";
 import parser from "prettier/parser-babel";
 import { useAppSelector } from "../../../../redux/hooks";
 import {
-  DeleteCells,
   getProjectData,
   updateCellCode,
   updateSaved,

@@ -13,14 +13,8 @@ import { getAuthData } from "@/app/redux/features/authSlice";
 import Resizable from "../../resizable";
 import { pythonExample, pythonExample2 } from "../../constatnts/example";
 
-import { Orbitron, Barlow } from "next/font/google";
-import {
-  BsFillLightningFill,
-  BsHeartFill,
-  BsFillEmojiAngryFill,
-  BsEmojiAngry,
-} from "react-icons/bs";
-import { CiFaceSmile } from "react-icons/ci";
+import { Barlow } from "next/font/google";
+
 import LandscapeAnimation from "../../LandscapeAnimation";
 
 const barlow = Barlow({
@@ -48,19 +42,10 @@ export default function PythonEdit() {
   const { pythonCode, title, updatedAt, createdAt, description, user } =
     useAppSelector(getProjectData);
   const { uid } = useAppSelector(getAuthData);
-  console.log(
-    "🚀 ~ file: page.tsx:49 ~ uidbbbbbbbbbbbbbbbbbbb:",
-    user.uid,
-    "and",
-    uid
-  );
   const { projectId } = useParams();
-  console.log("🚀 ~ file: page.tsx:51 ~ projectId:", projectId);
-
-  const ffffffff = useAppSelector(getProjectData);
   const [handleWidth, setHandleWidth] = useState(x.innerWidth * 0.8);
-
   const [showAlert, setShowAlert] = useState(true);
+
   useEffect(() => {
     const timer = setTimeout(
       () => {
@@ -141,11 +126,11 @@ export default function PythonEdit() {
 
   const [landscape, setLandscape] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
   const handlelandscape = () => {
     setLandscape(true);
     setTimeout(() => {
       setLandscape(false);
-      console.log("its on trueeeeeeee");
     }, 3200);
   };
   useEffect(() => {
@@ -343,25 +328,17 @@ export default function PythonEdit() {
                       display: "flex",
                     }}
                   >
-                    {/* {(pythonCode.includes("plt.") ||
-                      pythonCode.includes("sns.")) && */}
                     {data &&
-                      images
-                        .reverse()
-
-                        .map((plt: any, index: any) => {
-                          // if (index === 1) {
-                          //   return null; // Return null to skip this element
-                          // }
-                          return (
-                            <img
-                              key={index}
-                              src={plt}
-                              alt="Histogram"
-                              className=""
-                            />
-                          );
-                        })}
+                      images.reverse().map((plt: any, index: any) => {
+                        return (
+                          <img
+                            key={index}
+                            src={plt}
+                            alt="Histogram"
+                            className=""
+                          />
+                        );
+                      })}
                   </div>
                 )}
               </div>

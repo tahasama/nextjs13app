@@ -8,9 +8,7 @@ import {
   pythonExample2,
 } from "@/app/projects/constatnts/example";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import { v4 as uuid } from "uuid";
-
 import { RootState } from "../store";
 import {
   addDoc,
@@ -25,25 +23,18 @@ import {
 } from "firebase/firestore";
 import { db } from "@/app/firebase";
 
-const POJECT_URL: any = process.env.NEXT_PUBLIC_PROJECT_URL;
-
 export const fetchProjectByUser = createAsyncThunk(
   "fetchProjectByUser",
   async (uid: any) => {
-    console.log("🚀 ~ file: projectSlice.ts:33 ~ uid:", uid);
     try {
       const getProjects = collection(db, "projects");
       const getUserProjects = query(getProjects, where("user.uid", "==", uid));
-
       const querySnapshot = await getDocs(getUserProjects);
-
       const promises = querySnapshot.docs.map(async (docs: any) => {
-        console.log("fffffffffffff", docs.data());
         return { ...docs.data(), _id: docs.id };
       });
 
       const result: any[] = await Promise.all(promises);
-      console.log("🚀 ~ file: projectSlice.ts:45 ~ result:", result);
       return result;
     } catch (error) {
       return error;
@@ -63,18 +54,6 @@ export const fetchProjectById = createAsyncThunk<any, string>(
     }
   }
 );
-
-// export const searchProject = createAsyncThunk(
-//   "searchProject",
-//   async (projectTitle: string | undefined) => {
-//     try {
-//       const res = await axios.get(POJECT_URL + "search/q=" + projectTitle);
-//       return res.data;
-//     } catch (error) {
-//       return error;
-//     }
-//   }
-// );
 
 export interface valueProps {
   createdAt?: any;
@@ -149,10 +128,8 @@ export const createProject = createAsyncThunk(
 export const cloneProject = createAsyncThunk(
   "cloneProject",
   async (val: valueProps) => {
-    console.log("🚀 ~ file: projectSlice.ts:153 ~ val:", val);
     const object: any = {
       ...val,
-      // email: val.user,
       title: val.title + "  " + uuid(),
     };
     try {
@@ -199,7 +176,6 @@ export const updateProject = createAsyncThunk(
     } catch (error) {
       console.log("eeeeeeeeeeeeeeeeeeerr", error);
     }
-    console.log("🚀 ~ file: projectSlice.ts:203 ~ object._id:", value);
   }
 );
 
@@ -257,7 +233,6 @@ export const deleteProject = createAsyncThunk(
   "deleteProject",
 
   async (id: string) => {
-    console.log("🚀 ~ file: projectSlice.ts:260 ~ id:", id);
     try {
       const res = await deleteDoc(doc(db, "projects", id));
 
@@ -321,7 +296,6 @@ export const searchProjectsData = createAsyncThunk(
       })
       .map((doc) => ({ _id: doc.id, ...doc.data() }));
 
-    console.log("🚀 ~ file: projectSlice.ts:290 ~ documents:", documents);
     return documents;
   }
 );

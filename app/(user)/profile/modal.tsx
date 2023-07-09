@@ -1,36 +1,16 @@
-import * as Yup from "yup";
 import {
   getAuthData,
   updateUser,
   updateUserInfos,
 } from "@/app/redux/features/authSlice";
-import {
-  cleanForm,
-  cleanState,
-  createProject,
-  fetchProjectById,
-  fetchProjectByUser,
-  getProjectData,
-  projectInitialState,
-} from "@/app/redux/features/projectSlice";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
-import React, {
-  FormEventHandler,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { FormEventHandler, useEffect, useRef, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { MdAddCircleOutline } from "react-icons/md";
 import { AiOutlineCloseCircle, AiOutlineLink } from "react-icons/ai";
 import { FaGithub, FaTwitter, FaInstagram } from "react-icons/fa";
 import { barState } from "@/app/redux/features/sideBarSlice";
-import UploadImage from "./uploadImage";
 
 export default function ModalUser() {
-  const router = useRouter();
-  const projectTypeRef = useRef<any>(null);
   const [showModal, setShowModal] = React.useState(false);
   const nameRef = useRef<any>(null);
   const twitterRef = useRef<any>(null);
@@ -40,8 +20,6 @@ export default function ModalUser() {
   const bioRef = useRef<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  // const [errorProjectType, setErrorProjectType] = useState("");
-  // const [errorTitle, setErrorTitle] = useState("");
 
   const {
     displayName,
@@ -54,7 +32,6 @@ export default function ModalUser() {
     webSite,
     image,
   } = useAppSelector(getAuthData);
-  console.log("🚀 ~ file: modal.tsx:45 ~ ModalUser ~ social:", github);
 
   const pathname = usePathname();
 
@@ -94,11 +71,6 @@ export default function ModalUser() {
       setLoading(false), setShowModal(false), barState(false);
     });
   };
-
-  // const schema = Yup.object().shape({
-  //   title: Yup.string().required("Please add a project name!!!!!"),
-  //   projectType: Yup.string().required("Please choose a project projectType!"),
-  // });
 
   return (
     <>

@@ -13,7 +13,6 @@ import {
   userInitialState,
 } from "./redux/features/authSlice";
 import { AiOutlineSearch } from "react-icons/ai";
-import { GiHamburgerMenu } from "react-icons/gi";
 import { FormEventHandler, useRef, useState, useEffect } from "react";
 import { FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
 import { useParams, usePathname, useRouter } from "next/navigation";
@@ -21,19 +20,12 @@ import { useParams, usePathname, useRouter } from "next/navigation";
 import {
   getProjectData,
   projectInitialState,
-  // searchProjects,
-  searchProjectsData,
-  updateProjectInfos,
   cleanState,
   updateSaved,
   cleanUpSearch,
   searchTerms,
 } from "./redux/features/projectSlice";
 import Logo from "./images/Untitled1.png";
-import ModalUser from "./(user)/profile/modal";
-import ModalEdit from "./projects/modal";
-import ModalLogin from "./(user)/modalLogin";
-import ModalRegister from "./(user)/modaRegister";
 import Modal from "./(user)/modalLR";
 
 const kiwi = Kiwi_Maru({
@@ -70,31 +62,14 @@ const Header = () => {
       // fetch("http://localhost:8000/execute-python/", {
       method: "POST",
       body: JSON.stringify(dataToSend),
-    }).then(() => console.log("its been called!!!!!!!"));
+    });
   });
 
-  const {
-    title,
-    description,
-    selectedDiv,
-    code,
-    updatedAt,
-    saved,
-    reactCode,
-    cells,
-    star,
-    projectType,
-    pythonCode,
-    user,
-    search,
-  } = useAppSelector(getProjectData);
+  const { saved, user, search } = useAppSelector(getProjectData);
 
   const { uid, displayName, email, image } = useAppSelector(getAuthData);
-  console.log("🚀 ~ file: Header.tsx:64 ~ currentUrl:", image);
 
-  const [openUserMenu, setOpenUserMenu] = useState(false);
   const searchRef = useRef<any>(null);
-  const [errorTitle, setErrorTitle] = useState("");
   const [logout, setLogout] = useState(false);
 
   const [nav, setNav] = useState<boolean>(false);
@@ -112,37 +87,6 @@ const Header = () => {
         ("none");
 
         setLogout(false);
-      }
-    } else {
-      router.push(destination);
-    }
-  };
-
-  const alertedLogOut = (destination: string) => {
-    console.log(
-      "🚀 ~ file: Header.tsx:110 ~ alertedLogOut ~ destination:fffffffffff",
-      destination
-    );
-    if (!saved && uid === user.uid) {
-      const result = window.confirm(
-        "This work hasn't been saved!\n\n a - Hit 'Cancel' then 'Save' button if you want to save yout work \n b - Hit 'Ok' of you want to leave without saving"
-      );
-      setResult(result);
-      if (result) {
-        dispatch(updateSaved(true));
-
-        setTimeout(() => {
-          destination !== "/register" &&
-            signOut(auth).then(
-              () => (
-                dispatch(resetUser(userInitialState)),
-                dispatch(cleanState(projectInitialState)),
-                router.push(destination)
-              )
-            );
-        }, 600);
-      } else {
-        ("none");
       }
     } else {
       router.push(destination);
@@ -276,9 +220,6 @@ const Header = () => {
               <div
                 className="block px-4 py-3 text-md tracking-wider duration-300 transition-all rounded-b-md h-full text-cyan-500 hover:bg-gray-600 hover:text-white"
                 onClick={() => {
-                  // dispatch(showHideDropdown(!dropDown));
-                  // projectId
-                  //   ? alertedLogOut(uid ? "/" : "/register")
                   uid &&
                     signOut(auth).then(
                       () => (
@@ -288,7 +229,6 @@ const Header = () => {
                         dispatch(showHideDropdown(!dropDown))
                       )
                     );
-                  //     router.push(uid ? "/" : "/register"));
                 }}
               >
                 {uid ? " Sign out" : <Modal initialMode="register" />}

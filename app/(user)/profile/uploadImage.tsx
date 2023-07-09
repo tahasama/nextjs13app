@@ -1,34 +1,15 @@
-import * as Yup from "yup";
 import {
   cancelState,
   getAuthData,
   newImage,
   updateUser,
-  updateUserInfos,
   uploadImage,
 } from "@/app/redux/features/authSlice";
-import {
-  cleanForm,
-  cleanState,
-  createProject,
-  fetchProjectById,
-  fetchProjectByUser,
-  getProjectData,
-  projectInitialState,
-} from "@/app/redux/features/projectSlice";
+
 import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
-import React, {
-  FormEventHandler,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import { useRouter, usePathname } from "next/navigation";
-import { MdAddCircleOutline } from "react-icons/md";
+import React, { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { AiFillEdit, AiOutlineCloseCircle } from "react-icons/ai";
-import { FaGithub, FaTwitter, FaInstagram } from "react-icons/fa";
-import { barState } from "@/app/redux/features/sideBarSlice";
 
 export default function UploadImage() {
   const [showModal, setShowModal] = React.useState(false);
@@ -37,9 +18,6 @@ export default function UploadImage() {
   const imageRef = useRef<any>(null);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
-
-  // const [errorProjectType, setErrorProjectType] = useState("");
-  // const [errorTitle, setErrorTitle] = useState("");
 
   const userData = useAppSelector(getAuthData);
 
@@ -71,11 +49,6 @@ export default function UploadImage() {
       );
       const imgUrl = URL.createObjectURL(imageRef.current.files[0]);
 
-      // dispatch(
-      //   newUserImage({
-      //     userimage: imgUrl,
-      //   })
-      // );
       dispatch(
         newImage({
           image: imgUrl,

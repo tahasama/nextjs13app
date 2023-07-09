@@ -18,15 +18,12 @@ import Loading from "../Loading";
 import Modal from "@/app/modal";
 import ModalUser from "../modal";
 import UploadImage from "../uploadImage";
-import ModalLogin from "../../modalLogin";
 
 const page = () => {
   const { all } = useAppSelector(getProjectData);
-  console.log("🚀 ~ file: page.tsx:22 ~ page ~ all:", all);
   const [filteredAll, setFilteredAll] = useState([]); // State for filtered results
   const [selectedFilter, setSelectedFilter] = useState("");
   const params = useParams();
-  console.log("🚀 ~ file: page.tsx:28 ~ page ~ params:", params);
   const router = useRouter();
   const {
     lastSignInTime,
@@ -47,11 +44,6 @@ const page = () => {
     email,
     oemail,
   } = useAppSelector(getAuthData);
-  console.log("🚀 ~ file: page.tsx:49 ~ page ~  oimage,:", oimage);
-  console.log("🚀 ~ file: page.tsx:49 ~ page ~ image,:", image);
-  console.log("🚀 ~ file: page.tsx:46 ~ page ~ uid:", uid !== params.uid);
-  const xxx = useAppSelector(getAuthData);
-  console.log("🚀 ~ file: page.tsx:41 ~ page ~ social:0000000000", uid);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -71,21 +63,7 @@ const page = () => {
 
     setFilteredAll(filteredResults); // Update the filteredAll state with the filtered results
   };
-  const getCreatedDate = (createdAt: any) => {
-    console.log(
-      "🚀 ~ file: page.tsx:67 ~ getCreatedDate ~ createdAt:",
-      createdAt
-    );
-    return new Date(
-      // @ts-ignore
-      createdAt.seconds * 1000 + createdAt.nanoseconds / 1000000
-    );
-  };
 
-  // const getUpdatedDate = new Date(
-  //   // @ts-ignore
-  //   updatedAt.seconds * 1000 + updatedAt.nanoseconds / 1000000
-  // );
   return (
     <section className="bg-gray-900 flex flex-col md:flex-row w-full min-h-screen  text-white p-10  relative rounded-lg shadow-lg">
       <div
@@ -119,7 +97,6 @@ const page = () => {
               <span className="block text-md font-serif  text-gray-500 truncate dark:text-gray-400">
                 {uid !== params.uid ? oemail : email}
               </span>
-              {/* <h1 className="text-base md:text-lg font-bold">{email}</h1> */}
               <p className="text-xs md:text-sm text-gray-400 mt-4">
                 Joined:{" "}
                 {creationTime !== undefined &&
@@ -185,9 +162,6 @@ const page = () => {
         {uid === params.uid && (
           <div className="flex flex-row mb-3 gap-5">
             <Modal />
-            {/* <button className="bg-violet-900 text-white hover:bg-violet-700 font-bold uppercase text-sm  ml-4 px-9 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
-              Edit Profile
-            </button> */}
             <ModalUser />
           </div>
         )}
@@ -204,7 +178,6 @@ const page = () => {
           </p>
         </div>
       </div>
-      {/* <div className={`w-full  ${bio ? "md:w-5/7" : "md:w-2/3"} mt-20`}> */}
       <div className={`w-full md:w-2/3 mt-10 md:mt-20`}>
         <div className="flex items-center justify-around md:-ml-3">
           <div className="flex flex-col md:flex-row items-center mb-6 md:mb-12 mt-5 w-full">
@@ -325,13 +298,10 @@ const page = () => {
         <Suspense fallback={<Loading />}>
           <div className="flex flex-wrap justify-center gap-3 mt-3 md:mt-0 md:overflow-auto h-80 scrollbar scrollbar-thumb-purple-700 scrollbar-track-violet-900">
             {all !== undefined &&
-              (selectedFilter !== "" ? filteredAll : all)
-
-                // .sort((a: any, b: any) => b.stars - a.stars)
-                .map((project: any) => (
+              (selectedFilter !== "" ? filteredAll : all).map(
+                (project: any) => (
                   <div
                     key={project._id}
-                    // className="card-container flex flex-col w-2/5 h-40 bg-gray-800 rounded-lg shadow-lg"
                     className="card-container flex flex-col w-5/5 md:w-2/5 h-40 bg-gray-800 rounded-lg shadow-lg hover:ring-2 mt-1 hover:ring-purple-950 hover:bg-purple-950 hover:text-white transition-all duration-500 ease-in"
                   >
                     <a
@@ -382,7 +352,8 @@ const page = () => {
                       </p>
                     </div>
                   </div>
-                ))}
+                )
+              )}
           </div>
         </Suspense>
       </div>

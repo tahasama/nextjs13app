@@ -1,19 +1,10 @@
 "use client";
 import Image from "next/image";
-import { Nova_Oval } from "next/font/google";
-
 import html from "./images/html.png";
 import css from "./images/css.png";
 import javascript from "./images/javascript.png";
 import python from "./images/python.png";
 import Side from "./projects/Side";
-import { useEffect } from "react";
-import ModalLogin from "./(user)/modalLogin";
-
-const novaOval = Nova_Oval({
-  subsets: ["latin"],
-  weight: "400",
-});
 
 export default function Home() {
   const code = "Code Better";

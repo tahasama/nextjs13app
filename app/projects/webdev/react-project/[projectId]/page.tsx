@@ -5,7 +5,6 @@ import {
   fetchProjectById,
   getProjectData,
 } from "@/app/redux/features/projectSlice";
-import ReactCells from "../reactCells";
 import ReactEdit from "../page";
 
 const page = ({ params: { projectId } }: any) => {

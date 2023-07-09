@@ -26,7 +26,6 @@ import {
   getSideBarData,
   iseditState,
 } from "./redux/features/sideBarSlice";
-import { getBarData } from "./redux/features/barSlice";
 
 export default function Modal() {
   const router = useRouter();
@@ -36,15 +35,10 @@ export default function Modal() {
   const descriptionRef = useRef<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  // const [errorProjectType, setErrorProjectType] = useState("");
-  // const [errorTitle, setErrorTitle] = useState("");
-  const { title, description, code, projectType } =
-    useAppSelector(getProjectData);
-  const { displayName, email, uid } = useAppSelector(getAuthData);
-  const Proj = useAppSelector(getProjectData);
-  const { _id, titleErr, projectTypeErr } = useAppSelector(getProjectData);
-  const { newP, isedit } = useAppSelector(getSideBarData);
-  console.log("🚀 ~ file: modal.tsx:43 ~ Modal ~ newP:", newP);
+  const { title, description, projectType } = useAppSelector(getProjectData);
+  const { displayName, uid } = useAppSelector(getAuthData);
+  const { titleErr, projectTypeErr } = useAppSelector(getProjectData);
+  const { newP } = useAppSelector(getSideBarData);
 
   const pathname = usePathname();
 
@@ -61,17 +55,6 @@ export default function Modal() {
   );
 
   useEffect(() => {
-    // showModal
-    //   ? dispatch(
-    //       updateProjectInfos({ title: "", description: "", projectType: "" })
-    //     )
-    //   : dispatch(
-    //       updateProjectInfos({
-    //         title: title,
-    //         description: description,
-    //         projectType: projectType,
-    //       })
-    //     );
     const handleOutsideClick = (event: any) => {
       // Check if click event target is outside of the modal content
       if (event.target.classList.contains("closeModal")) {
@@ -88,11 +71,6 @@ export default function Modal() {
       window.removeEventListener("click", handleOutsideClick);
     };
   }, [showModal]);
-
-  // const schema = Yup.object().shape({
-  //   title: Yup.string().required("Please add a project name!!!!!"),
-  //   projectType: Yup.string().required("Please choose a project projectType!"),
-  // });
 
   const handleNewProjectCreate: FormEventHandler<HTMLFormElement> = async (
     e

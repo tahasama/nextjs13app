@@ -19,11 +19,6 @@ export const barSlice = createSlice({
     showHideDropdown: (state, action) => {
       state.dropDown = action.payload;
     },
-    // showHideSection: (state, action) => {
-    //   state.showSection.includes(action.payload)
-    //     ? state.showSection.pop()
-    //     : state.showSection.push(action.pqyloqd);
-    // },
   },
 });
 

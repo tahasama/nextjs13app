@@ -1,20 +1,17 @@
 "use client";
-import Modal from "@/app/modal";
-import Link from "next/link";
+
 import Image from "next/image";
 import webdev from "../../images/webdev.png";
-
 import React, { useRef } from "react";
 import { FaInfoCircle, FaUserPlus, FaReact } from "react-icons/fa";
 import { AiFillHtml5 } from "react-icons/ai";
 import { DiCss3 } from "react-icons/di";
-import { SiTypescript } from "react-icons/si";
 import { IoLogoJavascript } from "react-icons/io";
 import { RiArrowRightSLine, RiCodeBoxLine } from "react-icons/ri";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/app/redux/hooks";
 import { getAuthData } from "@/app/redux/features/authSlice";
-import ModalRegister from "@/app/(user)/modaRegister";
+import ModalLR from "@/app/(user)/modalLR";
 
 const page = () => {
   const gettingStartedRef = useRef<any>(null);
@@ -33,8 +30,6 @@ const page = () => {
     throw new Error("Function not implemented.");
   }
 
-  // <Link href={"projects/webdev/vanilla-project"}>Basic web dev</Link>
-  // <Link href={"projects/webdev/react-project"}>React web dev</Link>
   return (
     <div className="bg-gray-900">
       {/* Hero section */}
@@ -110,7 +105,7 @@ const page = () => {
                   className="inline-flex items-center px-2  py-3 border border-transparent text-base font-medium rounded-md text-stone-50 bg-cyan-500 hover:bg-cyan-500"
                 >
                   <FaUserPlus className="w-5 h-5 mr-2" />
-                  <ModalRegister />
+                  <ModalLR initialMode={"register"} />
                 </button>
               </div>
             </div>
@@ -223,9 +218,6 @@ const page = () => {
                 Start tutorial
               </a>
             </div>
-            {/* <div className="col-span-3 sm:col-span-2 lg:col-span-3 flex justify-center items-center"> */}
-
-            {/* </div> */}
           </div>{" "}
         </div>
       </section>

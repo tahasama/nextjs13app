@@ -126,7 +126,6 @@ export const loginUser = createAsyncThunk(
 export const updateUser = createAsyncThunk(
   "saveProject",
   async (value: any) => {
-    console.log("🚀 ~ file: authSlice.ts:127 ~ value:", value);
     const object = {
       displayName: value.displayName, // Include the pythonCode field in the object
       bio: value.bio, // Include the pythonCode field in the object
@@ -136,8 +135,6 @@ export const updateUser = createAsyncThunk(
       webSite: value.webSite,
       image: value.image,
     };
-    console.log("🚀 ~ file: authSlice.ts:132 ~ object:", object);
-
     try {
       const res = await updateDoc(
         doc(db, "users", value.uid),
@@ -176,10 +173,6 @@ export const getOtherUserByUid = createAsyncThunk(
       if (!userDoc.exists) {
         return { error: "this user do not exist" };
       }
-      console.log(
-        "🚀 ~ file: authSlice.ts:176 ~ userDoc.data():",
-        userDoc.data()
-      );
       return userDoc.data();
     } catch (error) {
       return error;
@@ -198,18 +191,14 @@ export const resetPassword = createAsyncThunk(
   }
 );
 
-///////new
 export const uploadImage = createAsyncThunk(
   "uploadImage",
   async ({ image, uid }: any) => {
-    console.log("🚀 ~ file: authSlice.ts:204 ~ image, uid :", image, uid);
     const storageRef = ref(storage, uid + ".jpg");
     try {
       await uploadBytesResumable(storageRef, image);
       try {
         const res = await getDownloadURL(storageRef);
-        console.log("🚀 ~ file: authSlice.ts:209 ~ res:", res);
-
         await updateDoc(doc(db, "users", uid), { image: res });
       } catch (error) {}
     } catch (error: any) {
@@ -322,10 +311,6 @@ export const authSlice = createSlice({
     });
     builder.addCase(getOtherUserByUid.fulfilled, (state, action: any) => {
       state.ouid = action.payload.uid;
-      console.log(
-        "🚀 ~ file: authSlice.ts:325 ~ builder.addCase ~ action.payload.:",
-        action.payload.uid
-      );
       state.odisplayName = action.payload.displayName;
       state.oemail = action.payload.email;
       state.ocreationTime = action.payload.creationTime;

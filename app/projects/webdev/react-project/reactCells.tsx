@@ -14,7 +14,7 @@ const exampleCells = [
   { cellId: uuidv4(), cellCode: example1 },
 ];
 
-import { Orbitron, Barlow } from "next/font/google";
+import { Barlow } from "next/font/google";
 import LandscapeAnimation from "../../LandscapeAnimation";
 
 const barlow = Barlow({
@@ -29,9 +29,6 @@ if (typeof window !== "undefined") {
 const ReactCells = () => {
   const { description, title, updatedAt, createdAt, user } =
     useAppSelector(getProjectData);
-
-  const hhh = useAppSelector(getProjectData);
-  console.log("🚀 ~ file: reactCells.tsx:29 ~ ReactCells ~ hhh:", hhh);
 
   const { uid } = useAppSelector(getAuthData);
   const { projectId } = useParams();

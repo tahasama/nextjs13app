@@ -43,10 +43,6 @@ const Register = () => {
       email: emailRef.current.value,
       password: passwordRef.current.value,
       displayName: displayNameRef.current.value,
-      // creationTime: new Date(),
-      // lastSignInTime: new Date(),
-
-      // other serializable properties
     };
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       dispatch(updateError("Passwords do not match, please try again"));
