@@ -300,7 +300,7 @@ export default function PythonEdit() {
                       display: "flex",
                     }}
                   >
-                    <div className="flex flex-col bg-gray-900 p-6 rounded-lg w-[100%] overflow-hidden">
+                    <div className="flex flex-col bg-gray-900 p-6 rounded-lg w-[100%] h-full">
                       <>
                         <pre
                           className="bg-gray-700  text-[#cacab3] border-2 border-slate-600 whitespace-pre-wrap
@@ -346,7 +346,7 @@ export default function PythonEdit() {
           </Resizable>{" "}
         </div>
       ) : (
-        <div className="flex flex-col p-4 mx-6 my-4 rounded-md items-center bg-gray-900 md:w-[80%]">
+        <div className="flex flex-col p-4 mx-6 my-4 mb-20 rounded-md items-center bg-gray-900 md:w-[80%]">
           {/* <p className="text-2xl font-bold mb-4 text-white">Result :</p> */}
           <pre
             className="bg-gray-700  text-[#cacab3] border-2 border-slate-600 whitespace-pre-wrap

@@ -42,6 +42,8 @@ export const javaScriptExample = `function myFunction() {
 export const pythonExample = `
 ### CREATING MORE THAN ONE IMAGE AT A TIME MAY PRODUCE WRONG IMAGES!!! 
 
+### Please clear your editor, then run plt.close('all'), before running any code that generates IMAGES
+
 # Load libraries
 from pandas import read_csv
 from pandas.plotting import scatter_matrix
