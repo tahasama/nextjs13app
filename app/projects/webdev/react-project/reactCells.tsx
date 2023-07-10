@@ -99,32 +99,34 @@ const ReactCells = () => {
               </h3>
             </div>
 
-            <div className="flex flex-col items-end md:absolute top-20 right-0 mt-4 mr-4">
-              <p className="text-sm text-gray-400">
-                Created:{" "}
-                <span className={`text-emerald-500 ${barlow.className}`}>
-                  {createdAt1.toLocaleDateString("en-US", {
-                    day: "2-digit",
-                    month: "short",
-                    year: "2-digit",
-                  })}
-                  &nbsp;
-                  {createdAt1.toLocaleTimeString("en-US")}
-                </span>
-              </p>
-              <p className="text-sm text-gray-400">
-                Updated:{" "}
-                <span className={`text-emerald-500 ${barlow.className}`}>
-                  {createdAt1.toLocaleDateString("en-US", {
-                    day: "2-digit",
-                    month: "short",
-                    year: "2-digit",
-                  })}
-                  &nbsp;
-                  {createdAt1.toLocaleTimeString("en-US")}
-                </span>
-              </p>
-            </div>
+            {projectId && (
+              <div className="flex flex-col items-end md:absolute top-20 right-0 mt-4 mr-4">
+                <p className="text-sm text-gray-400">
+                  Created:{" "}
+                  <span className={`text-emerald-500 ${barlow.className}`}>
+                    {createdAt1.toLocaleDateString("en-US", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "2-digit",
+                    })}
+                    &nbsp;
+                    {createdAt1.toLocaleTimeString("en-US")}
+                  </span>
+                </p>
+                <p className="text-sm text-gray-400">
+                  Updated:{" "}
+                  <span className={`text-emerald-500 ${barlow.className}`}>
+                    {createdAt1.toLocaleDateString("en-US", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "2-digit",
+                    })}
+                    &nbsp;
+                    {createdAt1.toLocaleTimeString("en-US")}
+                  </span>
+                </p>
+              </div>
+            )}
           </div>
         )}
 

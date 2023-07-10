@@ -204,7 +204,9 @@ const Header = () => {
           <ul className="cursor-pointer" aria-labelledby="user-menu-button ">
             <li>
               <div
-                className="block px-4 py-3 text-md  tracking-wider duration-300 transition-all rounded-t-md h-full text-cyan-500 hover:bg-gray-600 hover:text-white"
+                className={`${
+                  uid ? "rounded-none" : "rounded-t-md"
+                } block px-4 py-3 text-md  tracking-wider duration-300 transition-all h-full text-cyan-500 hover:bg-gray-600 hover:text-white`}
                 onClick={() => {
                   uid && projectId && alerted(uid && "/profile/" + uid);
                   uid &&

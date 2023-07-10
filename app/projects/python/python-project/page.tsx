@@ -173,7 +173,7 @@ export default function PythonEdit() {
       <div className="p-4 flex flex-col min-h-[150px] justify-around items-center w-full bg-gradient-to-r from-purple-900 to-indigo-950 shadow-lg text-white">
         {/* {saveMessage && <p className="saveMessage">{saveMessage}</p>} */}
 
-        {!showAlert && projectId !== undefined && (
+        {!showAlert && projectId && projectId !== undefined && (
           <div className="flex flex-col md:flex-row w-full justify-around items-center">
             <div className="text-center md:mx-14">
               <h2 className="text-2xl  lg:text-4xl font-bold mb-2">{title}</h2>
