@@ -206,9 +206,9 @@ const Header = () => {
               <div
                 className="block px-4 py-3 text-md  tracking-wider duration-300 transition-all rounded-t-md h-full text-cyan-500 hover:bg-gray-600 hover:text-white"
                 onClick={() => {
-                  projectId && alerted(uid ? "/profile/" + uid : currentUrl);
-                  !projectId &&
-                    router.push(uid ? "/profile/" + uid : currentUrl);
+                  uid && projectId
+                    ? alerted(uid && "/profile/" + uid)
+                    : router.push(uid ? "/profile/" + uid : currentUrl);
                   uid && dispatch(showHideDropdown(!dropDown));
                 }}
               >

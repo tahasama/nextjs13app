@@ -17,6 +17,8 @@ import { getAuthData } from "@/app/redux/features/authSlice";
 import ModalLR from "@/app/(user)/modalLR";
 
 const page = () => {
+  const nextUrl: string = process.env.NEXT_PUBLIC_NEXT as string;
+
   const gettingStartedRef = useRef<any>(null);
   const browsingTutorialsRef = useRef<any>(null);
   const { uid } = useAppSelector(getAuthData);
@@ -258,7 +260,10 @@ const page = () => {
               </p>
               <a
                 target="_blank"
-                href="http://localhost:3000/projects/python/python-project/XqOaVvbWYxHUrngjJedC"
+                href={
+                  nextUrl +
+                  "projects/python/python-project/XqOaVvbWYxHUrngjJedC"
+                }
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
                 View example
@@ -274,7 +279,10 @@ const page = () => {
               </p>
               <a
                 target="_blank"
-                href="http://localhost:3000/projects/python/python-project/CTeIbXzRD0BCg4SwpqDk"
+                href={
+                  nextUrl +
+                  "projects/python/python-project/CTeIbXzRD0BCg4SwpqDk"
+                }
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
                 View example
@@ -290,7 +298,10 @@ const page = () => {
               </p>
               <a
                 target="_blank"
-                href="http://localhost:3000/projects/python/python-project/6hm3ohGXCd40AHHzIh7u"
+                href={
+                  nextUrl +
+                  "projects/python/python-project/6hm3ohGXCd40AHHzIh7u"
+                }
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
                 View example

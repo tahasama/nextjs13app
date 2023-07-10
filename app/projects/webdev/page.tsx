@@ -14,6 +14,7 @@ import { getAuthData } from "@/app/redux/features/authSlice";
 import ModalLR from "@/app/(user)/modalLR";
 
 const page = () => {
+  const nextUrl: string = process.env.NEXT_PUBLIC_NEXT as string;
   const gettingStartedRef = useRef<any>(null);
   const router = useRouter();
   const { uid } = useAppSelector(getAuthData);
@@ -244,7 +245,10 @@ const page = () => {
               </p>
               <a
                 target="_blank"
-                href="http://localhost:3000/projects/webdev/vanilla-project/36U1uELG5U57LpJPJCj5"
+                href={
+                  nextUrl +
+                  "projects/webdev/vanilla-project/36U1uELG5U57LpJPJCj5"
+                }
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
                 View example
@@ -260,7 +264,9 @@ const page = () => {
               </p>
               <a
                 target="_blank"
-                href="http://localhost:3000/projects/webdev/react-project/ROuNbASieO84bcGus3Uv"
+                href={
+                  nextUrl + "projects/webdev/react-project/ROuNbASieO84bcGus3Uv"
+                }
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
                 View example
