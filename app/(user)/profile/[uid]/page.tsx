@@ -296,13 +296,13 @@ const page = () => {
           </div>
         </div>
         <Suspense fallback={<Loading />}>
-          <div className="flex flex-wrap justify-center gap-3 mt-3 md:mt-0 md:overflow-auto h-80 scrollbar scrollbar-thumb-purple-700 scrollbar-track-violet-900">
+          <div className="flex flex-wrap justify-center gap-3 mt-3 md:mt-0 overflow-auto h-80 scrollbar scrollbar-thumb-purple-700 scrollbar-track-violet-900">
             {all !== undefined &&
               (selectedFilter !== "" ? filteredAll : all).map(
                 (project: any) => (
                   <div
                     key={project._id}
-                    className="card-container flex flex-col w-5/5 md:w-2/5 h-40 bg-gray-800 rounded-lg shadow-lg hover:ring-2 mt-1 hover:ring-purple-950 hover:bg-purple-950 hover:text-white transition-all duration-500 ease-in"
+                    className="card-container flex flex-col w-full md:w-2/5 h-40 bg-gray-800 mx-1 rounded-lg shadow-lg hover:ring-2 mt-1 hover:ring-purple-950 hover:bg-purple-950 hover:text-white transition-all duration-500 ease-in"
                   >
                     <a
                       href={`/projects/${

@@ -21,18 +21,18 @@ const page = () => {
   }, [search]);
 
   return (
-    <div className="flex flex-row h-full w-full bg-gray-900 justify-around items-center text-slate-100">
+    <section className="bg-gray-900 flex flex-col md:flex-row w-full min-h-screen  text-white p-10  relative rounded-lg shadow-lg">
       <Suspense fallback={<Loading />}>
         <p className="top-28 md:top-24 w-4/5 md:left-16 left-10 py-4 absolute text-white text-xl font-serif">
           {searchAll.length} results for: {search}
         </p>
 
-        <div className="flex flex-wrap justify-center gap-3 md:overflow-auto top-20 relative h-2/3 scrollbar w-full scrollbar-thumb-purple-700 scrollbar-track-violet-900">
+        <div className="flex flex-wrap justify-center gap-3 mt-3 md:mt-0 top-36 md:top-40 relative overflow-auto h-96 scrollbar scrollbar-thumb-purple-700 scrollbar-track-violet-900">
           {searchAll.length !== 0 ? (
             searchAll.map((project: any) => (
               <div
                 key={project._id}
-                className="card-container flex flex-col w-4/5 md:w-4/12 h-44  bg-gray-800 rounded-lg shadow-lg hover:ring-2 mt-8 md:mt-0 hover:ring-purple-950 hover:bg-purple-950 hover:text-white transition-all duration-500 ease-in"
+                className="card-container flex flex-col w-full md:w-2/5 h-44 bg-gray-800 mx-1 rounded-lg shadow-lg hover:ring-2 mt-1 hover:ring-purple-950 hover:bg-purple-950 hover:text-white transition-all duration-500 ease-in"
               >
                 <a
                   href={`/projects/${
@@ -86,7 +86,7 @@ const page = () => {
           )}
         </div>
       </Suspense>
-    </div>
+    </section>
   );
 };
 

@@ -115,6 +115,7 @@ export default function Modal() {
             dispatch(barState(false));
             setLoading(false);
             setShowModal(false);
+            dispatch(cleanState(projectInitialState));
           }, 3000)
         );
     }
