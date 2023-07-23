@@ -108,6 +108,8 @@ const page = () => {
                     <ModalLR initialMode={"register"} />
                   </button>
                 </div>
+              </div>
+
           )}
           <div className="flex flex-wrap items-center justify-center mt-16">
             <div className="w-full md:w-1/2 px-4 py-6">
