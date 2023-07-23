@@ -99,16 +99,15 @@ const page = () => {
                 you the skills you need to create responsive and interactive
                 user interfaces.
               </p>
-              <div className="mt-8 flex justify-center">
-                <button
-                  onClick={() => router.push("/register")}
-                  className="inline-flex items-center px-2  py-3 border border-transparent text-base font-medium rounded-md text-stone-50 bg-cyan-500 hover:bg-cyan-500"
-                >
-                  <FaUserPlus className="w-5 h-5 mr-2" />
-                  <ModalLR initialMode={"register"} />
-                </button>
-              </div>
-            </div>
+               <div className="mt-8 flex justify-center">
+                  <button
+                    // onClick={() => router.push("/register")}
+                    className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-cyan-600 hover:bg-cyan-700"
+                  >
+                    <FaUserPlus className="w-5 h-5 mr-2" />
+                    <ModalLR initialMode={"register"} />
+                  </button>
+                </div>
           )}
           <div className="flex flex-wrap items-center justify-center mt-16">
             <div className="w-full md:w-1/2 px-4 py-6">
