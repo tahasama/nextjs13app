@@ -12,11 +12,18 @@ import {
 import { RiArrowRightSLine, RiCodeBoxLine } from "react-icons/ri";
 import python from "../../images/python-logo.png";
 import { useRouter } from "next/navigation";
-import { useAppSelector } from "@/app/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
 import { getAuthData } from "@/app/redux/features/authSlice";
 import ModalLR from "@/app/(user)/modalLR";
+import {
+  cleanState,
+  projectInitialState,
+} from "@/app/redux/features/projectSlice";
 
 const page = () => {
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+
   const gettingStartedRef = useRef<any>(null);
   const browsingTutorialsRef = useRef<any>(null);
   const { uid } = useAppSelector(getAuthData);
@@ -26,6 +33,16 @@ const page = () => {
   };
   const scrollToBrowsingTutorials = () => {
     browsingTutorialsRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handlePython = () => {
+    router.push("projects/python/python-project?type=basic");
+    dispatch(cleanState(projectInitialState));
+  };
+
+  const handleDataScience = () => {
+    router.push("projects/python/python-project?type=data");
+    dispatch(cleanState(projectInitialState));
   };
   return (
     <div className="bg-gray-100">
@@ -67,7 +84,7 @@ const page = () => {
               <Image
                 src={python}
                 alt="Python logo"
-                className="h-auto w-[55%]"
+                className="h-auto w-[55%] md:w-[100%] lg:w-[55%]"
               />
             </div>
           </div>
@@ -111,45 +128,39 @@ const page = () => {
               </p>
             </div>
           )}
-          <div className="flex flex-wrap items-center justify-center">
-            <div className="w-full md:w-1/2 lg:w-1/3 px-4 py-6">
+          <div className="flex flex-wrap items-center justify-center mt-16">
+            <div className="md:w-1/2 px-4 py-6 xl:w-1/3">
               <div className="bg-gray-800 rounded-lg shadow-lg p-6">
-                <h3 className="text-2xl font-semibold mb-4">
-                  Editor for Python
+                <h3 className="text-2xl font-semibold mb-4 text-gray-100">
+                  Editor for Python Projects
                 </h3>
                 <p className="text-gray-400 leading-relaxed mb-4">
-                  Use our editor to write and run Python code, and explore
-                  Python's capabilities.
+                  Use our editor to learn, write and run Python code, and
+                  explore Python's capabilities.
                 </p>
-                <Link
-                  href={{
-                    pathname: "projects/python/python-project/?type=basic",
-                    query: { type: "basic" },
-                  }}
+                <button
+                  onClick={handlePython}
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 >
                   Try now
-                </Link>
+                </button>
               </div>
             </div>
-            <div className="w-full md:w-1/2 lg:w-1/3 px-4 py-6">
+            <div className="md:w-1/2 px-4 py-6 xl:w-1/3">
               <div className="bg-gray-800 rounded-lg shadow-lg p-6">
-                <h3 className="text-2xl font-semibold mb-4">
-                  Simple Data Science Projects
+                <h3 className="text-2xl font-semibold mb-4 text-gray-100">
+                  Data Science Projects
                 </h3>
                 <p className="text-gray-400 leading-relaxed mb-4">
                   Create and explore simple data science projects, and visualize
                   data using Python.
                 </p>
-                <Link
-                  href={{
-                    pathname: "projects/python/python-project/?type=data",
-                    query: { type: "data" },
-                  }}
+                <button
+                  onClick={handleDataScience}
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 >
                   Try now
-                </Link>
+                </button>
               </div>
             </div>
           </div>

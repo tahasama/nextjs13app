@@ -70,11 +70,12 @@ const page = () => {
               </div>
               {/* <div className="mt-8"></div> */}
             </div>
-            <div className="hidden md:flex ml-40 w-full justify-start bg-gray-900">
+
+            <div className="hidden md:flex ml-40 w-full justify-center">
               <Image
                 src={webdev}
                 alt="React logo"
-                className="h-auto w-[82%] -mt-44 -ml-1- "
+                className="h-auto w-[82%] -mt-44 -ml-1-"
               />
             </div>
           </div>
@@ -99,17 +100,16 @@ const page = () => {
                 you the skills you need to create responsive and interactive
                 user interfaces.
               </p>
-               <div className="mt-8 flex justify-center">
-                  <button
-                    // onClick={() => router.push("/register")}
-                    className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-cyan-600 hover:bg-cyan-700"
-                  >
-                    <FaUserPlus className="w-5 h-5 mr-2" />
-                    <ModalLR initialMode={"register"} />
-                  </button>
-                </div>
+              <div className="mt-8 flex justify-center">
+                <button
+                  // onClick={() => router.push("/register")}
+                  className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-cyan-600 hover:bg-cyan-700"
+                >
+                  <FaUserPlus className="w-5 h-5 mr-2" />
+                  <ModalLR initialMode={"register"} />
+                </button>
               </div>
-
+            </div>
           )}
           <div className="flex flex-wrap items-center justify-center mt-16">
             <div className="w-full md:w-1/2 px-4 py-6">
