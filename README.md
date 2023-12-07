@@ -1,6 +1,7 @@
 ﻿# nextjs13app
 ## An app for learning and creating Python, JS WebDev & React Projects
-### with Django codeConverter app for Python
+### Made with Next.js 13 (Only Client Components), FireBase(Storage, Auth, FireStore), redux toolkit And Django codeConverter app for Python.
+
 
 ![1](https://github.com/tahasama/nextjs13app/assets/69104880/5a6e9206-aa15-4255-8d0a-0b004d2aafe4)
 
