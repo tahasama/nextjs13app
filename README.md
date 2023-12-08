@@ -1,4 +1,4 @@
-﻿# nextjs13app
+﻿# ThaCoder
 ## An app for learning and creating Python, JS WebDev & React Projects
 ### Made with Next.js 13 (Only Client Components), FireBase(Storage, Auth, FireStore), redux toolkit And Django codeConverter app for Python.
 
