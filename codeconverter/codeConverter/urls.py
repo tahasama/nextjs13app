@@ -17,12 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from .views import execute_python,check_installation_status
+from .views import execute_python
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('execute-python/', execute_python, name='execute_python'),
-    path('check_installation/', check_installation_status, name='check_installation_status'),
+    path('execute_python/', execute_python, name='execute_python'),
+    # path('check_installation/', check_installation, name='check_installation'),
 
 ]

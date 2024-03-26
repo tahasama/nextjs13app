@@ -1,11 +1,13 @@
+import base64
 import json
+import os
+import re
 import subprocess
 import sys
 import io
-import re
 from concurrent.futures import ThreadPoolExecutor
 from matplotlib import pyplot as plt
-import base64
+import pandas as pd
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
@@ -13,30 +15,21 @@ from django.views.decorators.csrf import csrf_exempt
 installed_packages_cache = set()
 
 @csrf_exempt
-def check_installation_status(request):
-    if request.method == 'POST':
-        data = json.loads(request.body.decode('utf-8'))
-        code = data.get('code', '')
-        installation_messages, installing = process_imports(code)
-
-        if installing:
-            return JsonResponse({'installation_messages': installation_messages})
-        else:
-            return JsonResponse({'installation_messages': []})
-    else:
-        return JsonResponse({'error': 'Invalid request method'})
-
-@csrf_exempt
 def execute_python(request):
-    if request.method == 'POST':
-        data = json.loads(request.body.decode('utf-8'))
-        code = data.get('code', '')
-        result, images, error = execute_code(code)
-        return JsonResponse({'result': result, 'result_images': images, 'error': error})
-    else:
+    if request.method != 'POST':
         return JsonResponse({'error': 'Invalid request method'})
 
-def process_imports(code):
+    data = json.loads(request.body.decode('utf-8'))
+    code = data.get('code', '')
+
+    # Check if the code contains any plotting commands
+    has_plots = any(('plt.' in line and not '# plt.' in line) or ('sns.' in line and not '# sns.' in line) for line in code.split('\n'))
+    for line in code.split('\n'):
+        if ' input'+'(' in line:
+            result = "Sorry, the 'input' command is not supported. If you have a variable with the name 'input', please change it."
+            return JsonResponse({'result': result, 'result_images': [], 'error': '', 'installation_messages': []})
+
+    # Extract import statements from the code
     imported_packages = set()
     for line in code.split('\n'):
         if 'from' in line and 'import' in line:
@@ -53,17 +46,10 @@ def process_imports(code):
     # Check if each imported package is already installed or in cache
     missing_packages = [pkg for pkg in imported_packages if pkg not in installed_packages_cache]
 
-    if missing_packages:
-        # Install the missing packages asynchronously
-        install_missing_packages(missing_packages)
+    # Install the missing packages asynchronously
+    install_missing_packages(missing_packages)
 
-        # Notify about the installation status
-        installation_messages = [f"Installing {pkg}..." for pkg in missing_packages]
-        return installation_messages, True
-    else:
-        return [], False
-
-def execute_code(code):
+    # Execute the Python code and collect stdout output
     with io.StringIO() as stdout_buffer, io.StringIO() as stderr_buffer:
         sys.stdout = stdout_buffer
         sys.stderr = stderr_buffer
@@ -75,26 +61,28 @@ def execute_code(code):
 
                 # Collect all figures and encode them as base64
                 images = []
-                for fig in plt.get_fignums():
-                    img_data = io.BytesIO()
-                    plt.figure(fig).savefig(img_data, format='png', bbox_inches='tight')
-                    encoded_img = base64.b64encode(img_data.getvalue()).decode('utf-8')
-                    images.append(f"data:image/png;base64,{encoded_img}")
-                plt.clf()  # Clear the current figure after saving all images
+                if has_plots:
+                    for fig in plt.get_fignums():
+                        img_data = io.BytesIO()
+                        plt.figure(fig).savefig(img_data, format='png', bbox_inches='tight')
+                        encoded_img = base64.b64encode(img_data.getvalue()).decode('utf-8')
+                        images.append(f"data:image/png;base64,{encoded_img}")
+                    plt.clf()  # Clear the current figure after saving all images
 
                 # Collect stdout output
                 result = stdout_buffer.getvalue().strip() or "No output to display."
-                error = ''
 
         except Exception as e:
             result = ''
             error = str(e)
+            return JsonResponse({'result': result, 'result_images': [], 'error': error, 'installation_messages': []})
 
-    # Reset stdout and stderr
+    # Reset stdout
     sys.stdout = sys.__stdout__
-    sys.stderr = sys.__stderr__
 
-    return result, images, error
+    # Return results along with installation status and errors as JSON response
+    return JsonResponse({'result': result, 'result_images': images, 'error': '', 'installation_messages': []})
+
 
 def install_package(package_name):
     try:
@@ -103,15 +91,21 @@ def install_package(package_name):
 
         # Check if installation was successful
         if result.returncode == 0:
+            print(f"Successfully installed {package_name}")
             installed_packages_cache.add(package_name)
             return True
         else:
+            print(f"Failed to install {package_name}: {result.stderr}")
             return False
     except subprocess.CalledProcessError as e:
+        print(f"Error installing {package_name}: {e}")
         return False
+
 
 def install_missing_packages(missing_packages):
     with ThreadPoolExecutor() as executor:
         futures = [executor.submit(install_package, package) for package in missing_packages]
         for future in futures:
             future.result()  # Wait for each installation to complete
+
+
