@@ -133,6 +133,10 @@ export default function PythonEdit() {
     try {
       const executionResponse = await fetch(pythonUrl!, {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*", // This may or may not be needed depending on your server setup
+        },
         body: JSON.stringify(dataToSend),
       });
 
