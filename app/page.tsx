@@ -17,8 +17,8 @@ export default function Home() {
       <Side />
       <div className="flex flex-row h-[calc(100vh-4rem)] justify-around items-center">
         <div
-          className="w-screen md:w-3/4 text-5xl md:text-[4.35rem] lg:text-8xl xl:text-9xl 
-         mt-24 flex flex-col items-center md:items-start md:text-start text-center gap-10 "
+          className="w-screen md:w-3/4 text-5xl md:text-[4.35rem] lg:text-8xl xl:text-[6.5rem] 
+         mt-28 flex flex-col items-center md:items-start md:text-start text-center gap-10 "
         >
           <p className="md:indent-10 lg:indent-28 w-[100vw]  md:w-full bg-white bg-gradient-to-l pb-4 pt-3 md:pt-0 md:pb-6  from-[#2c3e50] via-[#3498db] to-[#2c3e50]">
             Code Simpler
