@@ -17,6 +17,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the project files
 COPY . .
 
+# Add path to gunicorn to PATH environment variable
+ENV PATH="/home/myuser/.local/bin:${PATH}"
+
 # Expose the server port
 EXPOSE 8000
 

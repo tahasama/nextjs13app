@@ -29,13 +29,18 @@ if (typeof window !== "undefined") {
 
 export default function PythonEdit() {
   const pythonUrl: string = process.env.NEXT_PUBLIC_PYTHON as string;
+  const installationStatusUrl: string = process.env
+    .NEXT_PUBLIC_PYTHON_IMPORT as string;
+
   const editorRef = useRef<any>(null);
 
   const [data, setData] = useState<any>({
     error: "",
     result: "",
     result_images: "",
+    installation_messages: [],
   });
+
   const [images, setImages] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
@@ -100,20 +105,39 @@ export default function PythonEdit() {
 
     const dataToSend = { code: pythonCode };
 
-    fetch(pythonUrl!, {
-      // fetch("http://localhost:8000/execute-python/", {
+    // Step 1: Check installation status
+    const installationResponse = await fetch(installationStatusUrl!, {
       method: "POST",
       body: JSON.stringify(dataToSend),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setLoading(false);
-        setImages([...data?.result_images]);
-        setData(data);
-      })
-      .catch((error) => {
-        setData(error.message), setLoading(false);
+    });
+
+    const installationData = await installationResponse.json();
+    const { installation_messages } = installationData;
+
+    // Display installation messages if needed
+    if (installation_messages && installation_messages.length > 0) {
+      setData((prevData: any) => ({
+        ...prevData,
+        installation_messages: installation_messages,
+      }));
+      setLoading(false);
+    }
+
+    // Step 2: Execute Python code
+    try {
+      const executionResponse = await fetch(pythonUrl!, {
+        method: "POST",
+        body: JSON.stringify(dataToSend),
       });
+
+      const executionData = await executionResponse.json();
+      setLoading(false);
+      setImages([...executionData?.result_images]);
+      setData(executionData);
+    } catch (error: any) {
+      setData({ error: error.message });
+      setLoading(false);
+    }
   };
 
   const handleEditorChange = () => {
@@ -306,13 +330,14 @@ export default function PythonEdit() {
                           className="bg-gray-700  text-[#cacab3] border-2 border-slate-600 whitespace-pre-wrap
        w-full max-h-[80vh] overflow-auto scrollbar scrollbar-thumb-purple-900 scrollbar-track-gray-600 text-center"
                         >
-                          {loading ? (
-                            <>Loading...</>
-                          ) : data?.error ? (
-                            data?.error
-                          ) : (
-                            data.result
-                          )}
+                          {loading
+                            ? "loading..."
+                            : data && data.result
+                            ? data.result
+                            : data?.installation_messages &&
+                              data?.installation_messages.map(
+                                (message: any) => message
+                              )}
                         </pre>
                       </>
                     </div>
