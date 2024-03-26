@@ -40,7 +40,7 @@ export default function PythonEdit() {
     result_images: "",
     installation_messages: [],
   });
-
+  console.log("JJJJJJJJJJJ", data && data);
   const [images, setImages] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
