@@ -102,52 +102,23 @@ export default function PythonEdit() {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     setLoading(true);
-    setData({
-      error: "",
-      result: "",
-      result_images: "",
-      installation_messages: [],
-    });
 
     const dataToSend = { code: pythonCode };
 
-    // Step 1: Check installation status
-    const installationResponse = await fetch(installationStatusUrl!, {
+    fetch(pythonUrl!, {
       method: "POST",
       body: JSON.stringify(dataToSend),
-    });
-
-    const installationData = await installationResponse.json();
-    const { installation_messages } = installationData;
-
-    // Display installation messages if needed
-    if (installation_messages && installation_messages.length > 0) {
-      setData((prevData: any) => ({
-        ...prevData,
-        installation_messages: installation_messages,
-      }));
-      setLoading(false);
-    }
-
-    // Step 2: Execute Python code
-    try {
-      const executionResponse = await fetch(pythonUrl!, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*", // This may or may not be needed depending on your server setup
-        },
-        body: JSON.stringify(dataToSend),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setLoading(false);
+        setImages([...data?.result_images]);
+        setData(data);
+      })
+      .catch((error) => {
+        setData(error.message);
+        setLoading(false);
       });
-
-      const executionData = await executionResponse.json();
-      setLoading(false);
-      setImages([...executionData?.result_images]);
-      setData(executionData);
-    } catch (error: any) {
-      setData({ error: error.message });
-      setLoading(false);
-    }
   };
 
   const handleEditorChange = () => {
@@ -344,10 +315,7 @@ export default function PythonEdit() {
                             ? "loading..."
                             : data && data.result
                             ? data.result
-                            : data?.installation_messages &&
-                              data?.installation_messages.map(
-                                (message: any) => message
-                              )}
+                            : data.error}
                         </pre>
                       </>
                     </div>
@@ -387,13 +355,11 @@ export default function PythonEdit() {
             className="bg-gray-700  text-[#cacab3] border-2 border-slate-600 whitespace-pre-wrap
        w-full max-h-[80vh] overflow-auto scrollbar scrollbar-thumb-purple-900 scrollbar-track-gray-600"
           >
-            {loading ? (
-              <>Loading...</>
-            ) : data?.error ? (
-              data?.error
-            ) : (
-              data.result
-            )}
+            {loading
+              ? "loading..."
+              : data && data.result
+              ? data.result
+              : data.error}
           </pre>
           <div className="my-1 ">
             {pythonCode.includes("plt.") &&
