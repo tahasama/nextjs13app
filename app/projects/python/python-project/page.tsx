@@ -102,6 +102,12 @@ export default function PythonEdit() {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     setLoading(true);
+    setData({
+      error: "",
+      result: "",
+      result_images: "",
+      installation_messages: [],
+    });
 
     const dataToSend = { code: pythonCode };
 
