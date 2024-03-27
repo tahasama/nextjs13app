@@ -29,8 +29,8 @@ if (typeof window !== "undefined") {
 
 export default function PythonEdit() {
   const pythonUrl: string = process.env.NEXT_PUBLIC_PYTHON as string;
-  const installationStatusUrl: string = process.env
-    .NEXT_PUBLIC_PYTHON_IMPORT as string;
+  // const installationStatusUrl: string = process.env
+  //   .NEXT_PUBLIC_PYTHON_IMPORT as string;
 
   const editorRef = useRef<any>(null);
 
@@ -40,7 +40,7 @@ export default function PythonEdit() {
     result_images: "",
     // installation_messages: [],
   });
-  const [installation, setInstallation] = useState<any[]>([]);
+  // const [installation, setInstallation] = useState<any[]>([]);
 
   console.log("JJJJJJJJJJJ", data && data);
   const [images, setImages] = useState<any>([]);
@@ -107,19 +107,19 @@ export default function PythonEdit() {
 
     const dataToSend = { code: pythonCode };
 
-    fetch(installationStatusUrl!, {
-      method: "POST",
-      body: JSON.stringify(dataToSend),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setLoading(false);
-        setInstallation(data);
-      })
-      .catch((error) => {
-        setData(error.message);
-        setLoading(false);
-      });
+    // fetch(installationStatusUrl!, {
+    //   method: "POST",
+    //   body: JSON.stringify(dataToSend),
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     setLoading(false);
+    //     setInstallation(data);
+    //   })
+    //   .catch((error) => {
+    //     setData(error.message);
+    //     setLoading(false);
+    //   });
 
     fetch(pythonUrl!, {
       method: "POST",
@@ -332,10 +332,10 @@ export default function PythonEdit() {
                             : data && data.result
                             ? data.result
                             : data.error}
-                          {installation &&
+                          {/* {installation &&
                             Array.isArray(installation) &&
                             installation.length !== 0 &&
-                            installation.map((X: any) => x)}
+                            installation.map((X: any) => x)} */}
                         </pre>
                       </>
                     </div>
@@ -380,12 +380,12 @@ export default function PythonEdit() {
               : data && data.result
               ? data.result
               : data.error}
-            {installation &&
+            {/* {installation &&
               Array.isArray(installation) &&
               installation.length !== 0 &&
               installation.map((X: any) => {
                 return <p>installing {x}...</p>;
-              })}
+              })} */}
           </pre>
           <div className="my-1 ">
             {pythonCode.includes("plt.") &&
