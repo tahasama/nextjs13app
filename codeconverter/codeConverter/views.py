@@ -1,19 +1,22 @@
 import base64
 import json
-import os
 import re
 import subprocess
 import sys
 import io
 from concurrent.futures import ThreadPoolExecutor
 from matplotlib import pyplot as plt
-import pandas as pd
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+
+import functools
+
+# Import other necessary modules
 
 # Global variables for caching installed packages
 installed_packages_cache = set()
 
+@functools.lru_cache(maxsize=128)  # Limit cache size to 128 entries
 @csrf_exempt
 def execute_python(request):
     if request.method != 'POST':
@@ -24,13 +27,10 @@ def execute_python(request):
 
     # Check if the code contains any plotting commands
     has_plots = any(('plt.' in line and not '# plt.' in line) or ('sns.' in line and not '# sns.' in line) for line in code.split('\n'))
-    for line in code.split('\n'):
-        if ' input'+'(' in line:
-            result = "Sorry, the 'input' command is not supported. If you have a variable with the name 'input', please change it."
-            return JsonResponse({'result': result, 'result_images': [], 'error': '', 'installation_messages': []})
-
-    # Extract import statements from the code
+    
+    # Extract import statements and determine missing packages
     imported_packages = set()
+    missing_packages = set()
     for line in code.split('\n'):
         if 'from' in line and 'import' in line:
             match = re.search(r'from\s+(\S+)\s+import', line)
@@ -82,7 +82,6 @@ def execute_python(request):
 
     # Return results along with installation status and errors as JSON response
     return JsonResponse({'result': result, 'result_images': images, 'error': '', 'installation_messages': []})
-
 
 def install_package(package_name):
     try:

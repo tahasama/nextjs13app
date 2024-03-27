@@ -1,14 +1,15 @@
 # Base image
 FROM python:3.9-slim
 
+# Install Nginx
+RUN apt-get update && apt-get install -y nginx && apt-get clean
+
 # Create a non-root user
 RUN useradd -m myuser
 USER myuser
 
 # Working directory
 WORKDIR /app
-
-RUN pip install --upgrade pip
 
 # Copy requirements file and install dependencies
 COPY requirements.txt requirements.txt
@@ -23,5 +24,30 @@ ENV PATH="/home/myuser/.local/bin:${PATH}"
 # Expose the server port
 EXPOSE 8000
 
-# Command to start the server
+# Configure Nginx
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
+
+COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+
+# Command to start Gunicorn
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "codeConverter.wsgi"]
+
+
+
+# from bs4 import BeautifulSoup
+# soup = BeautifulSoup("<p>Some<b>bad<i>HTML")
+# print(soup.prettify())
+
+# from electronvolt import *
+# print(me)
+
+# import pendulum
+# now_in_paris = pendulum.now('Europe/Paris')
+# print(now_in_paris)
+
+# from DateTime import Timezones
+# zones = set(Timezones())
+# print(zones)
+
+# from MathLibrary import *
+# print(fact(5))

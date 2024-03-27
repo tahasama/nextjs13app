@@ -34,15 +34,11 @@ export default function PythonEdit() {
 
   const editorRef = useRef<any>(null);
 
-  const [data, setData] = useState<any>({
-    error: "",
-    result: "",
-    result_images: "",
-    // installation_messages: [],
-  });
+  const [data, setData] = useState<any>(undefined);
   const [installation, setInstallation] = useState<any[]>([]);
 
   console.log("JJJJJJJJJJJ", data && data);
+  console.log("LLLLLLLLLLL", installation && installation);
   const [images, setImages] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
@@ -104,6 +100,7 @@ export default function PythonEdit() {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     setLoading(true);
+    setData(undefined);
 
     const dataToSend = { code: pythonCode };
 
@@ -114,7 +111,7 @@ export default function PythonEdit() {
       .then((response) => response.json())
       .then((data) => {
         setLoading(false);
-        setInstallation(data);
+        setInstallation(data.missing_packages);
       })
       .catch((error) => {
         setData(error.message);
@@ -329,13 +326,15 @@ export default function PythonEdit() {
                         >
                           {loading
                             ? "loading..."
+                            : data === undefined &&
+                              installation &&
+                              installation.length !== 0
+                            ? installation.map((pack: any, index: any) => {
+                                return <p key={index}>installing {pack} ...</p>;
+                              })
                             : data && data.result
-                            ? data.result
-                            : data.error}
-                          {installation &&
-                            Array.isArray(installation) &&
-                            installation.length !== 0 &&
-                            installation.map((X: any) => x)}
+                            ? data?.result
+                            : data && data?.error}
                         </pre>
                       </>
                     </div>
@@ -377,15 +376,13 @@ export default function PythonEdit() {
           >
             {loading
               ? "loading..."
+              : data === undefined && installation && installation.length !== 0
+              ? installation.map((pack: any, index: any) => {
+                  return <p key={index}>installing {pack} ...</p>;
+                })
               : data && data.result
               ? data.result
-              : data.error}
-            {installation &&
-              Array.isArray(installation) &&
-              installation.length !== 0 &&
-              installation.map((X: any) => {
-                return <p>installing {x} ...</p>;
-              })}
+              : data && data?.error}
           </pre>
           <div className="my-1 ">
             {pythonCode.includes("plt.") &&
