@@ -384,7 +384,7 @@ export default function PythonEdit() {
               Array.isArray(installation) &&
               installation.length !== 0 &&
               installation.map((X: any) => {
-                return <p>installing {x} ...</p>;
+                return <p>installing {x}...</p>;
               })}
           </pre>
           <div className="my-1 ">
