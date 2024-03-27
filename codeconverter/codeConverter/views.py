@@ -107,3 +107,31 @@ def install_missing_packages(missing_packages):
         futures = [executor.submit(install_package, package) for package in missing_packages]
         for future in futures:
             future.result()  # Wait for each installation to complete
+
+
+@csrf_exempt
+def check_installation(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method'})
+
+    data = json.loads(request.body.decode('utf-8'))
+    code = data.get('code', '')
+
+    # Extract import statements from the code
+    imported_packages = set()
+    for line in code.split('\n'):
+        if 'from' in line and 'import' in line:
+            match = re.search(r'from\s+(\S+)\s+import', line)
+            if match:
+                package = match.group(1).split('.')[0]  # Extract the package name before the first '.'
+                imported_packages.add(package)
+        elif 'import' in line:
+            packages = re.findall(r'import\s+(\S+)', line)
+            for pkg in packages:
+                package = pkg.split('.')[0]  # Extract the package name before the first '.'
+                imported_packages.add(package)
+
+    # Check if each imported package is already installed or in cache
+    missing_packages = [pkg for pkg in imported_packages if pkg not in installed_packages_cache]
+
+    return JsonResponse({'missing_packages': missing_packages})

@@ -38,8 +38,10 @@ export default function PythonEdit() {
     error: "",
     result: "",
     result_images: "",
-    installation_messages: [],
+    // installation_messages: [],
   });
+  const [installation, setInstallation] = useState<any[]>([]);
+
   console.log("JJJJJJJJJJJ", data && data);
   const [images, setImages] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -104,6 +106,20 @@ export default function PythonEdit() {
     setLoading(true);
 
     const dataToSend = { code: pythonCode };
+
+    fetch(installationStatusUrl!, {
+      method: "POST",
+      body: JSON.stringify(dataToSend),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setLoading(false);
+        setInstallation(data);
+      })
+      .catch((error) => {
+        setData(error.message);
+        setLoading(false);
+      });
 
     fetch(pythonUrl!, {
       method: "POST",
@@ -316,6 +332,10 @@ export default function PythonEdit() {
                             : data && data.result
                             ? data.result
                             : data.error}
+                          {installation &&
+                            Array.isArray(installation) &&
+                            installation.length !== 0 &&
+                            installation.map((X: any) => x)}
                         </pre>
                       </>
                     </div>
@@ -360,6 +380,12 @@ export default function PythonEdit() {
               : data && data.result
               ? data.result
               : data.error}
+            {installation &&
+              Array.isArray(installation) &&
+              installation.length !== 0 &&
+              installation.map((X: any) => {
+                return <p>installing {x} ...</p>;
+              })}
           </pre>
           <div className="my-1 ">
             {pythonCode.includes("plt.") &&
